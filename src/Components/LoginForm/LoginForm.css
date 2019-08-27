@@ -1,0 +1,14 @@
+.header_login {
+  text-align: center;
+  padding-top: 50px;
+}
+
+.label_login {
+  display: block;
+  width: 85%;
+  margin: 0 auto;
+}
+
+.login_register_container {
+  text-align: center;
+}

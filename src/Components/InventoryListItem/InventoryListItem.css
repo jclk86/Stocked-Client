@@ -1,0 +1,16 @@
+.item_card {
+  border: 1px solid black;
+
+  width: 250px;
+  flex-basis: 20%;
+  padding: 10px;
+  position: relative;
+  margin: 5px;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.inventory_image {
+  max-width: 100%;
+  max-height: 100%;
+}

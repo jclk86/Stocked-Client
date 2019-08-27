@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "name": "stocked-client",
+  "alias": "jclk86s-stocked-client",
+  "routes": [
+    {
+      "src": "^/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": ".*",
+      "dest": "/index.html"
+    }
+  ]
+}

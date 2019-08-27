@@ -1,0 +1,14 @@
+.header_register {
+  text-align: center;
+  padding-top: 50px;
+}
+
+.register_btn_container {
+  text-align: center;
+}
+
+.label_registration {
+  display: block;
+  width: 85%;
+  margin: 0 auto;
+}
