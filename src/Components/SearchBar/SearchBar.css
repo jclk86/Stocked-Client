@@ -1,0 +1,21 @@
+.search_bar {
+  text-align: center;
+  padding-top: 15%;
+  width: 100%;
+}
+
+.tags_list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 600px;
+  justify-content: space-evenly;
+  padding: 0;
+  margin: 30px auto;
+}
+
+@media only screen and (max-width: 500px) {
+  .search_bar {
+    padding-top: 5%;
+  }
+}

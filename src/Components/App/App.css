@@ -1,21 +1,5 @@
 .App {
-  height: 100vh;
-  padding-top: 20px;
-  padding-bottom: 20px;
   max-width: 800px;
   margin: 0 auto;
-  background-color: rgb(216, 214, 214);
-}
-
-/* .App__header {
-  padding-left: 20px;
-  padding-right: 20px;
-} */
-
-.App__main {
-  /* height: calc(100vh - 70px); */
-  height: 100vh;
-  overflow: auto;
-  margin-top: 10px;
-  padding-bottom: 40px;
+  background-color: rgb(195, 255, 255);
 }

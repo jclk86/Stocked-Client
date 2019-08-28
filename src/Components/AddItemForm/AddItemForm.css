@@ -9,13 +9,51 @@
   margin: 0 auto;
 }
 
+.label_integer_inputs {
+  display: flex;
+  margin-bottom: 10px;
+}
+
 select {
   display: block;
   width: 85%;
   margin: 10px auto;
   font-size: 16px;
+  border-radius: 5px;
 }
 
 .btn_container {
   text-align: center;
+  padding-bottom: 30px;
+}
+
+.container_qty_cost {
+  display: flex;
+  flex-wrap: wrap;
+  width: 85%;
+  justify-content: space-between;
+  margin: 10px auto;
+}
+
+.item_units,
+.item_cost,
+.item_quantity {
+  width: 20%;
+}
+
+.integer_inputs {
+  border: 1px solid #ddd;
+  font-size: 1.1em;
+  padding: 10px;
+  text-align: left;
+  border-radius: 5px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 550px) {
+  .item_units,
+  .item_cost,
+  .item_quantity {
+    min-width: 100%;
+  }
 }

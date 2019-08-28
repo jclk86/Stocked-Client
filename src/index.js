@@ -4,10 +4,13 @@ import "./index.css";
 import App from "./Components/App/App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
+import { InventoryProvider } from "./context/InventoryContext";
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <InventoryProvider>
+      <App />
+    </InventoryProvider>
   </BrowserRouter>,
   document.getElementById("root")
 );

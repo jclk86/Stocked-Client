@@ -6,6 +6,7 @@ import RegistrationPage from "../../routes/RegistrationPage/RegistrationPage";
 import AddItemPage from "../../routes/AddItemPage/AddItemPage";
 import EditItemPage from "../../routes/EditItemPage/EditItemPage";
 import InventoryListPage from "../../routes/InventoryListPage/InventoryListPage";
+import AddTagPage from "../../routes/AddTagPage/AddTagPage";
 import "./App.css";
 
 class App extends Component {
@@ -28,6 +29,7 @@ class App extends Component {
           <Route exact path={"/register"} component={RegistrationPage} />
           <Route exact path={"/add-item"} component={AddItemPage} />
           <Route exact path={"/edit-item"} component={EditItemPage} />
+          <Route exact path={"/add-tag"} component={AddTagPage} />
         </main>
       </div>
     );

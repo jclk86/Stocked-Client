@@ -1,0 +1,38 @@
+.nav_link {
+  text-decoration: none;
+  color: black;
+  /* display: block; */
+  font-size: 16px;
+}
+
+.header_inventory_list_page {
+  color: black;
+  margin-bottom: 0;
+}
+
+.nav_top_right_links {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+.top_right_link {
+  margin-left: 25px;
+}
+
+@media only screen and (max-width: 500px) {
+  .header_inventory_list_page,
+  .nav_top_right_links,
+  .top_right_link {
+    width: 100%;
+  }
+
+  .header_inventory_list_page {
+    margin-left: 25px;
+    margin-bottom: 10px;
+  }
+
+  .top_right_link {
+    margin-bottom: 7px;
+  }
+}

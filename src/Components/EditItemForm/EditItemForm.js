@@ -21,19 +21,52 @@ export default class EditItemForm extends Component {
             id="EditItemForm__item_name"
           />
         </div>
-        <div className="item_quantity">
-          <label
-            htmlFor="EditItemForm__item_quantity"
-            className="label_edit_item_form"
-          >
-            Quantity <Required />
-          </label>
-          <Input
-            name="item_quantity"
-            type="number"
-            required
-            id="EditItemForm__item_quantity"
-          />
+        <div className="container_qty_cost">
+          <div className="item_quantity">
+            <label
+              htmlFor="EditItemForm__item_quantity"
+              className="label_integer_inputs"
+            >
+              Quantity <Required />
+            </label>
+            <input
+              className="integer_inputs"
+              name="item_quantity"
+              type="number"
+              required
+              id="EditItemForm__item_quantity"
+            />
+          </div>
+          <div className="item_units">
+            <label
+              htmlFor="EditItemForm__item_units"
+              className="label_integer_inputs"
+            >
+              Item Units <Required />
+            </label>
+            <input
+              className="integer_inputs"
+              name="item_units"
+              type="text"
+              required
+              id="EditItemForm__units"
+            />
+          </div>
+          <div className="item_cost">
+            <label
+              htmlFor="EditItemForm__item_cost"
+              className="label_integer_inputs"
+            >
+              Unit Cost <Required />
+            </label>
+            <input
+              className="integer_inputs"
+              name="item_cost"
+              type="number"
+              required
+              id="EditItemForm__item_cost"
+            />
+          </div>
         </div>
         <div className="description">
           <label

@@ -12,7 +12,7 @@ export default class AddItemForm extends Component {
             htmlFor="AddItemForm__item_name"
             className="label_add_item_form"
           >
-            Item name <Required />
+            Item Name <Required />
           </label>
           <Input
             name="item_name"
@@ -21,19 +21,52 @@ export default class AddItemForm extends Component {
             id="AddItemForm__item_name"
           />
         </div>
-        <div className="item_quantity">
-          <label
-            htmlFor="AddItemForm__item_quantity"
-            className="label_add_item_form"
-          >
-            Quantity <Required />
-          </label>
-          <Input
-            name="item_quantity"
-            type="number"
-            required
-            id="AddItemForm__item_quantity"
-          />
+        <div className="container_qty_cost">
+          <div className="item_quantity">
+            <label
+              htmlFor="AddItemForm__item_quantity"
+              className="label_integer_inputs"
+            >
+              Quantity <Required />
+            </label>
+            <input
+              className="integer_inputs"
+              name="item_quantity"
+              type="number"
+              required
+              id="AddItemForm__item_quantity"
+            />
+          </div>
+          <div className="item_units">
+            <label
+              htmlFor="AddItemForm__item_units"
+              className="label_integer_inputs"
+            >
+              Item Units <Required />
+            </label>
+            <input
+              className="integer_inputs"
+              name="item_units"
+              type="text"
+              required
+              id="AddItemForm__units"
+            />
+          </div>
+          <div className="item_cost">
+            <label
+              htmlFor="AddItemForm__item_cost"
+              className="label_integer_inputs"
+            >
+              Unit Cost <Required />
+            </label>
+            <input
+              className="integer_inputs"
+              name="item_cost"
+              type="number"
+              required
+              id="AddItemForm__item_cost"
+            />
+          </div>
         </div>
         <div className="description">
           <label
@@ -61,7 +94,7 @@ export default class AddItemForm extends Component {
 
         <div className="tags">
           <label htmlFor="AddItemForm__tags" className="label_add_item_form">
-            Tag
+            Category
             <Required />
           </label>{" "}
           <select>

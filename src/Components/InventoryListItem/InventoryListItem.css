@@ -1,12 +1,12 @@
 .item_card {
   border: 1px solid black;
-
   width: 250px;
   flex-basis: 20%;
   padding: 10px;
   position: relative;
   margin: 5px;
   text-align: center;
+  text-decoration: none;
   overflow-wrap: break-word;
 }
 

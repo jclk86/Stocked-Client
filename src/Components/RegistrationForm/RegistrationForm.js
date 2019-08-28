@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Input, Required, Form } from "../Utils/Utils";
+import { NavLink } from "react-router-dom";
 import "./RegistrationForm.css";
 
 export default class RegistrationForm extends Component {
@@ -72,6 +73,11 @@ export default class RegistrationForm extends Component {
         </div>
         <div className="register_btn_container">
           <Button type="submit">Submit</Button>
+        </div>
+        <div className="login_link">
+          <p>
+            Already a user? <NavLink to={"/login"}>Login</NavLink>
+          </p>
         </div>
       </Form>
     );

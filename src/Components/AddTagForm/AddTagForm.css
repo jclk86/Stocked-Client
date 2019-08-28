@@ -1,0 +1,16 @@
+.header_add_tag {
+  text-align: center;
+  padding-top: 50px;
+}
+
+.label_tag_name {
+  display: block;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 110px;
+}
+
+.container_add_tag_btn {
+  text-align: center;
+}
