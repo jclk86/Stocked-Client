@@ -113,6 +113,9 @@ export default class EditItemForm extends Component {
         <div className="btn_container">
           <Button type="submit">Edit</Button>
         </div>
+        <div className="btn_container btn_delete">
+          <Button type="submit">Delete</Button>
+        </div>
       </Form>
     );
   }

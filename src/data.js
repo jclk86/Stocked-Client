@@ -7,7 +7,8 @@ const inventory = [
     name: "Orange",
     description: "This is an orange",
     quantity: 1,
-    date: new Date()
+    date: new Date(),
+    tag: 1
   },
   {
     userId: 1,
@@ -17,7 +18,8 @@ const inventory = [
     name: "Apple",
     description: "Fuji apples",
     quantity: 20,
-    date: new Date()
+    date: new Date(),
+    tag: 2
   },
   {
     userId: 1,
@@ -27,7 +29,8 @@ const inventory = [
     name: "Bread",
     description: "loaves of bread",
     quantity: 10,
-    date: new Date()
+    date: new Date(),
+    tag: 3
   },
   {
     userId: 1,
@@ -37,7 +40,8 @@ const inventory = [
     name: "Tomatoes",
     description: "assorted tomatoes",
     quantity: 100,
-    date: new Date()
+    date: new Date(),
+    tag: 4
   },
   {
     userId: 1,
@@ -47,7 +51,8 @@ const inventory = [
     name: "Forks",
     description: "metal forks",
     quantity: 30,
-    date: new Date()
+    date: new Date(),
+    tag: 5
   },
   {
     userId: 1,
@@ -57,7 +62,8 @@ const inventory = [
     name: "Ketchup",
     description: "heinz ketchup bottles",
     quantity: 10,
-    date: new Date()
+    date: new Date(),
+    tag: 6
   }
 ];
 

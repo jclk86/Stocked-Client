@@ -23,6 +23,9 @@ select {
 
 .btn_container {
   text-align: center;
+}
+
+.btn_delete {
   padding-bottom: 30px;
 }
 

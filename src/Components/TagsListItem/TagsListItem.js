@@ -6,7 +6,7 @@ export default class TagsListItem extends Component {
   render() {
     const { tag } = this.props;
     return (
-      <NavLink to={"/"} className="tag_item">
+      <NavLink to={`/tags/${tag.tagId}`} className="tag_item">
         {tag.name}
       </NavLink>
     );

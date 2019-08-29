@@ -22,8 +22,11 @@ select {
   border-radius: 5px;
 }
 
-.btn_container {
+.container_btn {
   text-align: center;
+}
+
+.btn_cancel {
   padding-bottom: 30px;
 }
 

@@ -110,8 +110,11 @@ export default class AddItemForm extends Component {
             <option>Vegetables</option>
           </select>
         </div>
-        <div className="btn_container">
+        <div className="container_btn">
           <Button type="submit">Add</Button>
+        </div>
+        <div className="container_btn btn_cancel">
+          <Button type="submit">Cancel</Button>
         </div>
       </Form>
     );
