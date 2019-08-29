@@ -1,8 +1,66 @@
 import React, { Component } from "react";
 import { Form, Input, Required, Button, Textarea } from "../Utils/Utils";
 import "./AddItemForm.css";
+import InventoryContext from "../../context/InventoryContext";
 
 export default class AddItemForm extends Component {
+  static contextType = InventoryContext;
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: {
+        value: "",
+        touched: false
+      },
+      quantity: {
+        value: "",
+        touched: false
+      },
+      itemUnits: {
+        value: "",
+        touched: false
+      },
+      itemCost: {
+        value: null,
+        touched: false
+      },
+      description: {
+        value: ""
+      },
+      image: {
+        value: ""
+      },
+      tag: {
+        value: "",
+        touched: false
+      }
+    };
+  }
+
+  updateName = name => {
+    this.setState({ name: { value: name, touched: true } });
+  };
+
+  updateQuantity = quantity => {
+    this.setState({ quantity: { value: quantity, touched: true } });
+  };
+
+  updateItemUnits = itemUnits => {
+    this.setState({ itemUnits: { value: itemUnits, touched: true } });
+  };
+
+  updateItemCost = itemCost => {
+    this.setState({ itemCost: { value: itemCost, touched: true } });
+  };
+
+  updateDescription = description => {
+    this.setState({ description: { value: description } });
+  };
+
+  updateTag = tag => {
+    this.setState({ tag: { value: tag, touched: true } });
+  };
+
   render() {
     return (
       <Form>
@@ -44,13 +102,21 @@ export default class AddItemForm extends Component {
             >
               Item Units <Required />
             </label>
-            <input
+            <select
               className="integer_inputs"
               name="item_units"
               type="text"
               required
               id="AddItemForm__units"
-            />
+            >
+              <option>lb(s)</option>
+              <option>oz</option>
+              <option>grams</option>
+              <option>gallon(s)</option>
+              <option>qt</option>
+              <option>pint(s)</option>
+              <option>cup(s)</option>
+            </select>
           </div>
           <div className="item_cost">
             <label
@@ -83,7 +149,7 @@ export default class AddItemForm extends Component {
         </div>
         <div className="image">
           <label htmlFor="AddItemForm__image" className="label_add_item_form">
-            Image Url
+            Image URL
           </label>
           <Input
             type="text"
@@ -94,7 +160,7 @@ export default class AddItemForm extends Component {
 
         <div className="tags">
           <label htmlFor="AddItemForm__tags" className="label_add_item_form">
-            Category
+            Tag
             <Required />
           </label>{" "}
           <select>

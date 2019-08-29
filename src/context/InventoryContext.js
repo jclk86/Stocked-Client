@@ -23,10 +23,15 @@ export class InventoryProvider extends Component {
     this.setState({ tagsList });
   };
 
+  addInventoryItem = item => {
+    this.setState({ inventoryList: [...this.state.inventoryList, item] });
+  };
+
   render() {
     const value = {
       inventoryList: this.state.inventoryList,
-      tagsList: this.state.tagsList
+      tagsList: this.state.tagsList,
+      addInventoryItem: this.addInventoryItem
     };
     return (
       <InventoryContext.Provider value={value}>

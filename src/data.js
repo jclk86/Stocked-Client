@@ -64,6 +64,17 @@ const inventory = [
     quantity: 10,
     date: new Date(),
     tag: 6
+  },
+  {
+    userId: 55,
+    itemId: 23,
+    image:
+      "https://images.pexels.com/photos/161025/tomatoes-ketchup-sad-food-161025.jpeg?cs=srgb&dl=ketchup-sauce-tomatoes-161025.jpg&fm=jpg",
+    name: "Ketch",
+    description: "heinz ketchup bottles",
+    quantity: 10,
+    date: new Date(),
+    tag: 6
   }
 ];
 

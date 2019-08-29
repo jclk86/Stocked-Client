@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Section } from "../../Components/Utils/Utils";
+import { NavLink } from "react-router-dom";
 import InventoryListItem from "../../Components/InventoryListItem/InventoryListItem";
 import InventoryContext from "../../context/InventoryContext"; //filename
 import Header from "../../Components/Header/Header";
-import SearchBar from "../../Components/SearchBar/SearchBar";
+import Tags from "../../Components/Tags/Tags";
 import "./InventoryListPage.css";
 import { getInventoryListForTag } from "../../services/inventory-api-service";
 
@@ -13,23 +14,32 @@ export default class InventoryListPage extends Component {
     search: ""
   };
 
+  updateSearch = filter => {
+    this.setState({ search: filter });
+  };
+
   render() {
-    const { inventoryList } = this.context;
     const itemsForTag = getInventoryListForTag(
       this.context.inventoryList,
       this.props.match.params.tagId
     );
-    // const filteredSearch = .filter(item => {
-    //   return item.name.indexOf(this.state.search) !== -1;
-    // }) -- you need work off of the itemsForTag below. So it goes through 2 filters --
-    // save below to variable and then use it in this function and use result of this function
-    // to render inventory list
+    const filteredItems = itemsForTag.filter(item => {
+      return item.name.toLowerCase().includes(this.state.search.toLowerCase());
+    });
     return (
       <div className="container_inventory_list_page">
         <Header></Header>
-        <SearchBar></SearchBar>
+        <Tags></Tags>
+        <div className="container_search_filter">
+          <input
+            onChange={e => this.updateSearch(e.target.value)}
+            type="text"
+            placeholder="search"
+            className="search_filter"
+          ></input>
+        </div>
         <Section list className="InventoryListPage">
-          {itemsForTag.map(item => (
+          {filteredItems.map(item => (
             <InventoryListItem key={item.itemId} item={item} />
           ))}
         </Section>

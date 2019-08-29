@@ -21,7 +21,7 @@ textarea {
 
 .Button {
   border: 1px solid #aaa;
-  background-color: green;
+  background-color: rgb(148, 253, 204);
   color: white;
   font-size: 1.1em;
   border-radius: 4px;
@@ -50,7 +50,7 @@ textarea {
 }
 
 .Form {
-  background-color: rgb(68, 167, 200);
+  background-color: rgb(117, 121, 122);
   min-height: 600px;
   margin-top: 120px;
   border-radius: 30px;

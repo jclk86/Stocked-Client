@@ -1,4 +1,4 @@
-.search_bar {
+.container_tags {
   text-align: center;
   padding-top: 15%;
   width: 100%;
@@ -11,11 +11,21 @@
   max-width: 600px;
   justify-content: space-evenly;
   padding: 0;
-  margin: 30px auto;
+  margin: 20px auto;
+}
+
+.btn_show_all {
+  color: black;
+  border: 1px solid black;
+  padding: 4px;
+  margin: 3px 3px;
+  background-color: gray;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 500px) {
-  .search_bar {
+  .container_tags {
     padding-top: 5%;
   }
 }
