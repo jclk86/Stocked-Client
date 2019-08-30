@@ -186,10 +186,11 @@ class AddItemForm extends Component {
             Image URL
           </label>
           <Input
+            defaultValue="https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
             type="text"
             name="image_url"
             id="AddItemForm_image_url"
-            onChange={e => this.updateIm}
+            onChange={e => this.updateImageURL(e.target.value)}
           ></Input>
         </div>
 
@@ -208,7 +209,9 @@ class AddItemForm extends Component {
           <Button type="submit">Add</Button>
         </div>
         <div className="container_btn btn_cancel">
-          <Button type="submit">Cancel</Button>
+          <Button type="button" onClick={() => this.props.history.push("/")}>
+            Cancel
+          </Button>
         </div>
       </Form>
     );

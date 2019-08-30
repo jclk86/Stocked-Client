@@ -6,7 +6,7 @@ const inventory = [
       "https://images.pexels.com/photos/1937743/pexels-photo-1937743.jpeg?cs=srgb&dl=bright-citrus-citrus-fruit-1937743.jpg&fm=jpg",
     name: "Orange",
     description: "This is an orange",
-    quantity: 1,
+    quantity: 0,
     date: new Date(),
     tag: 1,
     unit: 1,
@@ -93,6 +93,7 @@ const inventory = [
 ];
 
 const tags = [
+  { name: "misc", tagId: 0 },
   { name: "Fruits", tagId: 1 },
   { name: "Utensils", tagId: 2 },
   { name: "Dairy", tagId: 3 },
@@ -106,6 +107,7 @@ const tags = [
 ];
 
 const units = [
+  { name: "misc", unitId: 0 },
   { name: "lb(s)", unitId: 1 },
   { name: "oz", unitId: 2 },
   { name: "grams", unitId: 3 },

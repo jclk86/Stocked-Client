@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Section } from "../../Components/Utils/Utils";
-import { NavLink } from "react-router-dom";
 import InventoryListItem from "../../Components/InventoryListItem/InventoryListItem";
 import InventoryContext from "../../context/InventoryContext"; //filename
 import Header from "../../Components/Header/Header";
