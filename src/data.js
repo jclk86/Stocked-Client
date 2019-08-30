@@ -8,7 +8,9 @@ const inventory = [
     description: "This is an orange",
     quantity: 1,
     date: new Date(),
-    tag: 1
+    tag: 1,
+    unit: 1,
+    cost: 3.99
   },
   {
     userId: 1,
@@ -19,7 +21,9 @@ const inventory = [
     description: "Fuji apples",
     quantity: 20,
     date: new Date(),
-    tag: 2
+    tag: 2,
+    unit: 7,
+    cost: 1.99
   },
   {
     userId: 1,
@@ -30,7 +34,9 @@ const inventory = [
     description: "loaves of bread",
     quantity: 10,
     date: new Date(),
-    tag: 3
+    tag: 3,
+    unit: 6,
+    cost: 3.99
   },
   {
     userId: 1,
@@ -41,7 +47,9 @@ const inventory = [
     description: "assorted tomatoes",
     quantity: 100,
     date: new Date(),
-    tag: 4
+    tag: 4,
+    unit: 5,
+    cost: 1.44
   },
   {
     userId: 1,
@@ -52,7 +60,9 @@ const inventory = [
     description: "metal forks",
     quantity: 30,
     date: new Date(),
-    tag: 5
+    tag: 5,
+    unit: 3,
+    cost: 0.97
   },
   {
     userId: 1,
@@ -63,7 +73,9 @@ const inventory = [
     description: "heinz ketchup bottles",
     quantity: 10,
     date: new Date(),
-    tag: 6
+    tag: 6,
+    unit: 2,
+    cost: 10.99
   },
   {
     userId: 55,
@@ -74,7 +86,9 @@ const inventory = [
     description: "heinz ketchup bottles",
     quantity: 10,
     date: new Date(),
-    tag: 6
+    tag: 6,
+    unit: 1,
+    cost: 2.23
   }
 ];
 
@@ -91,4 +105,14 @@ const tags = [
   { name: "Vegetables", tagId: 10 }
 ];
 
-export { inventory, tags };
+const units = [
+  { name: "lb(s)", unitId: 1 },
+  { name: "oz", unitId: 2 },
+  { name: "grams", unitId: 3 },
+  { name: "gallon(s)", unitId: 4 },
+  { name: "qt", unitId: 5 },
+  { name: "pint(s)", unitId: 6 },
+  { name: "cup(s)", unitId: 7 }
+];
+
+export { inventory, tags, units };

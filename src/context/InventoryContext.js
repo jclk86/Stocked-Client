@@ -1,37 +1,37 @@
 import React, { Component } from "react";
-import { tags, inventory } from "../data";
+import { tags, inventory, units } from "../data";
 
 const InventoryContext = React.createContext({
   inventoryList: [],
-  tagsList: [],
-  setInventoryList: () => {},
-  setTagsList: () => {}
+  setInventoryList: () => {}
 });
 export default InventoryContext;
 
 export class InventoryProvider extends Component {
   state = {
-    inventoryList: inventory,
-    tagsList: tags
+    inventoryList: inventory
   };
 
   setInventoryList = inventoryList => {
     this.setState({ inventoryList });
   };
 
-  setTagsList = tagsList => {
-    this.setState({ tagsList });
-  };
-
   addInventoryItem = item => {
     this.setState({ inventoryList: [...this.state.inventoryList, item] });
+    this.checkDB();
+  };
+
+  checkDB = () => {
+    console.log(this.state.inventoryList);
   };
 
   render() {
     const value = {
       inventoryList: this.state.inventoryList,
-      tagsList: this.state.tagsList,
-      addInventoryItem: this.addInventoryItem
+      tagsList: tags,
+      unitsList: units,
+      addInventoryItem: this.addInventoryItem,
+      setInventorylist: this.setInventoryList
     };
     return (
       <InventoryContext.Provider value={value}>

@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Form, Input, Required, Button, Textarea } from "../Utils/Utils";
 import "./AddItemForm.css";
 import InventoryContext from "../../context/InventoryContext";
+import { withRouter } from "react-router-dom";
 
-export default class AddItemForm extends Component {
+class AddItemForm extends Component {
   static contextType = InventoryContext;
   constructor(props) {
     super(props);
@@ -27,7 +28,7 @@ export default class AddItemForm extends Component {
       description: {
         value: ""
       },
-      image: {
+      imageURL: {
         value: ""
       },
       tag: {
@@ -57,13 +58,43 @@ export default class AddItemForm extends Component {
     this.setState({ description: { value: description } });
   };
 
+  updateImageURL = imageURL => {
+    this.setState({ imageURL: { value: imageURL } });
+  };
+
   updateTag = tag => {
     this.setState({ tag: { value: tag, touched: true } });
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+    const {
+      item_name,
+      item_quantity,
+      item_units,
+      item_cost,
+      description,
+      image_url,
+      tag
+    } = event.target;
+
+    const item = {
+      name: item_name.value,
+      quantity: item_quantity.value,
+      tag: tag.value,
+      image: image_url.value,
+      description: description.value,
+      units: item_units.value,
+      cost: item_cost.value
+    };
+
+    this.context.addInventoryItem(item);
+    this.props.history.goBack();
+  };
+
   render() {
     return (
-      <Form>
+      <Form onSubmit={event => this.handleSubmit(event)}>
         <h2 className="title_add_item_form">Add Item</h2>
         <div className="item_name">
           <label
@@ -77,6 +108,7 @@ export default class AddItemForm extends Component {
             type="text"
             required
             id="AddItemForm__item_name"
+            onChange={e => this.updateName(e.target.value)}
           />
         </div>
         <div className="container_qty_cost">
@@ -93,6 +125,7 @@ export default class AddItemForm extends Component {
               type="number"
               required
               id="AddItemForm__item_quantity"
+              onChange={e => this.updateQuantity(e.target.value)}
             />
           </div>
           <div className="item_units">
@@ -108,14 +141,13 @@ export default class AddItemForm extends Component {
               type="text"
               required
               id="AddItemForm__units"
+              onChange={e => this.updateItemUnits(e.target.value)}
             >
-              <option>lb(s)</option>
-              <option>oz</option>
-              <option>grams</option>
-              <option>gallon(s)</option>
-              <option>qt</option>
-              <option>pint(s)</option>
-              <option>cup(s)</option>
+              {this.context.unitsList.map(unit => (
+                <option value={unit.name} key={unit.unitId}>
+                  {unit.name}
+                </option>
+              ))}
             </select>
           </div>
           <div className="item_cost">
@@ -131,6 +163,7 @@ export default class AddItemForm extends Component {
               type="number"
               required
               id="AddItemForm__item_cost"
+              onChange={e => this.updateItemCost(e.target.value)}
             />
           </div>
         </div>
@@ -145,6 +178,7 @@ export default class AddItemForm extends Component {
             name="description"
             required
             id="AddItemForm__description"
+            onChange={e => this.updateDescription(e.target.value)}
           ></Textarea>
         </div>
         <div className="image">
@@ -155,6 +189,7 @@ export default class AddItemForm extends Component {
             type="text"
             name="image_url"
             id="AddItemForm_image_url"
+            onChange={e => this.updateIm}
           ></Input>
         </div>
 
@@ -163,17 +198,10 @@ export default class AddItemForm extends Component {
             Tag
             <Required />
           </label>{" "}
-          <select>
-            <option>Fruits</option>
-            <option>Utensils</option>
-            <option>Dairy</option>
-            <option>Meats</option>
-            <option>Sauces</option>
-            <option>Herbs & Spices</option>
-            <option>Beverages</option>
-            <option>Detergent</option>
-            <option>Cookware</option>
-            <option>Vegetables</option>
+          <select name="tag">
+            {this.context.tagsList.map(tag => (
+              <option key={tag.tagId}>{tag.name}</option>
+            ))}
           </select>
         </div>
         <div className="container_btn">
@@ -186,3 +214,5 @@ export default class AddItemForm extends Component {
     );
   }
 }
+
+export default withRouter(AddItemForm);
