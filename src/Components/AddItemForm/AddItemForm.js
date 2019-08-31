@@ -93,6 +93,7 @@ class AddItemForm extends Component {
   };
 
   render() {
+    const { tagsList, unitsList } = this.context;
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
         <h2 className="title_add_item_form">Add Item</h2>
@@ -136,6 +137,7 @@ class AddItemForm extends Component {
               Item Units <Required />
             </label>
             <select
+              defaultValue={unitsList[0].unitId}
               className="integer_inputs"
               name="item_units"
               type="text"
@@ -143,8 +145,8 @@ class AddItemForm extends Component {
               id="AddItemForm__units"
               onChange={e => this.updateItemUnits(e.target.value)}
             >
-              {this.context.unitsList.map(unit => (
-                <option value={unit.name} key={unit.unitId}>
+              {unitsList.map(unit => (
+                <option value={unit.unitId} key={unit.unitId}>
                   {unit.name}
                 </option>
               ))}
@@ -199,9 +201,11 @@ class AddItemForm extends Component {
             Tag
             <Required />
           </label>{" "}
-          <select name="tag">
-            {this.context.tagsList.map(tag => (
-              <option key={tag.tagId}>{tag.name}</option>
+          <select name="tag" defaultValue={tagsList[0].tagId}>
+            {tagsList.map(tag => (
+              <option key={tag.tagId} value={tag.tagId}>
+                {tag.name}
+              </option>
             ))}
           </select>
         </div>
