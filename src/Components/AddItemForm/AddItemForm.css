@@ -51,6 +51,14 @@ select {
   text-align: left;
   border-radius: 5px;
   width: 100%;
+  
+}
+
+.error {
+  text-align: center;
+  max-width: 85%;
+  margin: 0 auto;
+  color: red;
 }
 
 @media only screen and (max-width: 550px) {

@@ -3,6 +3,7 @@ import { Form, Input, Required, Button, Textarea } from "../Utils/Utils";
 import "./AddItemForm.css";
 import InventoryContext from "../../context/InventoryContext";
 import { withRouter } from "react-router-dom";
+import ValidationError from "../ValidationError/ValidationError"
 
 class AddItemForm extends Component {
   static contextType = InventoryContext;
@@ -18,7 +19,7 @@ class AddItemForm extends Component {
         touched: false
       },
       itemUnits: {
-        value: "",
+        value: null,
         touched: false
       },
       itemCost: {
@@ -32,7 +33,7 @@ class AddItemForm extends Component {
         value: ""
       },
       tag: {
-        value: "",
+        value: null,
         touched: false
       }
     };
@@ -92,6 +93,22 @@ class AddItemForm extends Component {
     this.props.history.goBack();
   };
 
+  validateName = () => {
+    const name = this.state.name.value.trim()
+    if (name.length === 0) {
+      return "Please enter a name"
+    } 
+  }
+
+
+  validateQuantity = () => {
+    const quantity = this.state.quantity.value
+    console.log(quantity)
+    if(quantity === "") {
+      return "Please enter quantity"
+    }
+  }
+
   render() {
     const { tagsList, unitsList } = this.context;
     return (
@@ -111,6 +128,7 @@ class AddItemForm extends Component {
             id="AddItemForm__item_name"
             onChange={e => this.updateName(e.target.value)}
           />
+          {this.state.name.touched && <ValidationError message={this.validateName()}/>}
         </div>
         <div className="container_qty_cost">
           <div className="item_quantity">
@@ -127,7 +145,9 @@ class AddItemForm extends Component {
               required
               id="AddItemForm__item_quantity"
               onChange={e => this.updateQuantity(e.target.value)}
+          
             />
+            {this.state.quantity.touched && <ValidationError message={this.validateQuantity()}/>}
           </div>
           <div className="item_units">
             <label
