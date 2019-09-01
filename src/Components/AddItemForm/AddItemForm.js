@@ -76,6 +76,7 @@ class AddItemForm extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const {
+      itemId,
       item_name,
       item_quantity,
       item_units,
@@ -86,6 +87,7 @@ class AddItemForm extends Component {
     } = event.target;
     // needs userId/should we set it in the route as well? Or can use the windows session storage?
     const item = {
+      itemId: Math.floor(Math.random() * 20), // remove
       name: item_name.value,
       quantity: parseInt(item_quantity.value),
       date: new Date(),
