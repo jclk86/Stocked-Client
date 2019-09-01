@@ -8,9 +8,7 @@ export default class Tags extends Component {
   static contextType = InventoryContext;
   renderTags() {
     return this.context.tagsList.map(tag => (
-      <TagsListItem key={tag.tagId} tag={tag}>
-        <li>{tag.name}</li>
-      </TagsListItem>
+      <TagsListItem key={tag.tagId} tag={tag}></TagsListItem>
     ));
   }
   render() {
@@ -18,7 +16,6 @@ export default class Tags extends Component {
       <div className="container_tags">
         <ul className="tags_list">
           {this.renderTags()}
-
           <NavLink to="/">
             <button type="button" className="btn_show_all">
               Show All

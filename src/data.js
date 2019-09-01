@@ -93,7 +93,6 @@ const inventory = [
 ];
 
 const tags = [
-  { name: "misc", tagId: 0 },
   { name: "Fruits", tagId: 1 },
   { name: "Utensils", tagId: 2 },
   { name: "Dairy", tagId: 3 },
@@ -103,18 +102,19 @@ const tags = [
   { name: "Beverages", tagId: 7 },
   { name: "Detergent", tagId: 8 },
   { name: "Cookware", tagId: 9 },
-  { name: "Vegetables", tagId: 10 }
+  { name: "Vegetables", tagId: 10 },
+  { name: "misc", tagId: 11 }
 ];
 
 const units = [
-  { name: "misc", unitId: 0 },
   { name: "lb(s)", unitId: 1 },
   { name: "oz", unitId: 2 },
   { name: "grams", unitId: 3 },
   { name: "gallon(s)", unitId: 4 },
   { name: "qt", unitId: 5 },
   { name: "pint(s)", unitId: 6 },
-  { name: "cup(s)", unitId: 7 }
+  { name: "cup(s)", unitId: 7 },
+  { name: "misc", unitId: 8 }
 ];
 
 export { inventory, tags, units };

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
 import "./TagsListItem.css";
 
 export default class TagsListItem extends Component {
@@ -12,3 +13,10 @@ export default class TagsListItem extends Component {
     );
   }
 }
+
+TagsListItem.propTypes = {
+  tag: PropTypes.shape({
+    name: PropTypes.string,
+    tagId: PropTypes.number
+  })
+};

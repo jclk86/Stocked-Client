@@ -1,9 +1,15 @@
 import React, { Component } from "react";
-import { Form, Input, Required, Button, Textarea } from "../Utils/Utils";
-import "./AddItemForm.css";
-import InventoryContext from "../../context/InventoryContext";
 import { withRouter } from "react-router-dom";
-import ValidationError from "../ValidationError/ValidationError"
+import "./AddItemForm.css";
+import { Form, Input, Required, Button, Textarea } from "../Utils/Utils";
+import InventoryContext from "../../context/InventoryContext";
+import {
+  ValidationError,
+  validateName,
+  validateQuantity,
+  validateCost
+} from "../ValidationError/ValidationError";
+// import { isValid } from "date-fns";
 
 class AddItemForm extends Component {
   static contextType = InventoryContext;
@@ -19,11 +25,11 @@ class AddItemForm extends Component {
         touched: false
       },
       itemUnits: {
-        value: null,
+        value: 8,
         touched: false
       },
       itemCost: {
-        value: null,
+        value: "",
         touched: false
       },
       description: {
@@ -33,7 +39,7 @@ class AddItemForm extends Component {
         value: ""
       },
       tag: {
-        value: null,
+        value: 11,
         touched: false
       }
     };
@@ -48,7 +54,7 @@ class AddItemForm extends Component {
   };
 
   updateItemUnits = itemUnits => {
-    this.setState({ itemUnits: { value: itemUnits, touched: true } });
+    this.setState({ itemUnits: { value: parseInt(itemUnits), touched: true } });
   };
 
   updateItemCost = itemCost => {
@@ -78,39 +84,39 @@ class AddItemForm extends Component {
       image_url,
       tag
     } = event.target;
-
+    // needs userId/should we set it in the route as well? Or can use the windows session storage?
     const item = {
       name: item_name.value,
-      quantity: item_quantity.value,
+      quantity: parseInt(item_quantity.value),
+      date: new Date(),
       tag: tag.value,
-      image: image_url.value,
+      image: image_url.value
+        ? image_url.value
+        : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       description: description.value,
       units: item_units.value,
-      cost: item_cost.value
+      cost: parseInt(item_cost.value)
     };
 
     this.context.addInventoryItem(item);
-    this.props.history.goBack();
+    this.props.history.push("/");
   };
 
-  validateName = () => {
-    const name = this.state.name.value.trim()
-    if (name.length === 0) {
-      return "Please enter a name"
-    } 
-  }
-
-
-  validateQuantity = () => {
-    const quantity = this.state.quantity.value
-    console.log(quantity)
-    if(quantity === "") {
-      return "Please enter quantity"
-    }
-  }
+  isFormValid = () => {
+    const { name, quantity, itemUnits, itemCost, tag } = this.state;
+    return (
+      name.value &&
+      quantity.value &&
+      itemUnits.value &&
+      itemCost.value &&
+      tag.value
+    );
+  };
 
   render() {
+    const { quantity, itemCost, name } = this.state;
     const { tagsList, unitsList } = this.context;
+    const isValid = this.isFormValid();
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
         <h2 className="title_add_item_form">Add Item</h2>
@@ -124,11 +130,12 @@ class AddItemForm extends Component {
           <Input
             name="item_name"
             type="text"
-            required
             id="AddItemForm__item_name"
             onChange={e => this.updateName(e.target.value)}
           />
-          {this.state.name.touched && <ValidationError message={this.validateName()}/>}
+          {this.state.name.touched && (
+            <ValidationError message={validateName(name.value)} />
+          )}
         </div>
         <div className="container_qty_cost">
           <div className="item_quantity">
@@ -142,12 +149,12 @@ class AddItemForm extends Component {
               className="integer_inputs"
               name="item_quantity"
               type="number"
-              required
               id="AddItemForm__item_quantity"
               onChange={e => this.updateQuantity(e.target.value)}
-          
             />
-            {this.state.quantity.touched && <ValidationError message={this.validateQuantity()}/>}
+            {this.state.quantity.touched && (
+              <ValidationError message={validateQuantity(quantity.value)} />
+            )}
           </div>
           <div className="item_units">
             <label
@@ -157,11 +164,10 @@ class AddItemForm extends Component {
               Item Units <Required />
             </label>
             <select
-              defaultValue={unitsList[0].unitId}
+              defaultValue={this.state.itemUnits.value}
               className="integer_inputs"
               name="item_units"
               type="text"
-              required
               id="AddItemForm__units"
               onChange={e => this.updateItemUnits(e.target.value)}
             >
@@ -183,10 +189,12 @@ class AddItemForm extends Component {
               className="integer_inputs"
               name="item_cost"
               type="number"
-              required
               id="AddItemForm__item_cost"
               onChange={e => this.updateItemCost(e.target.value)}
             />
+            {this.state.itemCost.touched && (
+              <ValidationError message={validateCost(itemCost.value)} />
+            )}
           </div>
         </div>
         <div className="description">
@@ -198,7 +206,6 @@ class AddItemForm extends Component {
           </label>
           <Textarea
             name="description"
-            required
             id="AddItemForm__description"
             onChange={e => this.updateDescription(e.target.value)}
           ></Textarea>
@@ -208,7 +215,6 @@ class AddItemForm extends Component {
             Image URL
           </label>
           <Input
-            defaultValue="https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
             type="text"
             name="image_url"
             id="AddItemForm_image_url"
@@ -221,7 +227,7 @@ class AddItemForm extends Component {
             Tag
             <Required />
           </label>{" "}
-          <select name="tag" defaultValue={tagsList[0].tagId}>
+          <select name="tag" defaultValue={this.state.tag.value}>
             {tagsList.map(tag => (
               <option key={tag.tagId} value={tag.tagId}>
                 {tag.name}
@@ -230,10 +236,16 @@ class AddItemForm extends Component {
           </select>
         </div>
         <div className="container_btn">
-          <Button type="submit">Add</Button>
+          <Button type="submit" role="button" disabled={!isValid}>
+            Add
+          </Button>
         </div>
         <div className="container_btn btn_cancel">
-          <Button type="button" onClick={() => this.props.history.push("/")}>
+          <Button
+            type="button"
+            role="button"
+            onClick={() => this.props.history.push("/")}
+          >
             Cancel
           </Button>
         </div>

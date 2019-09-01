@@ -1,10 +1,15 @@
 import React, { Component } from "react";
-import { Button, Input, Form } from "../Utils/Utils";
+import { Button, Input, Form, Logo } from "../Utils/Utils";
 import { Link } from "react-router-dom";
 import "./LoginForm.css";
-import { Logo } from "../Utils/Utils";
 
 export default class LoginForm extends Component {
+  static defaultProps = {
+    onLoginSuccess: () => {}
+  };
+
+  state = { error: null };
+
   render() {
     return (
       <Form>
@@ -30,7 +35,9 @@ export default class LoginForm extends Component {
           />
         </div>
         <div className="login_register_container">
-          <Button type="submit">Login</Button>
+          <Button role="button" type="submit">
+            Login
+          </Button>
           <p>
             Not a member? <Link to="/register">Register here.</Link>
           </p>

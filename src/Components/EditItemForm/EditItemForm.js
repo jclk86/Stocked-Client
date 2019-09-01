@@ -1,11 +1,18 @@
 import React, { Component } from "react";
-import { Form, Input, Required, Button, Textarea } from "../Utils/Utils";
 import { withRouter } from "react-router-dom";
 import "./EditItemForm.css";
+import { Form, Input, Required, Button, Textarea } from "../Utils/Utils";
 import InventoryContext from "../../context/InventoryContext";
+import {
+  ValidationError,
+  validateName,
+  validateQuantity,
+  validateCost
+} from "../ValidationError/ValidationError";
 
 class EditItemForm extends Component {
   static contextType = InventoryContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -38,23 +45,12 @@ class EditItemForm extends Component {
     };
   }
 
-  // userId: 1,
-  // itemId: 4,
-  // image:
-  //   "https://images.pexels.com/photos/2487443/pexels-photo-2487443.jpeg?cs=srgb&dl=abundance-apples-delicious-2487443.jpg&fm=jpg",
-  // name: "Apple",
-  // description: "Fuji apples",
-  // quantity: 20,
-  // date: new Date(),
-  //   tag: 2,
-  //     unit: 7,
-  //       cost: 1.99
-  // },
-
   prePopulateForm = (inventoryList, itemId) => {
     const itemObject = inventoryList.filter(item => {
       return item.itemId === parseInt(itemId)
         ? {
+            userId: item.userId,
+            itemId: item.itemId,
             name: item.name,
             quantity: item.quantity,
             unit: item.unit,
@@ -107,40 +103,51 @@ class EditItemForm extends Component {
       image_url,
       tag
     } = event.target;
-
+    // needs userId/should we set it in the route as well? Or can use the windows session storage?
     const item = {
       itemId: parseInt(this.props.match.params.itemId),
       name: item_name.value,
       date: new Date(),
-      quantity: item_quantity.value,
+      quantity: parseInt(item_quantity.value),
       tag: tag.value,
-      image: image_url.value,
+      image: image_url.value
+        ? image_url.value
+        : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       description: description.value,
       units: item_units.value,
-      cost: item_cost.value
+      cost: parseInt(item_cost.value)
     };
 
     this.context.updateInventoryItem(item);
-    this.props.history.goBack();
+    this.props.history.goBack("/");
+  };
+
+  isFormValid = () => {
+    const { name, quantity, itemUnits, itemCost, tag } = this.state;
+    return (
+      name.value &&
+      quantity.value &&
+      itemUnits.value &&
+      itemCost.value &&
+      tag.value
+    );
   };
 
   handleDelete = (itemId, cb) => {
     cb(itemId);
-    this.props.history.goBack();
-  };
-
-  checkProps = () => {
-    console.log(this.props.match.params.itemId);
+    this.props.history.push("/");
   };
 
   render() {
+    const { name, quantity, itemCost } = this.state;
     const { itemId } = this.props.match.params;
     const { inventoryList, unitsList } = this.context;
     const currentItemData = this.prePopulateForm(inventoryList, itemId);
+    const isValid = this.isFormValid(); // implement when
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
         <h2 className="title_edit_item_form">Edit Item</h2>
-        <div className="item_name">
+        <div className="container_item_name">
           <label
             htmlFor="EditItemForm__item_name"
             className="label_edit_item_form"
@@ -155,6 +162,9 @@ class EditItemForm extends Component {
             id="EditItemForm__item_name"
             onChange={e => this.editName(e.target.value)}
           />
+          {name.touched && (
+            <ValidationError message={validateName(name.value)} />
+          )}
         </div>
         <div className="container_qty_cost">
           <div className="item_quantity">
@@ -173,6 +183,9 @@ class EditItemForm extends Component {
               id="EditItemForm__item_quantity"
               onChange={e => this.editQuantity(e.target.value)}
             />
+            {quantity.touched && (
+              <ValidationError message={validateQuantity(quantity.value)} />
+            )}
           </div>
           <div className="item_units">
             <label
@@ -183,6 +196,7 @@ class EditItemForm extends Component {
             </label>
             <select
               defaultValue={currentItemData.unit} //FIX
+              htmlFor="EditItemForm__item_units"
               className="integer_inputs"
               name="item_units"
               type="text"
@@ -214,6 +228,9 @@ class EditItemForm extends Component {
               id="EditItemForm__item_cost"
               onChange={e => this.editItemCost(e.target.value)}
             />
+            {itemCost.touched && (
+              <ValidationError message={validateCost(itemCost.value)} />
+            )}
           </div>
         </div>
         <div className="description">
@@ -236,7 +253,7 @@ class EditItemForm extends Component {
             Image URL
           </label>
           <Input
-            defaultValue={currentItemData.image} // fix
+            defaultValue={currentItemData.image}
             type="text"
             name="image_url"
             id="AddItemForm_image_url"
@@ -249,6 +266,7 @@ class EditItemForm extends Component {
             <Required />
           </label>{" "}
           <select
+            id="EditItemForm__tags"
             defaultValue={currentItemData.tag}
             name="tag"
             onChange={e => this.editTag(e.target.value)}
@@ -260,12 +278,15 @@ class EditItemForm extends Component {
             ))}
           </select>
         </div>
-        <div className="btn_container">
-          <Button type="submit">Edit</Button>
+        <div className="container_btn">
+          <Button type="submit" role="button">
+            Edit
+          </Button>
         </div>
-        <div className="btn_container btn_delete">
+        <div className="container_btn btn_delete">
           <Button
             type="button"
+            role="button"
             onClick={() =>
               this.handleDelete(itemId, this.context.deleteInventoryItem)
             }
@@ -274,7 +295,11 @@ class EditItemForm extends Component {
           </Button>
         </div>
         <div className="container_btn btn_cancel">
-          <Button type="button" onClick={() => this.props.history.push("/")}>
+          <Button
+            role="button"
+            type="button"
+            onClick={() => this.props.history.push("/")}
+          >
             Cancel
           </Button>
         </div>

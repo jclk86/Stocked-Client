@@ -5,11 +5,14 @@ import App from "./Components/App/App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import { InventoryProvider } from "./context/InventoryContext";
+import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary";
 
 ReactDOM.render(
   <BrowserRouter>
     <InventoryProvider>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </InventoryProvider>
   </BrowserRouter>,
   document.getElementById("root")

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
+import "./InventoryListPage.css";
 import { Section } from "../../Components/Utils/Utils";
+import { getInventoryListForTag } from "../../services/inventory-api-service";
 import InventoryListItem from "../../Components/InventoryListItem/InventoryListItem";
-import InventoryContext from "../../context/InventoryContext"; //filename
+import InventoryContext from "../../context/InventoryContext";
 import Header from "../../Components/Header/Header";
 import Tags from "../../Components/Tags/Tags";
-import "./InventoryListPage.css";
-import { getInventoryListForTag } from "../../services/inventory-api-service";
 
 export default class InventoryListPage extends Component {
   static contextType = InventoryContext;
@@ -30,7 +30,9 @@ export default class InventoryListPage extends Component {
         <Header></Header>
         <Tags></Tags>
         <div className="container_search_filter">
+          <label htmlFor="search_filter"></label>
           <input
+            id="search_filter"
             onChange={e => this.updateSearch(e.target.value)}
             type="text"
             placeholder="search"
@@ -46,7 +48,3 @@ export default class InventoryListPage extends Component {
     );
   }
 }
-
-// if (this.state.search) {
-//   params.push(`search=${this.state.search}`);
-// }

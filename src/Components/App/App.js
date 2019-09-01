@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
-// import Header from "../Header/Header";
+import "./App.css";
 import LoginPage from "../../routes/LoginPage/LoginPage";
 import RegistrationPage from "../../routes/RegistrationPage/RegistrationPage";
 import AddItemPage from "../../routes/AddItemPage/AddItemPage";
 import EditItemPage from "../../routes/EditItemPage/EditItemPage";
 import InventoryListPage from "../../routes/InventoryListPage/InventoryListPage";
 import NotFoundPage from "../../routes/NotFoundPage/NotFoundPage";
-
-import "./App.css";
 
 class App extends Component {
   state = { hasError: false };
@@ -41,9 +39,3 @@ class App extends Component {
 }
 
 export default App;
-
-// <Route exact path={"/"} component={Tags} /> //show all returns here
-//
-//   <Route exact path={"/tags/:tagId"} component={Tags} /> // this is needed so you can get to this page for itemID to match
-//   <Route exact path={"/tags/:tagId"} component={InventoryListPage} /> --match all item ids with tagID
-// Route NOT FOUND PAGE
