@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Input, Form, Logo } from "../Utils/Utils";
 import { Link } from "react-router-dom";
 import "./LoginForm.css";
+import TokenService from "../../services/token-service";
 
 export default class LoginForm extends Component {
   static defaultProps = {
@@ -10,9 +11,24 @@ export default class LoginForm extends Component {
 
   state = { error: null };
 
+  handleSubmitBasicAuth = event => {
+    event.preventDefault();
+    const { user_name, password } = event.target;
+
+    TokenService.saveAuthToken(
+      TokenService.makeBasicAuthToken(user_name.value, password.value)
+    );
+
+    user_name.value = "";
+    password.value = "";
+    this.props.onLoginSuccess();
+  };
+
   render() {
+    const { error } = this.state;
     return (
-      <Form>
+      <Form className="LoginForm" onSubmit={this.handleSubmitBasicAuth}>
+        <div role="alert">{error && <p className="red">{error}</p>}</div>
         <div className="header_login">
           <Logo></Logo>
           <h2>STOCKED</h2>

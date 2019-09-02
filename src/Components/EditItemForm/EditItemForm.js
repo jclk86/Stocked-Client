@@ -95,27 +95,27 @@ class EditItemForm extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const {
-      item_name,
-      item_quantity,
-      item_units,
-      item_cost,
+      name,
+      quantity,
+      itemUnits,
+      itemCost,
       description,
-      image_url,
+      imageURL,
       tag
-    } = event.target;
+    } = this.state;
     // needs userId/should we set it in the route as well? Or can use the windows session storage?
     const item = {
       itemId: parseInt(this.props.match.params.itemId),
-      name: item_name.value,
+      name: name.value,
       date: new Date(),
-      quantity: parseInt(item_quantity.value),
+      quantity: parseInt(quantity.value),
       tag: tag.value,
-      image: image_url.value
-        ? image_url.value
+      image: imageURL.value
+        ? imageURL.value
         : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       description: description.value,
-      units: item_units.value,
-      cost: parseInt(item_cost.value)
+      units: itemUnits.value,
+      cost: parseInt(itemCost.value)
     };
 
     this.context.updateInventoryItem(item);
