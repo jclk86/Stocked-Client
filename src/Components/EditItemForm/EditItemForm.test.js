@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { mount } from "enzyme";
-import AddItemForm from "./AddItemForm";
+import EditItemForm from "./EditItemForm";
 import sinon from "sinon";
 
-describe(`AddItemForm Component`, () => {
+describe(`EditItemForm Component`, () => {
   it("fires submit", () => {
     const handleSubmitSpy = sinon.spy();
     const wrapper = mount(
       <BrowserRouter>
-        <AddItemForm onSubmit={handleSubmitSpy}></AddItemForm>
+        <EditItemForm onSubmit={handleSubmitSpy}></EditItemForm>
       </BrowserRouter>
     );
     wrapper.find(".Form").simulate("submit");

@@ -24,7 +24,7 @@ class EditItemForm extends Component {
         value: "",
         touched: false
       },
-      itemUnits: {
+      itemUnit: {
         value: "",
         touched: false
       },
@@ -52,12 +52,12 @@ class EditItemForm extends Component {
             userId: item.userId,
             itemId: item.itemId,
             name: item.name,
-            quantity: item.quantity,
-            unit: item.unit,
-            cost: item.cost,
+            quantity: parseInt(item.quantity),
+            unit: parseInt(item.unit),
+            cost: parseInt(item.cost),
             description: item.description,
             image: item.image,
-            tag: item.tag
+            tag: parseInt(item.tag)
           }
         : "";
     });
@@ -72,8 +72,8 @@ class EditItemForm extends Component {
     this.setState({ quantity: { value: quantity, touched: true } });
   };
 
-  editItemUnits = itemUnits => {
-    this.setState({ itemUnits: { value: itemUnits, touched: true } });
+  editItemUnit = itemUnit => {
+    this.setState({ itemUnit: { value: itemUnit, touched: true } });
   };
 
   editItemCost = itemCost => {
@@ -97,7 +97,7 @@ class EditItemForm extends Component {
     const {
       name,
       quantity,
-      itemUnits,
+      itemUnit,
       itemCost,
       description,
       imageURL,
@@ -114,7 +114,7 @@ class EditItemForm extends Component {
         ? imageURL.value
         : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       description: description.value,
-      units: itemUnits.value,
+      units: itemUnit.value,
       cost: parseInt(itemCost.value)
     };
 
@@ -123,11 +123,11 @@ class EditItemForm extends Component {
   };
 
   isFormValid = () => {
-    const { name, quantity, itemUnits, itemCost, tag } = this.state;
+    const { name, quantity, itemUnit, itemCost, tag } = this.state;
     return (
       name.value &&
       quantity.value &&
-      itemUnits.value &&
+      itemUnit.value &&
       itemCost.value &&
       tag.value
     );
@@ -142,7 +142,7 @@ class EditItemForm extends Component {
     const { name, quantity, itemCost } = this.state;
     const { itemId } = this.props.match.params;
     const { inventoryList, unitsList } = this.context;
-    const currentItemData = this.prePopulateForm(inventoryList, itemId);
+    const currentItemData = this.prePopulateForm(inventoryList, itemId); //set this to state
     const isValid = this.isFormValid(); // implement when
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
@@ -202,7 +202,7 @@ class EditItemForm extends Component {
               type="text"
               required
               id="EditItemForm__units"
-              onChange={e => this.editItemUnits(e.target.value)}
+              onChange={e => this.editItemUnit(e.target.value)}
             >
               {" "}
               {unitsList.map(unit => (
