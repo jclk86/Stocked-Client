@@ -1,3 +1,9 @@
-.search_filter {
-  max-width: 20%;
+.search__inventory_filter {
+  text-align: center;
+  max-width: 30%;
+}
+
+.container_search_filter {
+  max-width: 100%;
+  text-align: center;
 }

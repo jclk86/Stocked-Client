@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBox Component Renders SearchBox without issue 1`] = `
+<div
+  className="container_search_filter"
+>
+  <label
+    htmlFor="search_filter"
+  />
+  <input
+    className="search_inventory_filter"
+    id="search_filter"
+    name="search_filter"
+    onChange={[Function]}
+    placeholder="search"
+    type="text"
+  />
+</div>
+`;
