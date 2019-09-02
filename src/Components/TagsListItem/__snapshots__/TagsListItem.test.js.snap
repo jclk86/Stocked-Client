@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TagsListItem Component renders tags without issues 1`] = `
+<NavLink
+  className="tag_item"
+  to="/tags/1"
+/>
+`;
