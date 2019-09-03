@@ -1,11 +1,14 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import "./InventoryListPage.css";
 import { Section } from "../../Components/Utils/Utils";
 import { getInventoryListForTag } from "../../services/inventory-api-service";
 import InventoryListItem from "../../Components/InventoryListItem/InventoryListItem";
 import InventoryContext from "../../context/InventoryContext";
 import Header from "../../Components/Header/Header";
-import Tags from "../../Components/Tags/Tags";
+import TagsListItem from "../../Components/TagsListItem/TagsListItem";
+import SearchBox from "../../Components/SearchBox/SearchBox";
+import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary";
 
 export default class InventoryListPage extends Component {
   static contextType = InventoryContext;
@@ -16,6 +19,12 @@ export default class InventoryListPage extends Component {
   updateSearch = filter => {
     this.setState({ search: filter });
   };
+
+  renderTags() {
+    return this.context.tagsList.map(tag => (
+      <TagsListItem key={tag.tagId} tag={tag}></TagsListItem>
+    ));
+  }
 
   render() {
     const itemsForTag = getInventoryListForTag(
@@ -28,17 +37,18 @@ export default class InventoryListPage extends Component {
     return (
       <div className="container_inventory_list_page">
         <Header></Header>
-        <Tags></Tags>
-        <div className="container_search_filter">
-          <label htmlFor="search_filter"></label>
-          <input
-            id="search_filter"
-            onChange={e => this.updateSearch(e.target.value)}
-            type="text"
-            placeholder="search"
-            className="search_filter"
-          ></input>
-        </div>
+        <ul className="tags_list">
+          <ErrorBoundary>
+            {this.renderTags()}
+            <NavLink to="/" className="container_btn_show_all">
+              <button type="button" className="btn_show_all">
+                Show All
+              </button>
+            </NavLink>
+          </ErrorBoundary>
+        </ul>
+        <SearchBox updateSearch={this.updateSearch}></SearchBox>
+
         <Section list className="InventoryListPage">
           {filteredItems.map(item => (
             <InventoryListItem key={item.itemId} item={item} />

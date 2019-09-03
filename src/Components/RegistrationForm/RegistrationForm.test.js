@@ -2,12 +2,12 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { mount, shallow } from "enzyme";
 import toJson from "enzyme-to-json";
-import AddItemForm from "./AddItemForm";
+import RegistrationForm from "./RegistrationForm";
 import sinon from "sinon";
 
-describe(`AddItemForm Component`, () => {
-  it("Renders an AddItemForm without issue", () => {
-    const wrapper = shallow(<AddItemForm />);
+describe(`Registration Form`, () => {
+  it("Renders registration form without issues", () => {
+    const wrapper = shallow(<RegistrationForm />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
@@ -15,7 +15,7 @@ describe(`AddItemForm Component`, () => {
     const handleSubmitSpy = sinon.spy();
     const wrapper = mount(
       <BrowserRouter>
-        <AddItemForm onSubmit={handleSubmitSpy}></AddItemForm>
+        <RegistrationForm onSubmit={handleSubmitSpy}></RegistrationForm>
       </BrowserRouter>
     );
     wrapper.find(".Form").simulate("submit");

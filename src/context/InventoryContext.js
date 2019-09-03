@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { tags, inventory, units } from "../data";
+import { tags, inventory, units, user } from "../data";
 
 const InventoryContext = React.createContext({
   inventoryList: [],

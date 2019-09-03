@@ -27,6 +27,7 @@ export default class InventoryListItem extends Component {
             alt={`${item.name}`}
           ></img>
         </div>
+
         <h2>{item.name}</h2>
         <p> {item.description}</p>
         <p className={item.quantity === 0 ? "restock_message" : ""}>

@@ -7,6 +7,7 @@ import AddItemPage from "../../routes/AddItemPage/AddItemPage";
 import EditItemPage from "../../routes/EditItemPage/EditItemPage";
 import InventoryListPage from "../../routes/InventoryListPage/InventoryListPage";
 import NotFoundPage from "../../routes/NotFoundPage/NotFoundPage";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 class App extends Component {
   state = { hasError: false };
@@ -25,12 +26,20 @@ class App extends Component {
           )}
           <Switch>
             <Route exact path={"/"} component={InventoryListPage} />
+            <ErrorBoundary>
+              {" "}
+              <Route
+                exact
+                path={"/tags/:tagId"}
+                component={InventoryListPage}
+              />
+            </ErrorBoundary>
             <Route exact path={"/tags/:tagId"} component={InventoryListPage} />
             <Route exact path={"/login"} component={LoginPage} />
             <Route exact path={"/register"} component={RegistrationPage} />
             <Route exact path={"/add-item"} component={AddItemPage} />
             <Route exact path={"/edit-item/:itemId"} component={EditItemPage} />
-            <Route component={NotFoundPage}></Route>
+            <Route component={NotFoundPage}></Route>{" "}
           </Switch>
         </main>
       </div>

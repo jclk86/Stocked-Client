@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InventoryListItem Component renders inventory list without issue 1`] = `
+<NavLink
+  className="item_card"
+  role="navigation"
+  to="/edit-item/1"
+>
+  <div
+    aria-label="A undefined"
+    role="img"
+  >
+    <img
+      alt="undefined"
+      className="inventory_image"
+    />
+  </div>
+  <h2 />
+  <p>
+     
+  </p>
+  <p
+    className=""
+  >
+     
+    Qty: 
+  </p>
+  <p>
+    Total Cost: 
+    $ NaN
+  </p>
+</NavLink>
+`;

@@ -8,9 +8,13 @@ export default class RegistrationForm extends Component {
     onRegistrationSuccess: () => {}
   };
 
+  handleSubmit = () => {
+    this.props.onRegistrationSuccess();
+  };
+
   render() {
     return (
-      <Form>
+      <Form onSubmit={this.handleSubmit}>
         <div className="header_register">
           <h2>Registration</h2>
         </div>

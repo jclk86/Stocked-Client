@@ -24,7 +24,7 @@ class EditItemForm extends Component {
         value: "",
         touched: false
       },
-      itemUnit: {
+      itemUnits: {
         value: "",
         touched: false
       },
@@ -52,12 +52,12 @@ class EditItemForm extends Component {
             userId: item.userId,
             itemId: item.itemId,
             name: item.name,
-            quantity: parseInt(item.quantity),
-            unit: parseInt(item.unit),
-            cost: parseInt(item.cost),
+            quantity: item.quantity,
+            unit: item.unit,
+            cost: item.cost,
             description: item.description,
             image: item.image,
-            tag: parseInt(item.tag)
+            tag: item.tag
           }
         : "";
     });
@@ -72,8 +72,8 @@ class EditItemForm extends Component {
     this.setState({ quantity: { value: quantity, touched: true } });
   };
 
-  editItemUnit = itemUnit => {
-    this.setState({ itemUnit: { value: itemUnit, touched: true } });
+  editItemUnits = itemUnits => {
+    this.setState({ itemUnits: { value: itemUnits, touched: true } });
   };
 
   editItemCost = itemCost => {
@@ -97,25 +97,26 @@ class EditItemForm extends Component {
     const {
       name,
       quantity,
-      itemUnit,
+      itemUnits,
       itemCost,
       description,
       imageURL,
       tag
     } = this.state;
     // needs userId/should we set it in the route as well? Or can use the windows session storage?
+    // Mock data -- change to State when API implemented
     const item = {
-      itemId: parseInt(this.props.match.params.itemId),
+      itemId: Number(this.props.match.params.itemId),
       name: name.value,
       date: new Date(),
-      quantity: parseInt(quantity.value),
-      tag: tag.value,
+      quantity: Number(quantity.value),
+      tag: Number(tag.value),
       image: imageURL.value
         ? imageURL.value
         : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       description: description.value,
-      units: itemUnit.value,
-      cost: parseInt(itemCost.value)
+      units: Number(itemUnits.value),
+      cost: Number(itemCost.value)
     };
 
     this.context.updateInventoryItem(item);
@@ -123,11 +124,11 @@ class EditItemForm extends Component {
   };
 
   isFormValid = () => {
-    const { name, quantity, itemUnit, itemCost, tag } = this.state;
+    const { name, quantity, itemUnits, itemCost, tag } = this.state;
     return (
       name.value &&
       quantity.value &&
-      itemUnit.value &&
+      itemUnits.value &&
       itemCost.value &&
       tag.value
     );
@@ -142,8 +143,9 @@ class EditItemForm extends Component {
     const { name, quantity, itemCost } = this.state;
     const { itemId } = this.props.match.params;
     const { inventoryList, unitsList } = this.context;
-    const currentItemData = this.prePopulateForm(inventoryList, itemId); //set this to state
-    const isValid = this.isFormValid(); // implement when
+    const currentItemData = this.prePopulateForm(inventoryList, itemId);
+    console.log(currentItemData);
+    // const isValid = this.isFormValid(); // implement when
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
         <h2 className="title_edit_item_form">Edit Item</h2>
@@ -202,7 +204,7 @@ class EditItemForm extends Component {
               type="text"
               required
               id="EditItemForm__units"
-              onChange={e => this.editItemUnit(e.target.value)}
+              onChange={e => this.editItemUnits(e.target.value)}
             >
               {" "}
               {unitsList.map(unit => (
