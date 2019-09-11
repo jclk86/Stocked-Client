@@ -25,20 +25,16 @@ class App extends Component {
             <p className="red">There was an error! Oh no!</p>
           )}
           <Switch>
-            <Route exact path={"/"} component={InventoryListPage} />
-            <ErrorBoundary>
-              {" "}
-              <Route
-                exact
-                path={"/tags/:tagId"}
-                component={InventoryListPage}
-              />
-            </ErrorBoundary>
-            <Route exact path={"/tags/:tagId"} component={InventoryListPage} />
+            <Route exact path={"/"} component={InventoryListPage} />{" "}
+            <Route exact path={"/tags/:tag_id"} component={InventoryListPage} />
             <Route exact path={"/login"} component={LoginPage} />
             <Route exact path={"/register"} component={RegistrationPage} />
             <Route exact path={"/add-item"} component={AddItemPage} />
-            <Route exact path={"/edit-item/:itemId"} component={EditItemPage} />
+            <Route
+              exact
+              path={"/edit-item/:item_id"}
+              component={EditItemPage}
+            />
             <Route component={NotFoundPage}></Route>{" "}
           </Switch>
         </main>
@@ -48,3 +44,4 @@ class App extends Component {
 }
 
 export default App;
+// user_inventory/tags/:tagId

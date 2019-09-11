@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import "./AddItemForm.css";
 import { Form, Input, Required, Button, Textarea } from "../Utils/Utils";
 import InventoryContext from "../../context/InventoryContext";
+import InventoryApiService from "../../services/inventory-api-service";
 import {
   ValidationError,
   validateName,
@@ -16,6 +17,7 @@ class AddItemForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // change names according to
       name: {
         value: "",
         touched: false
@@ -24,22 +26,22 @@ class AddItemForm extends Component {
         value: "",
         touched: false
       },
-      itemUnits: {
-        value: 8,
-        touched: false
-      },
-      itemCost: {
+      unit: {
         value: "",
         touched: false
       },
-      description: {
+      cost: {
+        value: "",
+        touched: false
+      },
+      desc: {
         value: ""
       },
-      imageURL: {
+      image_url: {
         value: ""
       },
       tag: {
-        value: 11,
+        value: "",
         touched: false
       }
     };
@@ -53,69 +55,60 @@ class AddItemForm extends Component {
     this.setState({ quantity: { value: quantity, touched: true } });
   };
 
-  updateItemUnits = itemUnits => {
-    this.setState({ itemUnits: { value: parseInt(itemUnits), touched: true } });
+  updateUnit = unit => {
+    this.setState({ unit: { value: unit, touched: true } });
   };
 
-  updateItemCost = itemCost => {
-    this.setState({ itemCost: { value: itemCost, touched: true } });
+  updateCost = cost => {
+    this.setState({ cost: { value: cost, touched: true } });
   };
 
   updateDescription = description => {
-    this.setState({ description: { value: description } });
+    this.setState({ desc: { value: description } });
   };
 
   updateImageURL = imageURL => {
-    this.setState({ imageURL: { value: imageURL } });
+    this.setState({ image_url: { value: imageURL } });
   };
 
   updateTag = tag => {
     this.setState({ tag: { value: tag, touched: true } });
   };
+  // tags
+  // need unit too
+  componentDidMount() {}
 
   handleSubmit = event => {
     event.preventDefault();
-    const {
-      name,
-      quantity,
-      itemUnits,
-      itemCost,
-      description,
-      imageURL,
-      tag
-    } = this.state;
+    const { name, quantity, unit, cost, desc, image_url, tag } = this.state;
     // needs userId/should we set it in the route as well? Or can use the windows session storage?
+    // change UNIT and TAG to text value.No need to use numeric ID
+    // REMOVE DATE. YOU WILL TAKE FROM SERVER DB
     const item = {
-      itemId: Math.floor(Math.random() * 20), // remove
       name: name.value,
       quantity: parseInt(quantity.value),
-      date: new Date(),
       tag: tag.value,
-      image: imageURL.value
-        ? imageURL.value
+      image_url: image_url.value
+        ? image_url.value
         : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      description: description.value,
-      unit: itemUnits.value,
-      cost: parseInt(itemCost.value)
+      desc: desc.value,
+      unit: unit.value,
+      cost: parseInt(cost.value)
     };
-
+    InventoryApiService.postItem(item);
     this.context.addInventoryItem(item);
     this.props.history.push("/");
   };
 
   isFormValid = () => {
-    const { name, quantity, itemUnits, itemCost, tag } = this.state;
+    const { name, quantity, unit, cost, tag } = this.state;
     return (
-      name.value &&
-      quantity.value &&
-      itemUnits.value &&
-      itemCost.value &&
-      tag.value
+      name.value && quantity.value && unit.value && cost.value && tag.value
     );
   };
 
   render() {
-    const { quantity, itemCost, name } = this.state;
+    const { quantity, cost, name } = this.state;
     const { tagsList, unitsList } = this.context;
     const isValid = this.isFormValid();
     return (
@@ -165,12 +158,12 @@ class AddItemForm extends Component {
               Item Units <Required />
             </label>
             <select
-              defaultValue={this.state.itemUnits.value}
+              defaultValue={this.state.unit.value} // change. also, see below the units
               className="integer_inputs"
               name="item_units"
               type="text"
               id="AddItemForm__units"
-              onChange={e => this.updateItemUnits(e.target.value)}
+              onChange={e => this.updateUnit(e.target.value)}
             >
               {unitsList.map(unit => (
                 <option value={unit.unitId} key={unit.unitId}>
@@ -191,10 +184,10 @@ class AddItemForm extends Component {
               name="item_cost"
               type="number"
               id="AddItemForm__item_cost"
-              onChange={e => this.updateItemCost(e.target.value)}
+              onChange={e => this.updateCost(e.target.value)}
             />
-            {this.state.itemCost.touched && (
-              <ValidationError message={validateCost(itemCost.value)} />
+            {this.state.cost.touched && (
+              <ValidationError message={validateCost(cost.value)} />
             )}
           </div>
         </div>
@@ -222,7 +215,6 @@ class AddItemForm extends Component {
             onChange={e => this.updateImageURL(e.target.value)}
           ></Input>
         </div>
-
         <div className="tags">
           <label htmlFor="AddItemForm__tags" className="label_add_item_form">
             Tag

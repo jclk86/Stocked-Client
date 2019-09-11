@@ -13,11 +13,11 @@ export default class InventoryListItem extends Component {
   };
 
   render() {
-    const { item } = this.props;
+    const { item, user } = this.props;
     return (
       <NavLink
         role="navigation"
-        to={`/edit-item/${item.itemId}`}
+        to={`/edit-item/${item.item_id}`}
         className="item_card"
       >
         <div role="img" aria-label={`A ${item.name}`}>
@@ -29,7 +29,7 @@ export default class InventoryListItem extends Component {
         </div>
 
         <h2>{item.name}</h2>
-        <p> {item.description}</p>
+        <p> {item.desc}</p>
         <p className={item.quantity === 0 ? "restock_message" : ""}>
           {" "}
           Qty: {this.renderRestockMessage(item.quantity)}
@@ -45,7 +45,8 @@ InventoryListItem.defaultProps = {
     "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
   date: new Date()
 };
-
+// change UNIT and TAG to text value. No need to use numeric ID.
+// REMOVE DATE. YOU WILL TAKE FROM SERVER DB
 InventoryListItem.propTypes = {
   item: PropTypes.shape({
     userId: PropTypes.number,

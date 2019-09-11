@@ -4,7 +4,7 @@ import { tags, inventory, units, user } from "../data";
 const InventoryContext = React.createContext({
   inventoryList: [],
   tagsList: [],
-  unitsList: [],
+  unitsList: [], // don't need
   error: null,
   addInventoryItem: () => {},
   setInventoryList: () => {},
@@ -18,8 +18,18 @@ export default InventoryContext;
 
 export class InventoryProvider extends Component {
   state = {
-    inventoryList: inventory, // change to nullInventory,
+    inventoryList: [], // change to nullInventory,
+    tagsList: [],
     error: null
+  };
+
+  setInventoryList = inventoryList => {
+    this.setState({ inventoryList });
+  };
+
+  setTagsList = tagsList => {
+    this.setState({ tagsList });
+    console.log(this.state.tagsList);
   };
 
   setError = error => {
@@ -29,10 +39,6 @@ export class InventoryProvider extends Component {
 
   clearError = () => {
     this.setState({ error: null });
-  };
-
-  setInventoryList = inventoryList => {
-    this.setState({ inventoryList });
   };
 
   addInventoryItem = item => {
@@ -65,10 +71,11 @@ export class InventoryProvider extends Component {
       inventoryList: this.state.inventoryList,
       date: new Date(),
       userId: 1,
-      tagsList: tags,
+      tagsList: this.state.tagsList,
       unitsList: units,
+      setInventoryList: this.setInventoryList,
+      setTagsList: this.setTagsList,
       addInventoryItem: this.addInventoryItem,
-      setInventorylist: this.setInventoryList,
       updateInventoryItem: this.updateInventoryItem,
       deleteInventoryItem: this.deleteInventoryItem
     };

@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import "./EditItemForm.css";
 import { Form, Input, Required, Button, Textarea } from "../Utils/Utils";
 import InventoryContext from "../../context/InventoryContext";
+import InventoryApiService from "../../services/inventory-api-service";
 import {
   ValidationError,
   validateName,
@@ -44,7 +45,11 @@ class EditItemForm extends Component {
       }
     };
   }
+  //componentDidMount
 
+  // fetch data
+  // populate form
+  // create a submit that updates/patches
   prePopulateForm = (inventoryList, itemId) => {
     const itemObject = inventoryList.filter(item => {
       return item.itemId === parseInt(itemId)
@@ -105,6 +110,8 @@ class EditItemForm extends Component {
     } = this.state;
     // needs userId/should we set it in the route as well? Or can use the windows session storage?
     // Mock data -- change to State when API implemented
+    // change UNIT and TAG to text value. No need to use numeric ID
+    // REMOVE DATE. YOU WILL TAKE FROM SERVER DB
     const item = {
       itemId: Number(this.props.match.params.itemId),
       name: name.value,
@@ -143,8 +150,8 @@ class EditItemForm extends Component {
     const { name, quantity, itemCost } = this.state;
     const { itemId } = this.props.match.params;
     const { inventoryList, unitsList } = this.context;
-    const currentItemData = this.prePopulateForm(inventoryList, itemId);
-    console.log(currentItemData);
+    // const currentItemData = this.prePopulateForm(inventoryList, itemId);
+    // console.log(currentItemData);
     // const isValid = this.isFormValid(); // implement when
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
@@ -157,7 +164,7 @@ class EditItemForm extends Component {
             Item name <Required />
           </label>
           <Input
-            defaultValue={currentItemData.name}
+            // defaultValue={currentItemData.name}
             name="item_name"
             type="text"
             required
@@ -177,7 +184,7 @@ class EditItemForm extends Component {
               Quantity <Required />
             </label>
             <input
-              defaultValue={currentItemData.quantity}
+              // defaultValue={currentItemData.quantity}
               className="integer_inputs"
               name="item_quantity"
               type="number"
@@ -197,7 +204,7 @@ class EditItemForm extends Component {
               Item Units <Required />
             </label>
             <select
-              defaultValue={currentItemData.unit} //FIX
+              // defaultValue={currentItemData.unit} //FIX
               htmlFor="EditItemForm__item_units"
               className="integer_inputs"
               name="item_units"
@@ -222,7 +229,7 @@ class EditItemForm extends Component {
               Unit Cost <Required />
             </label>
             <input
-              defaultValue={currentItemData.cost}
+              // defaultValue={currentItemData.cost}
               className="integer_inputs"
               name="item_cost"
               type="number"
@@ -243,7 +250,7 @@ class EditItemForm extends Component {
             Description
           </label>
           <Textarea
-            defaultValue={currentItemData.description}
+            // defaultValue={currentItemData.description}
             name="description"
             required
             id="EditItemForm__description"
@@ -255,7 +262,7 @@ class EditItemForm extends Component {
             Image URL
           </label>
           <Input
-            defaultValue={currentItemData.image}
+            // defaultValue={currentItemData.image}
             type="text"
             name="image_url"
             id="AddItemForm_image_url"
@@ -269,7 +276,7 @@ class EditItemForm extends Component {
           </label>{" "}
           <select
             id="EditItemForm__tags"
-            defaultValue={currentItemData.tag}
+            // defaultValue={currentItemData.tag}
             name="tag"
             onChange={e => this.editTag(e.target.value)}
           >

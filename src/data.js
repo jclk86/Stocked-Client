@@ -93,28 +93,26 @@ const inventory = [
 ];
 
 const tags = [
-  { name: "Fruits", tagId: 1 },
-  { name: "Utensils", tagId: 2 },
-  { name: "Dairy", tagId: 3 },
-  { name: "Meats", tagId: 4 },
-  { name: "Sauces", tagId: 5 },
-  { name: "Herbs & Spices", tagId: 6 },
-  { name: "Beverages", tagId: 7 },
-  { name: "Detergent", tagId: 8 },
-  { name: "Cookware", tagId: 9 },
-  { name: "Vegetables", tagId: 10 },
-  { name: "misc", tagId: 11 }
+  { name: "proteins" },
+  { name: "beverages" },
+  { name: "condiments" },
+  { name: "dairy" },
+  { name: "dishware" },
+  { name: "utensils" },
+  { name: "spices" },
+  { name: "fruits" },
+  { name: "grains" }
 ];
 
 const units = [
-  { name: "lb(s)", unitId: 1 },
-  { name: "oz", unitId: 2 },
-  { name: "grams", unitId: 3 },
-  { name: "gallon(s)", unitId: 4 },
-  { name: "qt", unitId: 5 },
-  { name: "pint(s)", unitId: 6 },
-  { name: "cup(s)", unitId: 7 },
-  { name: "misc", unitId: 8 }
+  { name: "lb(s)" },
+  { name: "oz" },
+  { name: "grams" },
+  { name: "gallon(s)" },
+  { name: "qt" },
+  { name: "pint(s)" },
+  { name: "cup(s)" },
+  { name: "misc" }
 ];
 
 export { inventory, tags, units };
