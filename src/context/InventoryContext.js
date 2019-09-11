@@ -29,7 +29,6 @@ export class InventoryProvider extends Component {
 
   setTagsList = tagsList => {
     this.setState({ tagsList });
-    console.log(this.state.tagsList);
   };
 
   setError = error => {
@@ -43,6 +42,7 @@ export class InventoryProvider extends Component {
 
   addInventoryItem = item => {
     this.setState({ inventoryList: [...this.state.inventoryList, item] });
+    console.log(this.state.inventoryList);
   };
 
   updateInventoryItem = updatedItem => {
@@ -69,10 +69,9 @@ export class InventoryProvider extends Component {
   render() {
     const contextValue = {
       inventoryList: this.state.inventoryList,
-      date: new Date(),
-      userId: 1,
+      date: new Date(), // delete
+      userId: 1, // hardcoded. Change
       tagsList: this.state.tagsList,
-      unitsList: units,
       setInventoryList: this.setInventoryList,
       setTagsList: this.setTagsList,
       addInventoryItem: this.addInventoryItem,

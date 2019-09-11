@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./TagsListItem.css";
 
-export default class TagsListItem extends Component {
+// below, change route in app to accomodate the user_id
+class TagsListItem extends Component {
   render() {
-    const { tag } = this.props;
+    const { tag, user_id } = this.props;
     return (
-      <NavLink to={`/tags/${tag.name}`} className="tag_item">
+      <NavLink to={`/${user_id}/tags/${tag.name}`} className="tag_item">
         <li className="list_item_tag" key={tag.name}>
           {tag.name}
         </li>
@@ -22,3 +23,5 @@ TagsListItem.propTypes = {
     tagId: PropTypes.number
   })
 };
+
+export default withRouter(TagsListItem);

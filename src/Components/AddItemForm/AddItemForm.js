@@ -8,16 +8,16 @@ import {
   ValidationError,
   validateName,
   validateQuantity,
+  validateUnit,
   validateCost
 } from "../ValidationError/ValidationError";
 // import { isValid } from "date-fns";
-
+// fix cost per unit decimal requirement
 class AddItemForm extends Component {
   static contextType = InventoryContext;
   constructor(props) {
     super(props);
     this.state = {
-      // change names according to
       name: {
         value: "",
         touched: false
@@ -30,7 +30,7 @@ class AddItemForm extends Component {
         value: "",
         touched: false
       },
-      cost: {
+      cost_per_unit: {
         value: "",
         touched: false
       },
@@ -60,7 +60,7 @@ class AddItemForm extends Component {
   };
 
   updateCost = cost => {
-    this.setState({ cost: { value: cost, touched: true } });
+    this.setState({ cost_per_unit: { value: cost, touched: true } });
   };
 
   updateDescription = description => {
@@ -74,17 +74,25 @@ class AddItemForm extends Component {
   updateTag = tag => {
     this.setState({ tag: { value: tag, touched: true } });
   };
-  // tags
-  // need unit too
-  componentDidMount() {}
+
+  componentDidMount() {
+    InventoryApiService.getAllTags().then(this.context.setTagsList);
+  }
 
   handleSubmit = event => {
     event.preventDefault();
-    const { name, quantity, unit, cost, desc, image_url, tag } = this.state;
-    // needs userId/should we set it in the route as well? Or can use the windows session storage?
-    // change UNIT and TAG to text value.No need to use numeric ID
-    // REMOVE DATE. YOU WILL TAKE FROM SERVER DB
+    const {
+      name,
+      quantity,
+      unit,
+      cost_per_unit,
+      desc,
+      image_url,
+      tag
+    } = this.state;
+    const { user_id } = this.props.match.params;
     const item = {
+      user_id: user_id,
       name: name.value,
       quantity: parseInt(quantity.value),
       tag: tag.value,
@@ -93,24 +101,28 @@ class AddItemForm extends Component {
         : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       desc: desc.value,
       unit: unit.value,
-      cost: parseInt(cost.value)
+      cost_per_unit: parseInt(cost_per_unit.value)
     };
-    InventoryApiService.postItem(item);
+    InventoryApiService.postItem(item, user_id);
     this.context.addInventoryItem(item);
-    this.props.history.push("/");
+    this.props.history.push(`/${user_id}/inventory`);
   };
 
   isFormValid = () => {
-    const { name, quantity, unit, cost, tag } = this.state;
+    const { name, quantity, unit, cost_per_unit, tag } = this.state;
     return (
-      name.value && quantity.value && unit.value && cost.value && tag.value
+      name.value &&
+      quantity.value &&
+      unit.value &&
+      cost_per_unit.value &&
+      tag.value
     );
   };
 
   render() {
-    const { quantity, cost, name } = this.state;
-    const { tagsList, unitsList } = this.context;
-    const isValid = this.isFormValid();
+    const { quantity, cost_per_unit, name, unit } = this.state;
+    const { tagsList } = this.context;
+    const isValid = this.isFormValid(); // Fix and add below
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
         <h2 className="title_add_item_form">Add Item</h2>
@@ -157,20 +169,17 @@ class AddItemForm extends Component {
             >
               Item Units <Required />
             </label>
-            <select
-              defaultValue={this.state.unit.value} // change. also, see below the units
-              className="integer_inputs"
+            <input
+              defaultValue={this.state.unit.value}
+              className="integer_inputs" // change classname
               name="item_units"
               type="text"
               id="AddItemForm__units"
               onChange={e => this.updateUnit(e.target.value)}
-            >
-              {unitsList.map(unit => (
-                <option value={unit.unitId} key={unit.unitId}>
-                  {unit.name}
-                </option>
-              ))}
-            </select>
+            ></input>
+            {this.state.unit.touched && (
+              <ValidationError message={validateUnit(unit.value)} />
+            )}
           </div>
           <div className="item_cost">
             <label
@@ -186,8 +195,8 @@ class AddItemForm extends Component {
               id="AddItemForm__item_cost"
               onChange={e => this.updateCost(e.target.value)}
             />
-            {this.state.cost.touched && (
-              <ValidationError message={validateCost(cost.value)} />
+            {this.state.cost_per_unit.touched && (
+              <ValidationError message={validateCost(cost_per_unit.value)} />
             )}
           </div>
         </div>
@@ -222,14 +231,14 @@ class AddItemForm extends Component {
           </label>{" "}
           <select name="tag" defaultValue={this.state.tag.value}>
             {tagsList.map(tag => (
-              <option key={tag.tagId} value={tag.tagId}>
+              <option key={tag.name} value={tag.name}>
                 {tag.name}
               </option>
             ))}
           </select>
         </div>
         <div className="container_btn">
-          <Button type="submit" role="button" disabled={!isValid}>
+          <Button type="submit" role="button">
             Add
           </Button>
         </div>

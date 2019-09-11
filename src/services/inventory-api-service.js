@@ -37,15 +37,13 @@ const InventoryApiService = {
     );
   },
 
-  postItem(item) {
-    return fetch(`${config.API_ENDPOINT}/:user_id/inventory`, {
+  postItem(item, user_id) {
+    return fetch(`${config.API_ENDPOINT}/user/${user_id}/inventory`, {
       method: "POST",
       headers: {
         "content-type": "application/json"
       },
-      body: JSON.stringify({
-        item
-      })
+      body: JSON.stringify(item)
     }).then(res =>
       !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
     );
