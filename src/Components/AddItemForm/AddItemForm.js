@@ -8,6 +8,7 @@ import {
   ValidationError,
   validateName,
   validateQuantity,
+  validateUnit,
   validateCost
 } from "../ValidationError/ValidationError";
 // import { isValid } from "date-fns";
@@ -76,14 +77,14 @@ class AddItemForm extends Component {
   };
   // tags
   // need unit too
-  componentDidMount() {}
+  componentDidMount() {
+    InventoryApiService.getAllTags().then(this.context.setTagsList)
+  }
 
   handleSubmit = event => {
     event.preventDefault();
+    // const { user_id } = req.params
     const { name, quantity, unit, cost, desc, image_url, tag } = this.state;
-    // needs userId/should we set it in the route as well? Or can use the windows session storage?
-    // change UNIT and TAG to text value.No need to use numeric ID
-    // REMOVE DATE. YOU WILL TAKE FROM SERVER DB
     const item = {
       name: name.value,
       quantity: parseInt(quantity.value),
@@ -95,7 +96,7 @@ class AddItemForm extends Component {
       unit: unit.value,
       cost: parseInt(cost.value)
     };
-    InventoryApiService.postItem(item);
+    InventoryApiService.postItem(item, 1); // needs user id
     this.context.addInventoryItem(item);
     this.props.history.push("/");
   };
@@ -108,8 +109,8 @@ class AddItemForm extends Component {
   };
 
   render() {
-    const { quantity, cost, name } = this.state;
-    const { tagsList, unitsList } = this.context;
+    const { quantity, cost, name, unit } = this.state;
+    const { tagsList } = this.context;
     const isValid = this.isFormValid();
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
@@ -157,7 +158,7 @@ class AddItemForm extends Component {
             >
               Item Units <Required />
             </label>
-            <select
+            <input
               defaultValue={this.state.unit.value} // change. also, see below the units
               className="integer_inputs"
               name="item_units"
@@ -165,19 +166,17 @@ class AddItemForm extends Component {
               id="AddItemForm__units"
               onChange={e => this.updateUnit(e.target.value)}
             >
-              {unitsList.map(unit => (
-                <option value={unit.unitId} key={unit.unitId}>
-                  {unit.name}
-                </option>
-              ))}
-            </select>
+            </input>
+            {this.state.cost.touched && (
+              <ValidationError message={validateUnit(unit.value)} />
+            )}
           </div>
           <div className="item_cost">
             <label
               htmlFor="AddItemForm__item_cost"
               className="label_integer_inputs"
             >
-              Unit Cost <Required />
+              Cost per unit <Required />
             </label>
             <input
               className="integer_inputs"
@@ -229,7 +228,7 @@ class AddItemForm extends Component {
           </select>
         </div>
         <div className="container_btn">
-          <Button type="submit" role="button" disabled={!isValid}>
+          <Button type="submit" role="button">
             Add
           </Button>
         </div>

@@ -62,7 +62,7 @@ export default class InventoryListPage extends Component {
 
         <Section list className="InventoryListPage">
           {filteredItems.map(item => (
-            <InventoryListItem key={item.id} item={item} />
+            <InventoryListItem key={item.name} item={item} />
           ))}
         </Section>
       </div>

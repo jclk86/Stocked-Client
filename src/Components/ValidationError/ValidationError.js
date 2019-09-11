@@ -12,6 +12,12 @@ export function validateQuantity(fieldValue) {
   }
 }
 
+export function validateUnit(fieldValue) {
+  if(fieldValue === "") {
+    return "Please enter item unit";
+  }
+}
+
 export function validateCost(fieldValue) {
   if (fieldValue === "") {
     return "Please enter cost";

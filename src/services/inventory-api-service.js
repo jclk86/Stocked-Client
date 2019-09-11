@@ -37,8 +37,8 @@ const InventoryApiService = {
     );
   },
 
-  postItem(item) {
-    return fetch(`${config.API_ENDPOINT}/:user_id/inventory`, {
+  postItem(item, user_id = 1) {
+    return fetch(`${config.API_ENDPOINT}/${user_id}/inventory`, {
       method: "POST",
       headers: {
         "content-type": "application/json"

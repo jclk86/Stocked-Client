@@ -25,6 +25,7 @@ export class InventoryProvider extends Component {
 
   setInventoryList = inventoryList => {
     this.setState({ inventoryList });
+    console.log(this.state.inventoryList)
   };
 
   setTagsList = tagsList => {
