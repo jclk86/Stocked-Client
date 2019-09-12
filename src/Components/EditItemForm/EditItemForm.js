@@ -51,6 +51,7 @@ class EditItemForm extends Component {
 
   componentDidMount() {
     const { user_id, item_id } = this.props.match.params;
+
     InventoryApiService.getAllTags()
       .then(tags => {
         return tags;
@@ -122,7 +123,7 @@ class EditItemForm extends Component {
 
     const item = {
       user_id: Number(user_id),
-      item_id: Number(item_id),
+      item_id: item_id,
       name: name.value,
       quantity: Number(quantity.value),
       tag: tag.value,
@@ -131,11 +132,9 @@ class EditItemForm extends Component {
         : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       desc: desc.value,
       unit: unit.value,
-      cost_per_unit: parseInt(cost_per_unit.value)
+      cost_per_unit: Number(cost_per_unit.value)
     };
-
-    this.context.updateInventoryItem(item);
-    this.props.history.goBack(`/${user_id}/inventory`);
+    InventoryApiService.updateItem(item, user_id, item_id);
   };
 
   isFormValid = () => {
