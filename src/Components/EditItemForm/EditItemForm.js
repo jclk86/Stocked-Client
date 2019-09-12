@@ -47,7 +47,7 @@ class EditItemForm extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { user_id } = this.props.match.params;
     InventoryApiService.getInventory(user_id).then(data => {
       this.context.setInventoryList(data);
