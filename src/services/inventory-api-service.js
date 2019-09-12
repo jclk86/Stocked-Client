@@ -47,6 +47,21 @@ const InventoryApiService = {
     }).then(res =>
       !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
     );
+  },
+
+  updateItem(item, item_id, user_id) {
+    return fetch(
+      `${config.API_ENDPOINT}/user/${user_id}/inventory/${item_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify(item)
+      }
+    ).then(res =>
+      !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
+    );
   }
 };
 

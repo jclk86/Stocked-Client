@@ -25,6 +25,7 @@ export class InventoryProvider extends Component {
 
   setInventoryList = inventoryList => {
     this.setState({ inventoryList });
+    console.log(this.state.inventoryList);
   };
 
   setTagsList = tagsList => {
@@ -70,7 +71,7 @@ export class InventoryProvider extends Component {
     const contextValue = {
       inventoryList: this.state.inventoryList,
       date: new Date(), // delete
-      userId: 1, // hardcoded. Change
+      user_id: 1, // hardcoded. Change
       tagsList: this.state.tagsList,
       setInventoryList: this.setInventoryList,
       setTagsList: this.setTagsList,

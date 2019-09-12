@@ -3,6 +3,7 @@ import "./InventoryListItem.css";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
+// make names and classNames consistent
 export default class InventoryListItem extends Component {
   renderRestockMessage = itemQuantity => {
     return parseInt(itemQuantity) === 0 ? "None left. Restock." : itemQuantity;
@@ -13,16 +14,16 @@ export default class InventoryListItem extends Component {
   };
 
   render() {
-    const { item, user } = this.props;
+    const { item } = this.props;
     return (
       <NavLink
         role="navigation"
-        to={`/edit-item/${item.item_id}`}
+        to={`/${item.user_id}/inventory/edit-item/${item.item_id}`}
         className="item_card"
       >
         <div role="img" aria-label={`A ${item.name}`}>
           <img
-            src={item.image}
+            src={item.image_url}
             className="inventory_image"
             alt={`${item.name}`}
           ></img>
@@ -34,7 +35,9 @@ export default class InventoryListItem extends Component {
           {" "}
           Qty: {this.renderRestockMessage(item.quantity)}
         </p>
-        <p>Total Cost: {this.renderTotalCost(item.quantity, item.cost)}</p>
+        <p>
+          Total Cost: {this.renderTotalCost(item.quantity, item.cost_per_unit)}
+        </p>
       </NavLink>
     );
   }
@@ -43,18 +46,17 @@ export default class InventoryListItem extends Component {
 InventoryListItem.defaultProps = {
   image:
     "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  date: new Date()
+  date: new Date() // REMOVE DATE later. YOU WILL TAKE FROM SERVER DB
 };
-// change UNIT and TAG to text value. No need to use numeric ID.
-// REMOVE DATE. YOU WILL TAKE FROM SERVER DB
+
 InventoryListItem.propTypes = {
   item: PropTypes.shape({
-    userId: PropTypes.number,
-    itemId: PropTypes.number,
+    user_id: PropTypes.number,
+    item_id: PropTypes.number,
     name: PropTypes.string,
     image: PropTypes.string,
-    description: PropTypes.string,
+    desc: PropTypes.string,
     quantity: PropTypes.number,
-    cost: PropTypes.number
+    cost_per_unit: PropTypes.string
   })
 };

@@ -11,9 +11,9 @@ import {
   validateCost
 } from "../ValidationError/ValidationError";
 
+// add Proptypes
 class EditItemForm extends Component {
   static contextType = InventoryContext;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -25,18 +25,18 @@ class EditItemForm extends Component {
         value: "",
         touched: false
       },
-      itemUnits: {
+      unit: {
         value: "",
         touched: false
       },
-      itemCost: {
+      cost_per_unit: {
         value: null,
         touched: false
       },
-      description: {
+      desc: {
         value: ""
       },
-      imageURL: {
+      image_url: {
         value: ""
       },
       tag: {
@@ -45,29 +45,10 @@ class EditItemForm extends Component {
       }
     };
   }
-  //componentDidMount
 
-  // fetch data
-  // populate form
-  // create a submit that updates/patches
-  prePopulateForm = (inventoryList, itemId) => {
-    const itemObject = inventoryList.filter(item => {
-      return item.itemId === parseInt(itemId)
-        ? {
-            userId: item.userId,
-            itemId: item.itemId,
-            name: item.name,
-            quantity: item.quantity,
-            unit: item.unit,
-            cost: item.cost,
-            description: item.description,
-            image: item.image,
-            tag: item.tag
-          }
-        : "";
-    });
-    return itemObject[0];
-  };
+  // componentDidMount() {
+  //   InventoryApiService.getInventory();
+  // }
 
   editName = name => {
     this.setState({ name: { value: name, touched: true } });
@@ -78,19 +59,19 @@ class EditItemForm extends Component {
   };
 
   editItemUnits = itemUnits => {
-    this.setState({ itemUnits: { value: itemUnits, touched: true } });
+    this.setState({ unit: { value: itemUnits, touched: true } });
   };
 
-  editItemCost = itemCost => {
-    this.setState({ itemCost: { value: itemCost, touched: true } });
+  editItemCost = cost => {
+    this.setState({ cost_per_unit: { value: cost, touched: true } });
   };
 
   editDescription = description => {
-    this.setState({ description: { value: description } });
+    this.setState({ desc: { value: description } });
   };
 
   editImageURL = imageURL => {
-    this.setState({ imageURL: { value: imageURL } });
+    this.setState({ image_url: { value: imageURL } });
   };
 
   editTag = tag => {
@@ -99,31 +80,28 @@ class EditItemForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    const { user_id, item_id } = this.props.match.params;
     const {
       name,
       quantity,
-      itemUnits,
-      itemCost,
-      description,
-      imageURL,
+      unit,
+      cost_per_unit,
+      desc,
+      image_url,
       tag
     } = this.state;
-    // needs userId/should we set it in the route as well? Or can use the windows session storage?
-    // Mock data -- change to State when API implemented
-    // change UNIT and TAG to text value. No need to use numeric ID
-    // REMOVE DATE. YOU WILL TAKE FROM SERVER DB
+
     const item = {
-      itemId: Number(this.props.match.params.itemId),
+      item_Id: item_id,
       name: name.value,
-      date: new Date(),
       quantity: Number(quantity.value),
-      tag: Number(tag.value),
-      image: imageURL.value
-        ? imageURL.value
+      tag: tag.value,
+      image_url: image_url.value
+        ? image_url.value
         : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      description: description.value,
-      units: Number(itemUnits.value),
-      cost: Number(itemCost.value)
+      desc: desc.value,
+      unit: unit.value,
+      cost_per_unit: Number(cost_per_unit.value)
     };
 
     this.context.updateInventoryItem(item);
@@ -131,12 +109,12 @@ class EditItemForm extends Component {
   };
 
   isFormValid = () => {
-    const { name, quantity, itemUnits, itemCost, tag } = this.state;
+    const { name, quantity, unit, cost_per_unit, tag } = this.state;
     return (
       name.value &&
       quantity.value &&
-      itemUnits.value &&
-      itemCost.value &&
+      unit.value &&
+      cost_per_unit.value &&
       tag.value
     );
   };
@@ -147,11 +125,9 @@ class EditItemForm extends Component {
   };
 
   render() {
-    const { name, quantity, itemCost } = this.state;
-    const { itemId } = this.props.match.params;
-    const { inventoryList, unitsList } = this.context;
-    // const currentItemData = this.prePopulateForm(inventoryList, itemId);
-    // console.log(currentItemData);
+    const { name, quantity, cost_per_unit } = this.state;
+    const { item_id, user_id } = this.props.match.params;
+
     // const isValid = this.isFormValid(); // implement when
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
@@ -203,23 +179,16 @@ class EditItemForm extends Component {
             >
               Item Units <Required />
             </label>
-            <select
+            <input
               // defaultValue={currentItemData.unit} //FIX
               htmlFor="EditItemForm__item_units"
-              className="integer_inputs"
+              className="integer_inputs" // change class name
               name="item_units"
               type="text"
               required
               id="EditItemForm__units"
               onChange={e => this.editItemUnits(e.target.value)}
-            >
-              {" "}
-              {unitsList.map(unit => (
-                <option value={unit.unitId} key={unit.unitId}>
-                  {unit.name}
-                </option>
-              ))}
-            </select>
+            ></input>
           </div>
           <div className="item_cost">
             <label
@@ -237,8 +206,8 @@ class EditItemForm extends Component {
               id="EditItemForm__item_cost"
               onChange={e => this.editItemCost(e.target.value)}
             />
-            {itemCost.touched && (
-              <ValidationError message={validateCost(itemCost.value)} />
+            {cost_per_unit.touched && (
+              <ValidationError message={validateCost(cost_per_unit.value)} />
             )}
           </div>
         </div>
@@ -297,7 +266,7 @@ class EditItemForm extends Component {
             type="button"
             role="button"
             onClick={() =>
-              this.handleDelete(itemId, this.context.deleteInventoryItem)
+              this.handleDelete(item_id, this.context.deleteInventoryItem)
             }
           >
             Delete

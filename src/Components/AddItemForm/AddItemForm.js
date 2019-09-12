@@ -229,7 +229,11 @@ class AddItemForm extends Component {
             Tag
             <Required />
           </label>{" "}
-          <select name="tag" defaultValue={this.state.tag.value}>
+          <select
+            name="tag"
+            defaultValue={this.state.tag.value}
+            onChange={e => this.updateTag(e.target.value)}
+          >
             {tagsList.map(tag => (
               <option key={tag.name} value={tag.name}>
                 {tag.name}
