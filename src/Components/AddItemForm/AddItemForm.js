@@ -234,6 +234,7 @@ class AddItemForm extends Component {
             defaultValue={this.state.tag.value}
             onChange={e => this.updateTag(e.target.value)}
           >
+            <option>Select Tag</option>
             {tagsList.map(tag => (
               <option key={tag.name} value={tag.name}>
                 {tag.name}

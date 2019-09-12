@@ -8,7 +8,9 @@ import {
   ValidationError,
   validateName,
   validateQuantity,
-  validateCost
+  validateCost,
+  validateUnit,
+  validateTag
 } from "../ValidationError/ValidationError";
 
 // add Proptypes
@@ -17,7 +19,7 @@ class EditItemForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: "",
+      tagsList: [],
       name: {
         value: "",
         touched: false
@@ -49,15 +51,30 @@ class EditItemForm extends Component {
 
   componentDidMount() {
     const { user_id, item_id } = this.props.match.params;
-    InventoryApiService.getInventory(user_id)
-      .then(data => {
-        this.context.setInventoryList(data);
+    InventoryApiService.getAllTags()
+      .then(tags => {
+        return tags;
       })
-      .then(() => {
-        const currentItem = this.context.inventoryList.filter(
-          item => item.item_id === parseInt(item_id)
-        );
-        this.setState({ item: currentItem });
+      .then(tags => {
+        this.setState({ tagsList: tags });
+      });
+    InventoryApiService.getInventory(user_id).then(items => {
+      this.context.setInventoryList(items);
+    });
+    InventoryApiService.getByUserAndItemId(user_id, item_id)
+      .then(data => {
+        return data[0];
+      })
+      .then(item => {
+        this.setState({
+          name: { value: item.name, touched: true },
+          quantity: { value: item.quantity, touched: true },
+          unit: { value: item.unit, touched: true },
+          cost_per_unit: { value: item.cost_per_unit, touched: true },
+          desc: { value: item.desc },
+          image_url: { value: item.image_url },
+          tag: { value: item.tag, touched: true }
+        });
       });
   }
 
@@ -92,6 +109,7 @@ class EditItemForm extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { user_id, item_id } = this.props.match.params;
+
     const {
       name,
       quantity,
@@ -103,7 +121,8 @@ class EditItemForm extends Component {
     } = this.state;
 
     const item = {
-      item_Id: item_id,
+      user_id: Number(user_id),
+      item_id: Number(item_id),
       name: name.value,
       quantity: Number(quantity.value),
       tag: tag.value,
@@ -112,11 +131,11 @@ class EditItemForm extends Component {
         : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       desc: desc.value,
       unit: unit.value,
-      cost_per_unit: Number(cost_per_unit.value)
+      cost_per_unit: parseInt(cost_per_unit.value)
     };
 
     this.context.updateInventoryItem(item);
-    this.props.history.goBack("/");
+    this.props.history.goBack(`/${user_id}/inventory`);
   };
 
   isFormValid = () => {
@@ -134,12 +153,20 @@ class EditItemForm extends Component {
     cb(itemId);
     this.props.history.push("/");
   };
-
+  // identify the tag
+  // removed touched and put value instead for all validation errors
   render() {
-    const { name, quantity, cost_per_unit } = this.state;
-    const { item_id, user_id } = this.props.match.params;
-    console.log(this.state.item[0]);
-    // const isValid = this.isFormValid(); // implement when
+    const {
+      name,
+      quantity,
+      cost_per_unit,
+      image_url,
+      unit,
+      desc,
+      tag,
+      tagsList
+    } = this.state;
+    const { item_id } = this.props.match.params;
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
         <h2 className="title_edit_item_form">Edit Item</h2>
@@ -151,7 +178,7 @@ class EditItemForm extends Component {
             Item name <Required />
           </label>
           <Input
-            // defaultValue={this.state.item[0].name}
+            defaultValue={name.value}
             name="item_name"
             type="text"
             required
@@ -171,7 +198,7 @@ class EditItemForm extends Component {
               Quantity <Required />
             </label>
             <input
-              // defaultValue={currentItemData.quantity}
+              defaultValue={quantity.value}
               className="integer_inputs"
               name="item_quantity"
               type="number"
@@ -191,7 +218,7 @@ class EditItemForm extends Component {
               Item Units <Required />
             </label>
             <input
-              // defaultValue={currentItemData.unit} //FIX
+              defaultValue={unit.value}
               htmlFor="EditItemForm__item_units"
               className="integer_inputs" // change class name
               name="item_units"
@@ -200,6 +227,9 @@ class EditItemForm extends Component {
               id="EditItemForm__units"
               onChange={e => this.editItemUnits(e.target.value)}
             ></input>
+            {unit.touched && (
+              <ValidationError message={validateUnit(unit.value)} />
+            )}
           </div>
           <div className="item_cost">
             <label
@@ -209,7 +239,7 @@ class EditItemForm extends Component {
               Unit Cost <Required />
             </label>
             <input
-              // defaultValue={currentItemData.cost}
+              defaultValue={cost_per_unit.value}
               className="integer_inputs"
               name="item_cost"
               type="number"
@@ -230,7 +260,7 @@ class EditItemForm extends Component {
             Description
           </label>
           <Textarea
-            // defaultValue={currentItemData.description}
+            value={desc.value}
             name="description"
             required
             id="EditItemForm__description"
@@ -242,7 +272,7 @@ class EditItemForm extends Component {
             Image URL
           </label>
           <Input
-            // defaultValue={currentItemData.image}
+            defaultValue={image_url.value}
             type="text"
             name="image_url"
             id="AddItemForm_image_url"
@@ -255,13 +285,13 @@ class EditItemForm extends Component {
             <Required />
           </label>{" "}
           <select
+            value={tag.value}
             id="EditItemForm__tags"
-            // defaultValue={currentItemData.tag}
             name="tag"
             onChange={e => this.editTag(e.target.value)}
           >
-            {this.context.tagsList.map(tag => (
-              <option key={tag.tagId} value={tag.tagId}>
+            {tagsList.map(tag => (
+              <option key={tag.name} value={tag.name}>
                 {tag.name}
               </option>
             ))}

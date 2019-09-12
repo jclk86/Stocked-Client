@@ -49,7 +49,7 @@ const InventoryApiService = {
     );
   },
 
-  updateItem(item, item_id, user_id) {
+  updateItem(item, user_id, item_id) {
     return fetch(
       `${config.API_ENDPOINT}/user/${user_id}/inventory/${item_id}`,
       {

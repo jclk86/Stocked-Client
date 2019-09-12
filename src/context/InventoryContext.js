@@ -42,13 +42,13 @@ export class InventoryProvider extends Component {
 
   addInventoryItem = item => {
     this.setState({ inventoryList: [...this.state.inventoryList, item] });
-    console.log(this.state.inventoryList);
+    // console.log(this.state.inventoryList);
   };
 
   updateInventoryItem = updatedItem => {
     this.setState({
       inventoryList: this.state.inventoryList.map(item =>
-        item.itemId !== updatedItem.itemId ? item : updatedItem
+        item.item_id !== updatedItem.item_id ? item : updatedItem
       )
     });
   };

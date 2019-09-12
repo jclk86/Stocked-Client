@@ -16,7 +16,7 @@ class App extends Component {
     console.error(error);
     return { hasError: true };
   }
-
+  // need /user/:user_id?
   render() {
     return (
       <div className="App">

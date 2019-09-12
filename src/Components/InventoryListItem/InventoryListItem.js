@@ -36,7 +36,8 @@ export default class InventoryListItem extends Component {
           Qty: {this.renderRestockMessage(item.quantity)}
         </p>
         <p>
-          Total Cost: {this.renderTotalCost(item.quantity, item.cost_per_unit)}
+          Total Cost:{" "}
+          {this.renderTotalCost(item.quantity, parseInt(item.cost_per_unit))}
         </p>
       </NavLink>
     );
@@ -48,7 +49,7 @@ InventoryListItem.defaultProps = {
     "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
   date: new Date() // REMOVE DATE later. YOU WILL TAKE FROM SERVER DB
 };
-
+// add cost_per_unit
 InventoryListItem.propTypes = {
   item: PropTypes.shape({
     user_id: PropTypes.number,
@@ -56,7 +57,6 @@ InventoryListItem.propTypes = {
     name: PropTypes.string,
     image: PropTypes.string,
     desc: PropTypes.string,
-    quantity: PropTypes.number,
-    cost_per_unit: PropTypes.string
+    quantity: PropTypes.number
   })
 };

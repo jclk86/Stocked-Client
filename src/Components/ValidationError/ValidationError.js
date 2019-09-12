@@ -24,6 +24,12 @@ export function validateCost(fieldValue) {
   }
 }
 
+export function validateTag(fieldValue) {
+  if (!fieldValue) {
+    return "Please select a folder";
+  }
+}
+
 export function ValidationError(props) {
   if (props.message) {
     return <div className="error">{props.message}</div>;
