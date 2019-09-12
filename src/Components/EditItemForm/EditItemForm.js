@@ -46,10 +46,6 @@ class EditItemForm extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   InventoryApiService.getInventory();
-  // }
-
   editName = name => {
     this.setState({ name: { value: name, touched: true } });
   };
@@ -127,7 +123,6 @@ class EditItemForm extends Component {
   render() {
     const { name, quantity, cost_per_unit } = this.state;
     const { item_id, user_id } = this.props.match.params;
-
     // const isValid = this.isFormValid(); // implement when
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
@@ -140,7 +135,7 @@ class EditItemForm extends Component {
             Item name <Required />
           </label>
           <Input
-            // defaultValue={currentItemData.name}
+            // defaultValue={currentData.name}
             name="item_name"
             type="text"
             required
