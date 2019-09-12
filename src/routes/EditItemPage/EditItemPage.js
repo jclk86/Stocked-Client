@@ -20,11 +20,6 @@ class EditItemPage extends Component {
     };
   }
 
-  componentDidMount() {
-    const { user_id, item_id } = this.props.match.params;
-    InventoryApiService.getByUserAndItemId(user_id, item_id);
-  }
-
   render() {
     return (
       <Section className="edit_item_form">

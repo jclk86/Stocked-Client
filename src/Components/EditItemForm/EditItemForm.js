@@ -17,6 +17,7 @@ class EditItemForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      inventory: "",
       name: {
         value: "",
         touched: false
@@ -44,6 +45,13 @@ class EditItemForm extends Component {
         touched: false
       }
     };
+  }
+
+  componentWillMount() {
+    const { user_id } = this.props.match.params;
+    InventoryApiService.getInventory(user_id).then(data => {
+      this.context.setInventoryList(data);
+    });
   }
 
   editName = name => {
@@ -123,6 +131,7 @@ class EditItemForm extends Component {
   render() {
     const { name, quantity, cost_per_unit } = this.state;
     const { item_id, user_id } = this.props.match.params;
+    console.log(this.context.inventoryList);
     // const isValid = this.isFormValid(); // implement when
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
