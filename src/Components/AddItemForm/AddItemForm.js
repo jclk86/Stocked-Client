@@ -9,10 +9,10 @@ import {
   validateName,
   validateQuantity,
   validateUnit,
-  validateCost
+  validateCost,
+  validateTag
 } from "../ValidationError/ValidationError";
 // import { isValid } from "date-fns";
-// fix cost per unit decimal requirement
 class AddItemForm extends Component {
   static contextType = InventoryContext;
   constructor(props) {
@@ -92,7 +92,7 @@ class AddItemForm extends Component {
     } = this.state;
     const { user_id } = this.props.match.params;
     const item = {
-      user_id: user_id,
+      user_id: parseInt(user_id),
       name: name.value,
       quantity: parseInt(quantity.value),
       tag: tag.value,
@@ -101,7 +101,7 @@ class AddItemForm extends Component {
         : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       desc: desc.value,
       unit: unit.value,
-      cost_per_unit: parseInt(cost_per_unit.value)
+      cost_per_unit: cost_per_unit.value
     };
     InventoryApiService.postItem(item, user_id);
     this.context.addInventoryItem(item);
@@ -112,6 +112,8 @@ class AddItemForm extends Component {
     const { name, quantity, unit, cost_per_unit, tag } = this.state;
     return (
       name.value &&
+      name.value.length < 20 &&
+      name.value.length < 3 &&
       quantity.value &&
       unit.value &&
       cost_per_unit.value &&
@@ -120,9 +122,11 @@ class AddItemForm extends Component {
   };
 
   render() {
-    const { quantity, cost_per_unit, name, unit } = this.state;
+    const { quantity, cost_per_unit, name, unit, tag } = this.state;
+    const { user_id } = this.props.match.params;
     const { tagsList } = this.context;
-    const isValid = this.isFormValid(); // Fix and add below
+    const isValid = this.isFormValid();
+    console.log(!isValid);
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
         <h2 className="title_add_item_form">Add Item</h2>
@@ -139,7 +143,7 @@ class AddItemForm extends Component {
             id="AddItemForm__item_name"
             onChange={e => this.updateName(e.target.value)}
           />
-          {this.state.name.touched && (
+          {name.touched && (
             <ValidationError message={validateName(name.value)} />
           )}
         </div>
@@ -156,9 +160,11 @@ class AddItemForm extends Component {
               name="item_quantity"
               type="number"
               id="AddItemForm__item_quantity"
+              step="1"
+              min="0"
               onChange={e => this.updateQuantity(e.target.value)}
             />
-            {this.state.quantity.touched && (
+            {quantity.touched && (
               <ValidationError message={validateQuantity(quantity.value)} />
             )}
           </div>
@@ -170,14 +176,14 @@ class AddItemForm extends Component {
               Item Units <Required />
             </label>
             <input
-              defaultValue={this.state.unit.value}
-              className="integer_inputs" // change classname
+              defaultValue={unit.value}
+              className="integer_inputs"
               name="item_units"
               type="text"
               id="AddItemForm__units"
               onChange={e => this.updateUnit(e.target.value)}
             ></input>
-            {this.state.unit.touched && (
+            {unit.touched && (
               <ValidationError message={validateUnit(unit.value)} />
             )}
           </div>
@@ -194,8 +200,11 @@ class AddItemForm extends Component {
               type="number"
               id="AddItemForm__item_cost"
               onChange={e => this.updateCost(e.target.value)}
+              step="0.01"
+              min="0"
+              max="1000.00"
             />
-            {this.state.cost_per_unit.touched && (
+            {cost_per_unit.touched && (
               <ValidationError message={validateCost(cost_per_unit.value)} />
             )}
           </div>
@@ -229,21 +238,18 @@ class AddItemForm extends Component {
             Tag
             <Required />
           </label>{" "}
-          <select
-            name="tag"
-            defaultValue={this.state.tag.value}
-            onChange={e => this.updateTag(e.target.value)}
-          >
-            <option>Select Tag</option>
+          <select name="tag" onChange={e => this.updateTag(e.target.value)}>
+            <option value="">Select Tag</option>
             {tagsList.map(tag => (
               <option key={tag.name} value={tag.name}>
                 {tag.name}
               </option>
             ))}
           </select>
+          {tag.touched && <ValidationError message={validateTag(tag.value)} />}
         </div>
         <div className="container_btn">
-          <Button type="submit" role="button">
+          <Button type="submit" role="button" disabled={!isValid}>
             Add
           </Button>
         </div>
@@ -251,7 +257,7 @@ class AddItemForm extends Component {
           <Button
             type="button"
             role="button"
-            onClick={() => this.props.history.push("/")}
+            onClick={() => this.props.history.push(`/${user_id}/inventory`)}
           >
             Cancel
           </Button>

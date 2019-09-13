@@ -66,7 +66,11 @@ class InventoryListPage extends Component {
 
         <Section list className="InventoryListPage">
           {filteredItems.map(item => (
-            <InventoryListItem key={item.name} item={item} /> // pass user in
+            <InventoryListItem
+              key={item.name}
+              item={item}
+              cost_per_unit={parseInt(item.cost_per_unit)}
+            /> // pass user in
           ))}
         </Section>
       </div>

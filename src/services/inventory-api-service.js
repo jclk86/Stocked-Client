@@ -48,20 +48,34 @@ const InventoryApiService = {
       !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
     );
   },
-
+  // ask about this later
   updateItem(item, user_id, item_id) {
     return fetch(
       `${config.API_ENDPOINT}/user/${user_id}/inventory/${item_id}`,
       {
         method: "PATCH",
+        body: JSON.stringify(item),
         headers: {
           "content-type": "application/json"
-        },
-        body: JSON.stringify(item)
+        }
       }
-    ).then(res =>
-      !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
-    );
+    ).then(res => (!res.ok ? Promise.reject(res) : res));
+  },
+
+  deleteItem(user_id, item_id) {
+    return fetch(
+      `${config.API_ENDPOINT}/user/${user_id}/inventory/${item_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json"
+        }
+      }
+    ).then(res => {
+      if (!res.ok) {
+        return res.json().then(error => Promise.reject(error));
+      }
+    });
   }
 };
 

@@ -13,7 +13,6 @@ import {
   validateTag
 } from "../ValidationError/ValidationError";
 
-// add Proptypes
 class EditItemForm extends Component {
   static contextType = InventoryContext;
   constructor(props) {
@@ -122,19 +121,21 @@ class EditItemForm extends Component {
     } = this.state;
 
     const item = {
-      user_id: Number(user_id),
+      user_id: user_id,
       item_id: item_id,
       name: name.value,
-      quantity: Number(quantity.value),
+      quantity: quantity.value,
       tag: tag.value,
       image_url: image_url.value
         ? image_url.value
         : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       desc: desc.value,
       unit: unit.value,
-      cost_per_unit: Number(cost_per_unit.value)
+      cost_per_unit: cost_per_unit.value
     };
-    InventoryApiService.updateItem(item, user_id, item_id);
+    InventoryApiService.updateItem(item, user_id, item_id).then(item => {
+      this.props.history.goBack(`/${user_id}/inventory`);
+    });
   };
 
   isFormValid = () => {
@@ -148,9 +149,9 @@ class EditItemForm extends Component {
     );
   };
 
-  handleDelete = (itemId, cb) => {
-    cb(itemId);
-    this.props.history.push("/");
+  handleDelete = (user_id, item_id) => {
+    InventoryApiService.deleteItem(user_id, item_id);
+    this.props.history.push(`/${user_id}/inventory`);
   };
   // identify the tag
   // removed touched and put value instead for all validation errors
@@ -165,7 +166,7 @@ class EditItemForm extends Component {
       tag,
       tagsList
     } = this.state;
-    const { item_id } = this.props.match.params;
+    const { item_id, user_id } = this.props.match.params;
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
         <h2 className="title_edit_item_form">Edit Item</h2>
@@ -219,7 +220,7 @@ class EditItemForm extends Component {
             <input
               defaultValue={unit.value}
               htmlFor="EditItemForm__item_units"
-              className="integer_inputs" // change class name
+              className="integer_inputs"
               name="item_units"
               type="text"
               required
@@ -239,6 +240,9 @@ class EditItemForm extends Component {
             </label>
             <input
               defaultValue={cost_per_unit.value}
+              min="0"
+              max="10000.00"
+              step="any"
               className="integer_inputs"
               name="item_cost"
               type="number"
@@ -305,9 +309,7 @@ class EditItemForm extends Component {
           <Button
             type="button"
             role="button"
-            onClick={() =>
-              this.handleDelete(item_id, this.context.deleteInventoryItem)
-            }
+            onClick={() => this.handleDelete(user_id, item_id)}
           >
             Delete
           </Button>
