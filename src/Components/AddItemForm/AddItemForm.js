@@ -56,7 +56,9 @@ class AddItemForm extends Component {
   };
 
   updateUnit = unit => {
-    this.setState({ unit: { value: unit, touched: true } });
+    if (unit.match("^[a-zA-Z]*$") != null) {
+      this.setState({ unit: { value: unit, touched: true } });
+    }
   };
 
   updateCost = cost => {
@@ -113,10 +115,13 @@ class AddItemForm extends Component {
     return (
       name.value &&
       name.value.length < 20 &&
-      name.value.length < 3 &&
+      name.value.length >= 3 &&
       quantity.value &&
+      quantity.value < 1000 &&
       unit.value &&
+      unit.value.length <= 5 &&
       cost_per_unit.value &&
+      cost_per_unit.value < 500 &&
       tag.value
     );
   };
@@ -126,7 +131,7 @@ class AddItemForm extends Component {
     const { user_id } = this.props.match.params;
     const { tagsList } = this.context;
     const isValid = this.isFormValid();
-    console.log(!isValid);
+
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
         <h2 className="title_add_item_form">Add Item</h2>
@@ -176,7 +181,7 @@ class AddItemForm extends Component {
               Item Units <Required />
             </label>
             <input
-              defaultValue={unit.value}
+              value={unit.value}
               className="integer_inputs"
               name="item_units"
               type="text"

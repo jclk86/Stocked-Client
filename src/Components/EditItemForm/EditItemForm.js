@@ -9,8 +9,7 @@ import {
   validateName,
   validateQuantity,
   validateCost,
-  validateUnit,
-  validateTag
+  validateUnit
 } from "../ValidationError/ValidationError";
 
 class EditItemForm extends Component {
@@ -86,8 +85,10 @@ class EditItemForm extends Component {
     this.setState({ quantity: { value: quantity, touched: true } });
   };
 
-  editItemUnits = itemUnits => {
-    this.setState({ unit: { value: itemUnits, touched: true } });
+  editItemUnit = unit => {
+    if (unit.match("^[a-zA-Z]*$") != null) {
+      this.setState({ unit: { value: unit, touched: true } });
+    }
   };
 
   editItemCost = cost => {
@@ -142,9 +143,14 @@ class EditItemForm extends Component {
     const { name, quantity, unit, cost_per_unit, tag } = this.state;
     return (
       name.value &&
+      name.value.length < 20 &&
+      name.value.length >= 3 &&
       quantity.value &&
+      quantity.value < 1000 &&
       unit.value &&
+      unit.value.length <= 5 &&
       cost_per_unit.value &&
+      cost_per_unit.value < 500 &&
       tag.value
     );
   };
@@ -153,8 +159,7 @@ class EditItemForm extends Component {
     InventoryApiService.deleteItem(user_id, item_id);
     this.props.history.push(`/${user_id}/inventory`);
   };
-  // identify the tag
-  // removed touched and put value instead for all validation errors
+
   render() {
     const {
       name,
@@ -167,6 +172,7 @@ class EditItemForm extends Component {
       tagsList
     } = this.state;
     const { item_id, user_id } = this.props.match.params;
+    const isValid = this.isFormValid();
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
         <h2 className="title_edit_item_form">Edit Item</h2>
@@ -178,7 +184,7 @@ class EditItemForm extends Component {
             Item name <Required />
           </label>
           <Input
-            defaultValue={name.value}
+            value={name.value}
             name="item_name"
             type="text"
             required
@@ -198,7 +204,7 @@ class EditItemForm extends Component {
               Quantity <Required />
             </label>
             <input
-              defaultValue={quantity.value}
+              value={quantity.value}
               className="integer_inputs"
               name="item_quantity"
               type="number"
@@ -218,14 +224,14 @@ class EditItemForm extends Component {
               Item Units <Required />
             </label>
             <input
-              defaultValue={unit.value}
+              value={unit.value}
               htmlFor="EditItemForm__item_units"
               className="integer_inputs"
               name="item_units"
               type="text"
               required
               id="EditItemForm__units"
-              onChange={e => this.editItemUnits(e.target.value)}
+              onChange={e => this.editItemUnit(e.target.value)}
             ></input>
             {unit.touched && (
               <ValidationError message={validateUnit(unit.value)} />
@@ -239,7 +245,7 @@ class EditItemForm extends Component {
               Unit Cost <Required />
             </label>
             <input
-              defaultValue={cost_per_unit.value}
+              value={cost_per_unit.value}
               min="0"
               max="10000.00"
               step="any"
@@ -275,7 +281,7 @@ class EditItemForm extends Component {
             Image URL
           </label>
           <Input
-            defaultValue={image_url.value}
+            value={image_url.value}
             type="text"
             name="image_url"
             id="AddItemForm_image_url"
@@ -301,7 +307,7 @@ class EditItemForm extends Component {
           </select>
         </div>
         <div className="container_btn">
-          <Button type="submit" role="button">
+          <Button type="submit" role="button" disabled={!isValid}>
             Edit
           </Button>
         </div>
@@ -318,7 +324,7 @@ class EditItemForm extends Component {
           <Button
             role="button"
             type="button"
-            onClick={() => this.props.history.push("/")}
+            onClick={() => this.props.history.push(`/${user_id}/inventory`)}
           >
             Cancel
           </Button>

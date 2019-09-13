@@ -9,7 +9,11 @@ export default class Header extends Component {
     const { user_id } = this.props;
     return (
       <NavBar>
-        <NavLink role="navigation" to="/" className="nav_link">
+        <NavLink
+          role="navigation"
+          to={`/${user_id}/inventory`}
+          className="nav_link"
+        >
           <h1 className="header_inventory_list_page">STOCKED</h1>
         </NavLink>
         <div className="nav_top_right_links">

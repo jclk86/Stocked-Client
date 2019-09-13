@@ -3,7 +3,6 @@ import "./InventoryListItem.css";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
-// make names and classNames consistent
 export default class InventoryListItem extends Component {
   renderRestockMessage = itemQuantity => {
     return parseInt(itemQuantity) === 0 ? "None left. Restock." : itemQuantity;
@@ -11,7 +10,7 @@ export default class InventoryListItem extends Component {
 
   renderTotalCost = (itemQuantity, itemCost) => {
     const calc = itemQuantity * itemCost;
-    const totalCost = (Math.floor(100 * calc) / 100).toFixed(2);
+    const totalCost = calc.toFixed(2);
     return `$  ${totalCost}`;
   };
 
@@ -35,7 +34,10 @@ export default class InventoryListItem extends Component {
         <p> {item.desc}</p>
         <p className={item.quantity === 0 ? "restock_message" : ""}>
           {" "}
-          Qty: {this.renderRestockMessage(item.quantity)} {item.unit}
+          Qty:{" "}
+          {this.renderRestockMessage(item.quantity) === "None left. Restock."
+            ? "None left. Restock."
+            : item.unit}
         </p>
         <p>Total Cost: </p>
         <p>{this.renderTotalCost(item.quantity, item.cost_per_unit)}</p>
@@ -48,7 +50,7 @@ InventoryListItem.defaultProps = {
   image:
     "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
 };
-// add cost_per_unit
+
 InventoryListItem.propTypes = {
   item: PropTypes.shape({
     user_id: PropTypes.number,
