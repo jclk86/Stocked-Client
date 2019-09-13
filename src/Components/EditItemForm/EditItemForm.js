@@ -184,6 +184,7 @@ class EditItemForm extends Component {
             Item name <Required />
           </label>
           <Input
+            placeholder="apples..."
             value={name.value}
             name="item_name"
             type="text"
@@ -204,6 +205,7 @@ class EditItemForm extends Component {
               Quantity <Required />
             </label>
             <input
+              placeholder="5"
               value={quantity.value}
               className="integer_inputs"
               name="item_quantity"
@@ -224,6 +226,7 @@ class EditItemForm extends Component {
               Item Units <Required />
             </label>
             <input
+              placeholder="lbs"
               value={unit.value}
               htmlFor="EditItemForm__item_units"
               className="integer_inputs"
@@ -245,6 +248,7 @@ class EditItemForm extends Component {
               Unit Cost <Required />
             </label>
             <input
+              placeholder="2.99"
               value={cost_per_unit.value}
               min="0"
               max="10000.00"
@@ -269,6 +273,7 @@ class EditItemForm extends Component {
             Description
           </label>
           <Textarea
+            placeholder="for apple pies..."
             value={desc.value}
             name="description"
             required
@@ -281,6 +286,7 @@ class EditItemForm extends Component {
             Image URL
           </label>
           <Input
+            placeholder="https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
             value={image_url.value}
             type="text"
             name="image_url"

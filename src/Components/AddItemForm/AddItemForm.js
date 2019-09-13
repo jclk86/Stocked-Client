@@ -143,6 +143,7 @@ class AddItemForm extends Component {
             Item Name <Required />
           </label>
           <Input
+            placeholder="apples..."
             name="item_name"
             type="text"
             id="AddItemForm__item_name"
@@ -161,6 +162,7 @@ class AddItemForm extends Component {
               Quantity <Required />
             </label>
             <input
+              placeholder="5"
               className="integer_inputs"
               name="item_quantity"
               type="number"
@@ -181,6 +183,7 @@ class AddItemForm extends Component {
               Item Units <Required />
             </label>
             <input
+              placeholder="lbs"
               value={unit.value}
               className="integer_inputs"
               name="item_units"
@@ -200,6 +203,7 @@ class AddItemForm extends Component {
               Unit Cost <Required />
             </label>
             <input
+              placeholder="2.99"
               className="integer_inputs"
               name="item_cost"
               type="number"
@@ -222,6 +226,7 @@ class AddItemForm extends Component {
             Description
           </label>
           <Textarea
+            placeholder="for apple pies..."
             name="description"
             id="AddItemForm__description"
             onChange={e => this.updateDescription(e.target.value)}
@@ -232,6 +237,7 @@ class AddItemForm extends Component {
             Image URL
           </label>
           <Input
+            placeholder="https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
             type="text"
             name="image_url"
             id="AddItemForm_image_url"
