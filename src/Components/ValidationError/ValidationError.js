@@ -12,8 +12,8 @@ export function validateName(fieldValue) {
 export function validateQuantity(fieldValue) {
   if (fieldValue === "") {
     return "Please enter quantity";
-  } else if (fieldValue > 10000) {
-    return "Please limit your amount to under 10000";
+  } else if (fieldValue > 1000) {
+    return "Please limit your amount to under 1000";
   }
 }
 
@@ -29,8 +29,8 @@ export function validateUnit(fieldValue) {
 export function validateCost(fieldValue) {
   if (fieldValue === "") {
     return "Please enter cost";
-  } else if (fieldValue > 1000) {
-    return "Please limit cost to under $1000.00";
+  } else if (fieldValue > 500) {
+    return "Please limit cost to under $500.00";
   }
 }
 
