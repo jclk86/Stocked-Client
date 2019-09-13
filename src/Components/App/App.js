@@ -16,7 +16,6 @@ class App extends Component {
     console.error(error);
     return { hasError: true };
   }
-
   render() {
     return (
       <div className="App">
@@ -25,14 +24,26 @@ class App extends Component {
             <p className="red">There was an error! Oh no!</p>
           )}
           <Switch>
-            <Route exact path={"/"} component={InventoryListPage} />{" "}
-            <Route exact path={"/tags/:tag_id"} component={InventoryListPage} />
-            <Route exact path={"/login"} component={LoginPage} />
-            <Route exact path={"/register"} component={RegistrationPage} />
-            <Route exact path={"/add-item"} component={AddItemPage} />
             <Route
               exact
-              path={"/edit-item/:item_id"}
+              path={"/:user_id/inventory"}
+              component={InventoryListPage}
+            />{" "}
+            <Route
+              exact
+              path={"/:user_id/tags/:tag_id"}
+              component={InventoryListPage}
+            />
+            <Route exact path={"/login"} component={LoginPage} />
+            <Route exact path={"/register"} component={RegistrationPage} />
+            <Route
+              exact
+              path={"/:user_id/inventory/add-item"}
+              component={AddItemPage}
+            />
+            <Route
+              exact
+              path={"/:user_id/inventory/edit-item/:item_id"}
               component={EditItemPage}
             />
             <Route component={NotFoundPage}></Route>{" "}
@@ -44,4 +55,3 @@ class App extends Component {
 }
 
 export default App;
-// user_inventory/tags/:tagId

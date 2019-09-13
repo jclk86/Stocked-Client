@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { tags, inventory, units, user } from "../data";
 
 const InventoryContext = React.createContext({
   inventoryList: [],
   tagsList: [],
-  unitsList: [], // don't need
   error: null,
   addInventoryItem: () => {},
   setInventoryList: () => {},
@@ -18,7 +16,7 @@ export default InventoryContext;
 
 export class InventoryProvider extends Component {
   state = {
-    inventoryList: [], // change to nullInventory,
+    inventoryList: [],
     tagsList: [],
     error: null
   };
@@ -30,7 +28,6 @@ export class InventoryProvider extends Component {
 
   setTagsList = tagsList => {
     this.setState({ tagsList });
-    console.log(this.state.tagsList);
   };
 
   setError = error => {
@@ -49,7 +46,7 @@ export class InventoryProvider extends Component {
   updateInventoryItem = updatedItem => {
     this.setState({
       inventoryList: this.state.inventoryList.map(item =>
-        item.itemId !== updatedItem.itemId ? item : updatedItem
+        item.item_id !== updatedItem.item_id ? item : updatedItem
       )
     });
   };
@@ -62,7 +59,7 @@ export class InventoryProvider extends Component {
     });
   };
 
-  // clearArticle = () => {
+  // clearItem = () => {
   //   this.setInventoryList(nullInventory)
   //   this.setComments([])
   // }
@@ -70,10 +67,8 @@ export class InventoryProvider extends Component {
   render() {
     const contextValue = {
       inventoryList: this.state.inventoryList,
-      date: new Date(),
-      userId: 1,
+      user_id: 1, // hardcoded. Change
       tagsList: this.state.tagsList,
-      unitsList: units,
       setInventoryList: this.setInventoryList,
       setTagsList: this.setTagsList,
       addInventoryItem: this.addInventoryItem,

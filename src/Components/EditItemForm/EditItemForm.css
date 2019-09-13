@@ -51,6 +51,14 @@ select {
   width: 100%;
 }
 
+.string_inputs {
+  border: 1px solid #ddd;
+  font-size: 1.1em;
+  text-align: left;
+  border-radius: 5px;
+  width: 100%;
+}
+
 @media only screen and (max-width: 550px) {
   .item_units,
   .item_cost,

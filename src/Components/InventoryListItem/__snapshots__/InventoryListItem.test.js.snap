@@ -4,7 +4,7 @@ exports[`InventoryListItem Component renders inventory list without issue 1`] = 
 <NavLink
   className="item_card"
   role="navigation"
-  to="/edit-item/1"
+  to="/undefined/inventory/edit-item/undefined"
 >
   <div
     aria-label="A undefined"
@@ -23,11 +23,14 @@ exports[`InventoryListItem Component renders inventory list without issue 1`] = 
     className=""
   >
      
-    Qty: 
+    Qty:
+     
   </p>
   <p>
     Total Cost: 
-    $ NaN
+  </p>
+  <p>
+    $  NaN
   </p>
 </NavLink>
 `;

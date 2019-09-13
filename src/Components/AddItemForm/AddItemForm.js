@@ -9,16 +9,15 @@ import {
   validateName,
   validateQuantity,
   validateUnit,
-  validateCost
+  validateCost,
+  validateTag
 } from "../ValidationError/ValidationError";
 // import { isValid } from "date-fns";
-
 class AddItemForm extends Component {
   static contextType = InventoryContext;
   constructor(props) {
     super(props);
     this.state = {
-      // change names according to
       name: {
         value: "",
         touched: false
@@ -31,7 +30,7 @@ class AddItemForm extends Component {
         value: "",
         touched: false
       },
-      cost: {
+      cost_per_unit: {
         value: "",
         touched: false
       },
@@ -57,11 +56,13 @@ class AddItemForm extends Component {
   };
 
   updateUnit = unit => {
-    this.setState({ unit: { value: unit, touched: true } });
+    if (unit.match("^[a-zA-Z]*$") != null) {
+      this.setState({ unit: { value: unit, touched: true } });
+    }
   };
 
   updateCost = cost => {
-    this.setState({ cost: { value: cost, touched: true } });
+    this.setState({ cost_per_unit: { value: cost, touched: true } });
   };
 
   updateDescription = description => {
@@ -75,17 +76,25 @@ class AddItemForm extends Component {
   updateTag = tag => {
     this.setState({ tag: { value: tag, touched: true } });
   };
-  // tags
-  // need unit too
+
   componentDidMount() {
-    InventoryApiService.getAllTags().then(this.context.setTagsList)
+    InventoryApiService.getAllTags().then(this.context.setTagsList);
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    // const { user_id } = req.params
-    const { name, quantity, unit, cost, desc, image_url, tag } = this.state;
+    const {
+      name,
+      quantity,
+      unit,
+      cost_per_unit,
+      desc,
+      image_url,
+      tag
+    } = this.state;
+    const { user_id } = this.props.match.params;
     const item = {
+      user_id: parseInt(user_id),
       name: name.value,
       quantity: parseInt(quantity.value),
       tag: tag.value,
@@ -94,24 +103,35 @@ class AddItemForm extends Component {
         : "https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       desc: desc.value,
       unit: unit.value,
-      cost: parseInt(cost.value)
+      cost_per_unit: cost_per_unit.value
     };
-    InventoryApiService.postItem(item, 1); // needs user id
+    InventoryApiService.postItem(item, user_id);
     this.context.addInventoryItem(item);
-    this.props.history.push("/");
+    this.props.history.push(`/${user_id}/inventory`);
   };
 
   isFormValid = () => {
-    const { name, quantity, unit, cost, tag } = this.state;
+    const { name, quantity, unit, cost_per_unit, tag } = this.state;
     return (
-      name.value && quantity.value && unit.value && cost.value && tag.value
+      name.value &&
+      name.value.length < 20 &&
+      name.value.length >= 3 &&
+      quantity.value &&
+      quantity.value < 1000 &&
+      unit.value &&
+      unit.value.length <= 5 &&
+      cost_per_unit.value &&
+      cost_per_unit.value < 500 &&
+      tag.value
     );
   };
 
   render() {
-    const { quantity, cost, name, unit } = this.state;
+    const { quantity, cost_per_unit, name, unit, tag } = this.state;
+    const { user_id } = this.props.match.params;
     const { tagsList } = this.context;
     const isValid = this.isFormValid();
+
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
         <h2 className="title_add_item_form">Add Item</h2>
@@ -123,12 +143,13 @@ class AddItemForm extends Component {
             Item Name <Required />
           </label>
           <Input
+            placeholder="apples..."
             name="item_name"
             type="text"
             id="AddItemForm__item_name"
             onChange={e => this.updateName(e.target.value)}
           />
-          {this.state.name.touched && (
+          {name.touched && (
             <ValidationError message={validateName(name.value)} />
           )}
         </div>
@@ -141,13 +162,16 @@ class AddItemForm extends Component {
               Quantity <Required />
             </label>
             <input
+              placeholder="5"
               className="integer_inputs"
               name="item_quantity"
               type="number"
               id="AddItemForm__item_quantity"
+              step="1"
+              min="0"
               onChange={e => this.updateQuantity(e.target.value)}
             />
-            {this.state.quantity.touched && (
+            {quantity.touched && (
               <ValidationError message={validateQuantity(quantity.value)} />
             )}
           </div>
@@ -159,15 +183,15 @@ class AddItemForm extends Component {
               Item Units <Required />
             </label>
             <input
-              defaultValue={this.state.unit.value} // change. also, see below the units
+              placeholder="lbs"
+              value={unit.value}
               className="integer_inputs"
               name="item_units"
               type="text"
               id="AddItemForm__units"
               onChange={e => this.updateUnit(e.target.value)}
-            >
-            </input>
-            {this.state.cost.touched && (
+            ></input>
+            {unit.touched && (
               <ValidationError message={validateUnit(unit.value)} />
             )}
           </div>
@@ -179,14 +203,18 @@ class AddItemForm extends Component {
               Cost per unit <Required />
             </label>
             <input
+              placeholder="2.99"
               className="integer_inputs"
               name="item_cost"
               type="number"
               id="AddItemForm__item_cost"
               onChange={e => this.updateCost(e.target.value)}
+              step="0.01"
+              min="0"
+              max="1000.00"
             />
-            {this.state.cost.touched && (
-              <ValidationError message={validateCost(cost.value)} />
+            {cost_per_unit.touched && (
+              <ValidationError message={validateCost(cost_per_unit.value)} />
             )}
           </div>
         </div>
@@ -198,6 +226,7 @@ class AddItemForm extends Component {
             Description
           </label>
           <Textarea
+            placeholder="for apple pies..."
             name="description"
             id="AddItemForm__description"
             onChange={e => this.updateDescription(e.target.value)}
@@ -208,6 +237,7 @@ class AddItemForm extends Component {
             Image URL
           </label>
           <Input
+            placeholder="https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
             type="text"
             name="image_url"
             id="AddItemForm_image_url"
@@ -219,13 +249,15 @@ class AddItemForm extends Component {
             Tag
             <Required />
           </label>{" "}
-          <select name="tag" defaultValue={this.state.tag.value}>
+          <select name="tag" onChange={e => this.updateTag(e.target.value)}>
+            <option value="">Select Tag</option>
             {tagsList.map(tag => (
-              <option key={tag.tagId} value={tag.tagId}>
+              <option key={tag.name} value={tag.name}>
                 {tag.name}
               </option>
             ))}
           </select>
+          {tag.touched && <ValidationError message={validateTag(tag.value)} />}
         </div>
         <div className="container_btn">
           <Button type="submit" role="button">
@@ -236,7 +268,7 @@ class AddItemForm extends Component {
           <Button
             type="button"
             role="button"
-            onClick={() => this.props.history.push("/")}
+            onClick={() => this.props.history.push(`/${user_id}/inventory`)}
           >
             Cancel
           </Button>
