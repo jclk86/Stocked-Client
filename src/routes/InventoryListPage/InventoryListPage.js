@@ -15,7 +15,7 @@ class InventoryListPage extends Component {
   state = {
     search: ""
   };
-  // this user_id is hardcoded. Remember to change it.
+  // this user_id is hardcoded. Remember to change it. Also, use Promise.all
   componentDidMount() {
     InventoryApiService.getInventory(1).then(this.context.setInventoryList);
     InventoryApiService.getAllTags().then(this.context.setTagsList);
