@@ -1,5 +1,6 @@
 import config from "../config";
 
+// session storage?
 const TokenService = {
   saveAuthToken(token) {
     window.localStorage.setItem(config.TOKEN_KEY, token);
