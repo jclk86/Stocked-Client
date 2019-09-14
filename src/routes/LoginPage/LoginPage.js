@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Section } from "../../Components/Utils/Utils";
+import { withRouter } from "react-router-dom";
 import LoginForm from "../../Components/LoginForm/LoginForm";
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
+  // get the user_id a
   static defaultProps = {
     location: {},
     history: {
@@ -10,10 +12,10 @@ export default class LoginPage extends Component {
     }
   };
 
-  handleLoginSuccess = () => {
+  handleLoginSuccess = userId => {
     const { location, history } = this.props;
-    const destination = (location.state || {}).from || "/";
-    history.push(destination);
+    const destination = (location.state || {}).from || `/${userId}/inventory`; // added USERID params here
+    history.push({ pathname: destination, state: userId });
   };
 
   render() {
@@ -24,3 +26,5 @@ export default class LoginPage extends Component {
     );
   }
 }
+
+export default withRouter(LoginPage);

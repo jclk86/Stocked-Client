@@ -23,7 +23,7 @@ export class InventoryProvider extends Component {
 
   setInventoryList = inventoryList => {
     this.setState({ inventoryList });
-    console.log(this.state.inventoryList)
+    console.log(this.state.inventoryList);
   };
 
   setTagsList = tagsList => {
@@ -73,7 +73,10 @@ export class InventoryProvider extends Component {
       setTagsList: this.setTagsList,
       addInventoryItem: this.addInventoryItem,
       updateInventoryItem: this.updateInventoryItem,
-      deleteInventoryItem: this.deleteInventoryItem
+      deleteInventoryItem: this.deleteInventoryItem,
+      error: this.state.error,
+      clearError: this.clearError,
+      setError: this.setError
     };
     return (
       <InventoryContext.Provider value={contextValue}>

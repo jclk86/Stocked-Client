@@ -15,9 +15,12 @@ class InventoryListPage extends Component {
   state = {
     search: ""
   };
-  // this user_id is hardcoded. Remember to change it. Also, use Promise.all
+
   componentDidMount() {
-    InventoryApiService.getInventory(1).then(this.context.setInventoryList);
+    this.context.clearError();
+    InventoryApiService.getInventory(this.props.match.params.user_id).then(
+      this.context.setInventoryList
+    );
     InventoryApiService.getAllTags().then(this.context.setTagsList);
   }
 
@@ -39,19 +42,24 @@ class InventoryListPage extends Component {
       return item.name.toLowerCase().includes(this.state.search.toLowerCase());
     });
     const { user_id } = this.props.match.params;
+    const { error } = this.context;
 
     return (
       <div className="container_inventory_list_page">
         <Header user_id={user_id}></Header>
         <ul className="tags_list">
           <ErrorBoundary>
-            {this.context.tagsList.map(tag => (
-              <TagsListItem
-                key={tag.name}
-                tag={tag}
-                user_id={user_id}
-              ></TagsListItem>
-            ))}
+            {error ? (
+              <p className="red">There was an error, try again</p>
+            ) : (
+              this.context.tagsList.map(tag => (
+                <TagsListItem
+                  key={tag.name}
+                  tag={tag}
+                  user_id={user_id}
+                ></TagsListItem>
+              ))
+            )}
             <NavLink
               to={`/${user_id}/inventory`}
               className="container_btn_show_all"
@@ -67,10 +75,10 @@ class InventoryListPage extends Component {
         <Section list className="InventoryListPage">
           {filteredItems.map(item => (
             <InventoryListItem
-              key={item.name}
+              key={item.name} // why does item_id not work?
               item={item}
               cost_per_unit={parseInt(item.cost_per_unit)}
-            /> // pass user in
+            />
           ))}
         </Section>
       </div>

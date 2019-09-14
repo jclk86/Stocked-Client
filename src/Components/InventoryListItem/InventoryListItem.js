@@ -4,8 +4,14 @@ import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
 export default class InventoryListItem extends Component {
-  renderRestockMessage = itemQuantity => {
-    return parseInt(itemQuantity) === 0 ? "None left. Restock." : itemQuantity;
+  renderRestockMessage = (itemQuantity, itemUnit) => {
+    return parseInt(itemQuantity) === 0 ? (
+      <span className="restock_message">None left. Restock.</span>
+    ) : (
+      <span>
+        {itemQuantity} {itemUnit}
+      </span>
+    );
   };
 
   renderTotalCost = (itemQuantity, itemCost) => {
@@ -32,13 +38,12 @@ export default class InventoryListItem extends Component {
 
         <h2>{item.name}</h2>
         <p> {item.desc}</p>
-        <p className={item.quantity === 0 ? "restock_message" : ""}>
+        <div
+          className={item.quantity === 0 ? "restock_message" : "qty_no_style"}
+        >
           {" "}
-          Qty:{" "}
-          {this.renderRestockMessage(item.quantity) === "None left. Restock."
-            ? "None left. Restock."
-            : item.unit}
-        </p>
+          Qty: {this.renderRestockMessage(item.quantity, item.unit)}
+        </div>
         <p>Total Cost: </p>
         <p>{this.renderTotalCost(item.quantity, item.cost_per_unit)}</p>
       </NavLink>

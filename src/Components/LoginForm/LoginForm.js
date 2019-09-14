@@ -3,25 +3,36 @@ import { Button, Input, Form, Logo } from "../Utils/Utils";
 import { Link } from "react-router-dom";
 import "./LoginForm.css";
 import TokenService from "../../services/token-service";
+import AuthApiService from "../../services/auth-api-service";
 
 export default class LoginForm extends Component {
   static defaultProps = {
-    onLoginSuccess: () => {}
+    onLoginSuccess: () => {},
+    setUserId: () => {}
   };
 
   state = { error: null };
 
+  //login also has to find the user and return the context
   handleSubmitBasicAuth = event => {
     event.preventDefault();
-    const { user_name, password } = event.target;
+    this.setState({ error: null });
+    const { username, password } = event.target;
 
-    TokenService.saveAuthToken(
-      TokenService.makeBasicAuthToken(user_name.value, password.value)
-    );
-
-    user_name.value = "";
-    password.value = "";
-    this.props.onLoginSuccess();
+    AuthApiService.postLogin({
+      username: username.value,
+      password: password.value
+    })
+      .then(res => {
+        const user = res.id;
+        username.value = "";
+        password.value = "";
+        TokenService.saveAuthToken(res.authToken);
+        this.props.onLoginSuccess(user.id); // change
+      })
+      .catch(res => {
+        this.setState({ error: res.error });
+      });
   };
 
   render() {
@@ -37,7 +48,7 @@ export default class LoginForm extends Component {
           <label htmlFor="LoginForm__user_name" className="label_login">
             User name
           </label>
-          <Input required name="user_name" id="LoginForm__user_name" />
+          <Input required name="username" id="LoginForm__user_name" />
         </div>
         <div className="password">
           <label htmlFor="LoginForm__password" className="label_login">

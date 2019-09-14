@@ -185,7 +185,7 @@ class EditItemForm extends Component {
           </label>
           <Input
             placeholder="apples..."
-            value={name.value}
+            defaultValue={name.value}
             name="item_name"
             type="text"
             required
@@ -206,7 +206,7 @@ class EditItemForm extends Component {
             </label>
             <input
               placeholder="5"
-              value={quantity.value}
+              defaultValue={quantity.value}
               className="integer_inputs"
               name="item_quantity"
               type="number"
@@ -227,7 +227,7 @@ class EditItemForm extends Component {
             </label>
             <input
               placeholder="lbs"
-              value={unit.value}
+              defaultValue={unit.value}
               htmlFor="EditItemForm__item_units"
               className="integer_inputs"
               name="item_units"
@@ -249,7 +249,7 @@ class EditItemForm extends Component {
             </label>
             <input
               placeholder="2.99"
-              value={cost_per_unit.value}
+              defaultValue={cost_per_unit.value}
               min="0"
               max="10000.00"
               step="any"
@@ -287,7 +287,7 @@ class EditItemForm extends Component {
           </label>
           <Input
             placeholder="https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-            value={image_url.value}
+            defaultValue={image_url.value}
             type="text"
             name="image_url"
             id="AddItemForm_image_url"
@@ -300,7 +300,7 @@ class EditItemForm extends Component {
             <Required />
           </label>{" "}
           <select
-            value={tag.value}
+            defaultValue={tag.value}
             id="EditItemForm__tags"
             name="tag"
             onChange={e => this.editTag(e.target.value)}

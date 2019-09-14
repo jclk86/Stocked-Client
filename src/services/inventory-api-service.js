@@ -1,11 +1,13 @@
 import config from "../config";
+import TokenService from "../services/token-service";
 
 const InventoryApiService = {
   getInventory(user_id) {
     return fetch(`${config.API_ENDPOINT}/user/${user_id}/inventory`, {
       method: "GET",
       headers: {
-        "content-type": "application/json"
+        "content-type": "application/json",
+        authorization: `bearer ${TokenService.getAuthToken()}`
       }
     }).then(res =>
       !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
@@ -29,7 +31,8 @@ const InventoryApiService = {
       {
         method: "GET",
         headers: {
-          "content-type": "application/json"
+          "content-type": "application/json",
+          authorization: `bearer ${TokenService.getAuthToken()}`
         }
       }
     ).then(res =>
@@ -41,7 +44,8 @@ const InventoryApiService = {
     return fetch(`${config.API_ENDPOINT}/user/${user_id}/inventory`, {
       method: "POST",
       headers: {
-        "content-type": "application/json"
+        "content-type": "application/json",
+        authorization: `bearer ${TokenService.getAuthToken()}`
       },
       body: JSON.stringify(item)
     }).then(res =>
@@ -56,7 +60,8 @@ const InventoryApiService = {
         method: "PATCH",
         body: JSON.stringify(item),
         headers: {
-          "content-type": "application/json"
+          "content-type": "application/json",
+          authorization: `bearer ${TokenService.getAuthToken()}`
         }
       }
     ).then(res => (!res.ok ? Promise.reject(res) : res));
@@ -68,7 +73,8 @@ const InventoryApiService = {
       {
         method: "DELETE",
         headers: {
-          "content-type": "application/json"
+          "content-type": "application/json",
+          authorization: `bearer ${TokenService.getAuthToken()}`
         }
       }
     ).then(res => {
