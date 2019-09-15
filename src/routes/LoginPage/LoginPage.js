@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import LoginForm from "../../Components/LoginForm/LoginForm";
 
 class LoginPage extends Component {
-  // get the user_id a
   static defaultProps = {
     location: {},
     history: {
@@ -14,7 +13,7 @@ class LoginPage extends Component {
 
   handleLoginSuccess = userId => {
     const { location, history } = this.props;
-    const destination = (location.state || {}).from || `/${userId}/inventory`; // added USERID params here
+    const destination = (location.state || {}).from || `/${userId}/inventory`;
     history.push({ pathname: destination, state: userId });
   };
 

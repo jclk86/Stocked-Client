@@ -2,48 +2,91 @@ import React, { Component } from "react";
 import { Button, Input, Required, Form } from "../Utils/Utils";
 import { NavLink } from "react-router-dom";
 import "./RegistrationForm.css";
+import AuthApiService from "../../services/auth-api-service";
+import {
+  ValidationError,
+  validatePassword,
+  validateEmail
+} from "../ValidationError/ValidationError";
 
 export default class RegistrationForm extends Component {
   static defaultProps = {
     onRegistrationSuccess: () => {}
   };
 
-  handleSubmit = () => {
-    this.props.onRegistrationSuccess();
+  state = {
+    error: null,
+    password: { value: "", touched: false },
+    email: { value: "", touched: false }
   };
 
+  updatePassword = password => {
+    this.setState({ password: { value: password, touched: true } });
+  };
+
+  updateEmail = email => {
+    this.setState({ email: { value: email, touched: true } });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const { fullname, password, username, email } = event.target;
+    this.setState({ error: null, password: password, email: email });
+
+    AuthApiService.postUser({
+      username: username.value,
+      password: password.value,
+      fullname: fullname.value,
+      email: email.value
+    })
+      .then(user => {
+        fullname.value = "";
+        username.value = "";
+        password.value = "";
+        email.value = "";
+        this.props.onRegistrationSuccess();
+      })
+      .catch(res => {
+        this.setState({ error: res.error });
+      });
+  };
+
+  // is valid needed and validation errors for password and email
+
   render() {
+    const { error, password, email } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
+        <div role="alert">{error && <p className="red">{error}</p>}</div>
         <div className="header_register">
           <h2>Registration</h2>
         </div>
-        <div className="full_name">
+        <div className="fullname">
           <label
-            htmlFor="RegistrationForm__full_name"
+            htmlFor="RegistrationForm__fullname"
             className="label_registration"
           >
             Full name <Required />
           </label>
           <Input
-            name="full_name"
+            name="fullname"
             type="text"
             required
-            id="RegistrationForm__full_name"
+            id="RegistrationForm__fullname"
           />
         </div>
         <div className="user_name">
           <label
-            htmlFor="RegistrationForm__user_name"
+            htmlFor="RegistrationForm__username"
             className="label_registration"
           >
             User name <Required />
           </label>
           <Input
-            name="user_name"
+            name="username"
             type="text"
             required
-            id="RegistrationForm__user_name"
+            id="RegistrationForm__username"
           />
         </div>
         <div className="password">
@@ -54,11 +97,15 @@ export default class RegistrationForm extends Component {
             Password <Required />
           </label>
           <Input
+            onChange={e => this.updatePassword(e.target.value)}
             name="password"
             type="password"
             required
             id="RegistrationForm__password"
           />
+          {password.touched && (
+            <ValidationError message={validatePassword(password.value)} />
+          )}
         </div>
         <div className="email">
           <label
@@ -69,11 +116,15 @@ export default class RegistrationForm extends Component {
             <Required />
           </label>{" "}
           <Input
+            onChange={e => this.updateEmail(e.target.value)}
             name="email"
             type="text"
             required
             id="RegistrationForm__email"
           />
+          {email.touched && (
+            <ValidationError message={validateEmail(email.value)} />
+          )}
         </div>
         <div className="register_btn_container">
           <Button type="submit">Submit</Button>

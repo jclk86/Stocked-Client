@@ -105,9 +105,11 @@ class AddItemForm extends Component {
       unit: unit.value,
       cost_per_unit: cost_per_unit.value
     };
-    InventoryApiService.postItem(item, user_id);
-    this.context.addInventoryItem(item);
-    this.props.history.goBack(`/${user_id}/inventory`);
+    InventoryApiService.postItem(item, user_id)
+      .then(this.context.addInventoryItem(item))
+      .then(() => {
+        this.props.history.push(`/${user_id}/inventory`);
+      });
   };
 
   isFormValid = () => {
