@@ -135,7 +135,7 @@ class EditItemForm extends Component {
       cost_per_unit: cost_per_unit.value
     };
     InventoryApiService.updateItem(item, user_id, item_id).then(item => {
-      this.props.history.goBack(`/${user_id}/inventory`);
+      this.props.history.push(`/${user_id}/inventory`);
     });
   };
 
@@ -276,7 +276,6 @@ class EditItemForm extends Component {
             placeholder="for apple pies..."
             value={desc.value}
             name="description"
-            required
             id="EditItemForm__description"
             onChange={e => this.editDescription(e.target.value)}
           ></Textarea>

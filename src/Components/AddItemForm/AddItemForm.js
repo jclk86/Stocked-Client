@@ -107,7 +107,7 @@ class AddItemForm extends Component {
     };
     InventoryApiService.postItem(item, user_id);
     this.context.addInventoryItem(item);
-    this.props.history.push(`/${user_id}/inventory`);
+    this.props.history.goBack(`/${user_id}/inventory`);
   };
 
   isFormValid = () => {
@@ -260,7 +260,7 @@ class AddItemForm extends Component {
           {tag.touched && <ValidationError message={validateTag(tag.value)} />}
         </div>
         <div className="container_btn">
-          <Button type="submit" role="button">
+          <Button type="submit" role="button" disabled={!isValid}>
             Add
           </Button>
         </div>

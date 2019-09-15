@@ -1,19 +1,17 @@
 import React, { Component } from "react";
 import { Button, Input, Form, Logo } from "../Utils/Utils";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import "./LoginForm.css";
-import TokenService from "../../services/token-service";
 import AuthApiService from "../../services/auth-api-service";
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
   static defaultProps = {
     onLoginSuccess: () => {},
-    setUserId: () => {}
+    setUserId: () => {} // remove
   };
 
   state = { error: null };
 
-  //login also has to find the user and return the context
   handleSubmitBasicAuth = event => {
     event.preventDefault();
     this.setState({ error: null });
@@ -27,8 +25,7 @@ export default class LoginForm extends Component {
         const user = res.id;
         username.value = "";
         password.value = "";
-        TokenService.saveAuthToken(res.authToken);
-        this.props.onLoginSuccess(user.id); // change
+        this.props.onLoginSuccess(user.id);
       })
       .catch(res => {
         this.setState({ error: res.error });
@@ -73,3 +70,5 @@ export default class LoginForm extends Component {
     );
   }
 }
+
+export default withRouter(LoginForm);

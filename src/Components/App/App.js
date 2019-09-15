@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import "./App.css";
+import TokenService from "../../services/token-service";
+import AuthApiService from "../../services/auth-api-service";
+import IdleService from "../../services/idle-service";
 import LoginPage from "../../routes/LoginPage/LoginPage";
 import RegistrationPage from "../../routes/RegistrationPage/RegistrationPage";
 import AddItemPage from "../../routes/AddItemPage/AddItemPage";
@@ -16,6 +19,29 @@ class App extends Component {
     console.error(error);
     return { hasError: true };
   }
+
+  componentDidMount() {
+    IdleService.setIdleCallback(this.logoutFromIdle);
+    if (TokenService.hasAuthToken()) {
+      IdleService.regiserIdleTimerResets();
+      TokenService.queueCallbackBeforeExpiry(() => {
+        AuthApiService.postRefreshToken();
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    IdleService.unRegisterIdleResets();
+    TokenService.clearCallbackBeforeExpiry();
+  }
+
+  logoutFromIdle = () => {
+    TokenService.clearAuthToken();
+    TokenService.clearCallbackBeforeExpiry();
+    IdleService.unRegisterIdleResets();
+    this.forceUpdate();
+  };
+
   render() {
     return (
       <div className="App">
@@ -23,7 +49,9 @@ class App extends Component {
           {this.state.hasError && (
             <p className="red">There was an error! Oh no!</p>
           )}
+
           <Switch>
+            <Route exact path={"/login"} component={LoginPage} />
             <Route
               exact
               path={"/:user_id/inventory"}
@@ -34,7 +62,6 @@ class App extends Component {
               path={"/:user_id/tags/:tag_id"}
               component={InventoryListPage}
             />
-            <Route exact path={"/login"} component={LoginPage} />
             <Route exact path={"/register"} component={RegistrationPage} />
             <Route
               exact
@@ -46,6 +73,7 @@ class App extends Component {
               path={"/:user_id/inventory/edit-item/:item_id"}
               component={EditItemPage}
             />
+            <Redirect from="/" to="/login"></Redirect>
             <Route component={NotFoundPage}></Route>{" "}
           </Switch>
         </main>
@@ -54,4 +82,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

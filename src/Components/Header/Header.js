@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { NavBar } from "../../Components/Utils/Utils";
+import IdleService from "../../services/idle-service";
+import TokenService from "../../services/token-service";
 import "./Header.css";
 
 export default class Header extends Component {
-  // change the link for stocked logo
+  handleLogoutClick = () => {
+    TokenService.clearAuthToken();
+    TokenService.clearCallbackBeforeExpiry();
+    IdleService.unRegisterIdleResets();
+  };
   render() {
     const { user_id } = this.props;
     return (
@@ -33,6 +39,7 @@ export default class Header extends Component {
           </NavLink>
           <NavLink
             role="navigation"
+            onClick={this.handleLogoutClick}
             to="/login"
             className="nav_link top_right_link"
           >

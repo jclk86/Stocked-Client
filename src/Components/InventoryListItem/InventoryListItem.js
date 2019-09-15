@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./InventoryListItem.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
-export default class InventoryListItem extends Component {
+class InventoryListItem extends Component {
   renderRestockMessage = (itemQuantity, itemUnit) => {
     return parseInt(itemQuantity) === 0 ? (
       <span className="restock_message">None left. Restock.</span>
@@ -67,3 +67,5 @@ InventoryListItem.propTypes = {
     cost_per_unit: PropTypes.string
   })
 };
+
+export default withRouter(InventoryListItem);
