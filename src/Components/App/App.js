@@ -10,7 +10,8 @@ import AddItemPage from "../../routes/AddItemPage/AddItemPage";
 import EditItemPage from "../../routes/EditItemPage/EditItemPage";
 import InventoryListPage from "../../routes/InventoryListPage/InventoryListPage";
 import NotFoundPage from "../../routes/NotFoundPage/NotFoundPage";
-import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
+import PrivateRoute from "../Utils/PrivateRoute";
+import PublicOnlyRoute from "../Utils/PublicOnlyRoute";
 
 class App extends Component {
   state = { hasError: false };
@@ -51,24 +52,28 @@ class App extends Component {
           )}
 
           <Switch>
-            <Route exact path={"/login"} component={LoginPage} />
-            <Route
+            <PublicOnlyRoute exact path={"/login"} component={LoginPage} />
+            <PublicOnlyRoute
+              exact
+              path={"/register"}
+              component={RegistrationPage}
+            />
+            <PrivateRoute
               exact
               path={"/:user_id/inventory"}
               component={InventoryListPage}
             />{" "}
-            <Route
+            <PrivateRoute
               exact
               path={"/:user_id/tags/:tag_id"}
               component={InventoryListPage}
             />
-            <Route exact path={"/register"} component={RegistrationPage} />
-            <Route
+            <PrivateRoute
               exact
               path={"/:user_id/inventory/add-item"}
               component={AddItemPage}
             />
-            <Route
+            <PrivateRoute
               exact
               path={"/:user_id/inventory/edit-item/:item_id"}
               component={EditItemPage}
