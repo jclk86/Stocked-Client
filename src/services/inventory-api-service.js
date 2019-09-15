@@ -52,7 +52,7 @@ const InventoryApiService = {
       !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
     );
   },
-  // ask about this later
+
   updateItem(item, user_id, item_id) {
     return fetch(
       `${config.API_ENDPOINT}/user/${user_id}/inventory/${item_id}`,

@@ -156,8 +156,9 @@ class EditItemForm extends Component {
   };
 
   handleDelete = (user_id, item_id) => {
-    InventoryApiService.deleteItem(user_id, item_id);
-    this.props.history.push(`/${user_id}/inventory`);
+    InventoryApiService.deleteItem(user_id, item_id).then(() => {
+      this.props.history.push(`/${user_id}/inventory`);
+    });
   };
 
   render() {

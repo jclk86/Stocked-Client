@@ -51,8 +51,6 @@ export default class RegistrationForm extends Component {
       });
   };
 
-  // is valid needed and validation errors for password and email
-
   render() {
     const { error, password, email } = this.state;
     return (

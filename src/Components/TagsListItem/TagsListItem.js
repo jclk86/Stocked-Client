@@ -3,7 +3,6 @@ import { NavLink, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./TagsListItem.css";
 
-// below, change route in app to accomodate the user_id
 class TagsListItem extends Component {
   render() {
     const { tag, user_id } = this.props;

@@ -6,8 +6,7 @@ import AuthApiService from "../../services/auth-api-service";
 
 class LoginForm extends Component {
   static defaultProps = {
-    onLoginSuccess: () => {},
-    setUserId: () => {} // remove
+    onLoginSuccess: () => {}
   };
 
   state = { error: null };

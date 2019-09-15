@@ -75,7 +75,7 @@ class InventoryListPage extends Component {
         <Section list className="InventoryListPage">
           {filteredItems.map(item => (
             <InventoryListItem
-              key={item.name} // why does item_id not work?
+              key={item.name} // doublecheck
               item={item}
               cost_per_unit={parseInt(item.cost_per_unit)}
             />

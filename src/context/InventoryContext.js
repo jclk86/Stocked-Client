@@ -8,7 +8,6 @@ const InventoryContext = React.createContext({
   setInventoryList: () => {},
   updateInventoryItem: () => {},
   deleteInventoryItem: () => {},
-  clearInventoryItem: () => {},
   setError: () => {},
   clearError: () => {}
 });
@@ -32,7 +31,7 @@ export class InventoryProvider extends Component {
 
   setError = error => {
     console.error(error);
-    this.setState({ error }); // these must be set with conditionals. on the component rendering area you want to render error message if not rendered. Context becomes errorboundary, Not need fo errorBoundary component
+    this.setState({ error });
   };
 
   clearError = () => {
@@ -59,15 +58,9 @@ export class InventoryProvider extends Component {
     });
   };
 
-  // clearItem = () => {
-  //   this.setInventoryList(nullInventory)
-  //   this.setComments([])
-  // }
-
   render() {
     const contextValue = {
       inventoryList: this.state.inventoryList,
-      user_id: 1, // hardcoded. Change
       tagsList: this.state.tagsList,
       setInventoryList: this.setInventoryList,
       setTagsList: this.setTagsList,
