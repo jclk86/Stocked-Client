@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Input, Required, Form } from "../Utils/Utils";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import "./RegistrationForm.css";
 import AuthApiService from "../../services/auth-api-service";
 import {
@@ -9,16 +9,18 @@ import {
   validateEmail
 } from "../ValidationError/ValidationError";
 
-export default class RegistrationForm extends Component {
+class RegistrationForm extends Component {
   static defaultProps = {
     onRegistrationSuccess: () => {}
   };
-
-  state = {
-    error: null,
-    password: { value: "", touched: false },
-    email: { value: "", touched: false }
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      password: { value: "", touched: false },
+      email: { value: "", touched: false }
+    };
+  }
 
   updatePassword = password => {
     this.setState({ password: { value: password, touched: true } });
@@ -136,3 +138,5 @@ export default class RegistrationForm extends Component {
     );
   }
 }
+
+export default withRouter(RegistrationForm);

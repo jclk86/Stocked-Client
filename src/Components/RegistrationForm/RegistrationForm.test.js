@@ -13,11 +13,17 @@ describe(`Registration Form`, () => {
 
   it("fires submit", () => {
     const handleSubmitSpy = sinon.spy();
+    const cb = () => {
+      wrapper.find(".Form").simulate("submit");
+    };
     const wrapper = mount(
       <BrowserRouter>
         <RegistrationForm onSubmit={handleSubmitSpy}></RegistrationForm>
       </BrowserRouter>
     );
-    wrapper.find(".Form").simulate("submit");
+    wrapper.setState({
+      password: { value: "Password123!", touched: true },
+      cb
+    });
   });
 });
