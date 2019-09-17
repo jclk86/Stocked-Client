@@ -7,7 +7,7 @@ const InventoryApiService = {
       method: "GET",
       headers: {
         "content-type": "application/json",
-        authorization: `bearer ${TokenService.getAuthToken()}`
+        authorization: `Bearer ${TokenService.getAuthToken()}`
       }
     }).then(res =>
       !res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
@@ -32,7 +32,7 @@ const InventoryApiService = {
         method: "GET",
         headers: {
           "content-type": "application/json",
-          authorization: `bearer ${TokenService.getAuthToken()}`
+          authorization: `Bearer ${TokenService.getAuthToken()}`
         }
       }
     ).then(res =>
@@ -45,7 +45,7 @@ const InventoryApiService = {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        authorization: `bearer ${TokenService.getAuthToken()}`
+        authorization: `Bearer ${TokenService.getAuthToken()}`
       },
       body: JSON.stringify(item)
     }).then(res =>
@@ -61,7 +61,7 @@ const InventoryApiService = {
         body: JSON.stringify(item),
         headers: {
           "content-type": "application/json",
-          authorization: `bearer ${TokenService.getAuthToken()}`
+          authorization: `Bearer ${TokenService.getAuthToken()}`
         }
       }
     ).then(res => (!res.ok ? Promise.reject(res) : res));
@@ -74,7 +74,7 @@ const InventoryApiService = {
         method: "DELETE",
         headers: {
           "content-type": "application/json",
-          authorization: `bearer ${TokenService.getAuthToken()}`
+          authorization: `Bearer ${TokenService.getAuthToken()}`
         }
       }
     ).then(res => {
