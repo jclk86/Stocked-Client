@@ -1,9 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap");
-
-.AddItem_Form {
-  font-family: "Open Sans", sans-serif;
-}
-
 .title_add_item_form {
   text-align: center;
   padding-top: 40px;
@@ -18,10 +12,6 @@
 .label_integer_inputs {
   display: flex;
   margin-bottom: 10px;
-}
-
-textarea {
-  font-family: "Open Sans", sans-serif;
 }
 
 select {

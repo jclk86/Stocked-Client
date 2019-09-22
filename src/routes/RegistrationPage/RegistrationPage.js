@@ -16,13 +16,11 @@ export default class RegistrationPage extends Component {
 
   render() {
     return (
-      <Background>
-        <Section className="RegistrationPage">
-          <RegistrationForm
-            onRegistrationSuccess={this.handleRegistrationSuccess}
-          />
-        </Section>
-      </Background>
+      <Section className="RegistrationPage">
+        <RegistrationForm
+          onRegistrationSuccess={this.handleRegistrationSuccess}
+        />
+      </Section>
     );
   }
 }

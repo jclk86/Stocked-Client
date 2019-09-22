@@ -19,7 +19,6 @@ import {
   validateCost,
   validateTag
 } from "../ValidationError/ValidationError";
-import logo from "../../images/logo.png";
 
 class AddItemForm extends Component {
   static contextType = InventoryContext;
@@ -143,155 +142,151 @@ class AddItemForm extends Component {
     const isValid = this.isFormValid();
 
     return (
-      <Background>
-        <Form
-          className="AddItem_Form"
-          onSubmit={event => this.handleSubmit(event)}
-        >
-          <h2 className="title_add_item_form">Add Item</h2>
-          <div className="item_name">
+      <Form
+        className="AddItem_Form"
+        onSubmit={event => this.handleSubmit(event)}
+      >
+        <h2 className="title_add_item_form">Add Item</h2>
+        <div className="item_name">
+          <label
+            htmlFor="AddItemForm__item_name"
+            className="label_add_item_form"
+          >
+            Item Name <Required />
+          </label>
+          <Input
+            placeholder="apples..."
+            name="item_name"
+            type="text"
+            id="AddItemForm__item_name"
+            onChange={e => this.updateName(e.target.value)}
+          />
+          {name.touched && (
+            <ValidationError message={validateName(name.value)} />
+          )}
+        </div>
+        <div className="container_qty_cost">
+          <div className="container_item_quantity">
             <label
-              htmlFor="AddItemForm__item_name"
-              className="label_add_item_form"
+              htmlFor="AddItemForm__item_quantity"
+              className="label_integer_inputs"
             >
-              Item Name <Required />
+              Quantity <Required />
             </label>
-            <Input
-              placeholder="apples..."
-              name="item_name"
-              type="text"
-              id="AddItemForm__item_name"
-              onChange={e => this.updateName(e.target.value)}
+            <input
+              placeholder="5"
+              className="integer_inputs"
+              name="item_quantity"
+              type="number"
+              id="AddItemForm__item_quantity"
+              step="1"
+              min="0"
+              onChange={e => this.updateQuantity(e.target.value)}
             />
-            {name.touched && (
-              <ValidationError message={validateName(name.value)} />
+            {quantity.touched && (
+              <ValidationError message={validateQuantity(quantity.value)} />
             )}
           </div>
-          <div className="container_qty_cost">
-            <div className="container_item_quantity">
-              <label
-                htmlFor="AddItemForm__item_quantity"
-                className="label_integer_inputs"
-              >
-                Quantity <Required />
-              </label>
-              <input
-                placeholder="5"
-                className="integer_inputs"
-                name="item_quantity"
-                type="number"
-                id="AddItemForm__item_quantity"
-                step="1"
-                min="0"
-                onChange={e => this.updateQuantity(e.target.value)}
-              />
-              {quantity.touched && (
-                <ValidationError message={validateQuantity(quantity.value)} />
-              )}
-            </div>
-            <div className="container_item_units">
-              <label
-                htmlFor="AddItemForm__item_units"
-                className="label_integer_inputs"
-              >
-                Units
-                <Required />
-              </label>
-              <input
-                placeholder="lbs"
-                value={unit.value}
-                className="integer_inputs"
-                name="item_units"
-                type="text"
-                id="AddItemForm__units"
-                onChange={e => this.updateUnit(e.target.value)}
-              ></input>
-              {unit.touched && (
-                <ValidationError message={validateUnit(unit.value)} />
-              )}
-            </div>
-            <div className="container_item_cost">
-              <label
-                htmlFor="AddItemForm__item_cost"
-                className="label_integer_inputs"
-              >
-                Unit Cost <Required />
-              </label>
-              <input
-                placeholder="2.99"
-                className="integer_inputs"
-                name="item_cost"
-                type="number"
-                id="AddItemForm__item_cost"
-                onChange={e => this.updateCost(e.target.value)}
-                step="0.01"
-                min="0"
-                max="1000.00"
-              />
-              {cost_per_unit.touched && (
-                <ValidationError message={validateCost(cost_per_unit.value)} />
-              )}
-            </div>
-          </div>
-          <div className="description">
+          <div className="container_item_units">
             <label
-              htmlFor="AddItemForm__description"
-              className="label_add_item_form"
+              htmlFor="AddItemForm__item_units"
+              className="label_integer_inputs"
             >
-              Description
-            </label>
-            <Textarea
-              placeholder="for apple pies..."
-              name="description"
-              id="AddItemForm__description"
-              onChange={e => this.updateDescription(e.target.value)}
-            ></Textarea>
-          </div>
-          <div className="image">
-            <label htmlFor="AddItemForm__image" className="label_add_item_form">
-              Image URL
-            </label>
-            <Input
-              placeholder="https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-              type="text"
-              name="image_url"
-              id="AddItemForm_image_url"
-              onChange={e => this.updateImageURL(e.target.value)}
-            ></Input>
-          </div>
-          <div className="tags">
-            <label htmlFor="AddItemForm__tags" className="label_add_item_form">
-              Tag
+              Units
               <Required />
-            </label>{" "}
-            <select name="tag" onChange={e => this.updateTag(e.target.value)}>
-              <option value="">Select Tag</option>
-              {tagsList.map(tag => (
-                <option key={tag.name} value={tag.name}>
-                  {tag.name}
-                </option>
-              ))}
-            </select>
-            {tag.touched && (
-              <ValidationError message={validateTag(tag.value)} />
+            </label>
+            <input
+              placeholder="lbs"
+              value={unit.value}
+              className="integer_inputs"
+              name="item_units"
+              type="text"
+              id="AddItemForm__units"
+              onChange={e => this.updateUnit(e.target.value)}
+            ></input>
+            {unit.touched && (
+              <ValidationError message={validateUnit(unit.value)} />
             )}
           </div>
-          <div className="container_btn">
-            <Button type="submit" role="button" disabled={!isValid}>
-              Add
-            </Button>
-          </div>
-          <div className="container_btn btn_cancel">
-            <Button
-              type="button"
-              role="button"
-              onClick={() => this.props.history.push(`/${user_id}/inventory`)}
+          <div className="container_item_cost">
+            <label
+              htmlFor="AddItemForm__item_cost"
+              className="label_integer_inputs"
             >
-              Cancel
-            </Button>
+              Unit Cost <Required />
+            </label>
+            <input
+              placeholder="2.99"
+              className="integer_inputs"
+              name="item_cost"
+              type="number"
+              id="AddItemForm__item_cost"
+              onChange={e => this.updateCost(e.target.value)}
+              step="0.01"
+              min="0"
+              max="1000.00"
+            />
+            {cost_per_unit.touched && (
+              <ValidationError message={validateCost(cost_per_unit.value)} />
+            )}
           </div>
-        </Form>
-      </Background>
+        </div>
+        <div className="description">
+          <label
+            htmlFor="AddItemForm__description"
+            className="label_add_item_form"
+          >
+            Description
+          </label>
+          <Textarea
+            placeholder="for apple pies..."
+            name="description"
+            id="AddItemForm__description"
+            onChange={e => this.updateDescription(e.target.value)}
+          ></Textarea>
+        </div>
+        <div className="image">
+          <label htmlFor="AddItemForm__image" className="label_add_item_form">
+            Image URL
+          </label>
+          <Input
+            placeholder="https://images.pexels.com/photos/1907642/pexels-photo-1907642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            type="text"
+            name="image_url"
+            id="AddItemForm_image_url"
+            onChange={e => this.updateImageURL(e.target.value)}
+          ></Input>
+        </div>
+        <div className="tags">
+          <label htmlFor="AddItemForm__tags" className="label_add_item_form">
+            Tag
+            <Required />
+          </label>{" "}
+          <select name="tag" onChange={e => this.updateTag(e.target.value)}>
+            <option value="">Select Tag</option>
+            {tagsList.map(tag => (
+              <option key={tag.name} value={tag.name}>
+                {tag.name}
+              </option>
+            ))}
+          </select>
+          {tag.touched && <ValidationError message={validateTag(tag.value)} />}
+        </div>
+        <div className="container_btn">
+          <Button type="submit" role="button" disabled={!isValid}>
+            Add
+          </Button>
+        </div>
+        <div className="container_btn btn_cancel">
+          <Button
+            type="button"
+            role="button"
+            onClick={() => this.props.history.push(`/${user_id}/inventory`)}
+          >
+            Cancel
+          </Button>
+        </div>
+      </Form>
     );
   }
 }
