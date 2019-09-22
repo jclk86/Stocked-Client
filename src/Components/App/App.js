@@ -44,7 +44,6 @@ class App extends Component {
   };
 
   render() {
-    const inventoryListPath = "/:user_id/inventory";
     return (
       <div className="App">
         <main className="App__main">

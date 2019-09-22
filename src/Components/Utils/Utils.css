@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap");
 .Input,
 textarea {
   border: 1px solid black;
@@ -9,9 +8,8 @@ textarea {
   text-align: left;
   width: 85%;
   border-radius: 1px;
-  font-family: "Open Sans", sans-serif;
 }
-/* Add font family above and remove text area css from forms  */
+/* apply font above */
 .Input::placeholder,
 .Textarea::placeholder {
   color: #ccc;
@@ -38,7 +36,6 @@ textarea {
   color: #ca1551;
   font-family: Arial;
   font-weight: bold;
-  font-family: "Open Sans", sans-serif;
 }
 
 .Section {
@@ -62,7 +59,6 @@ textarea {
   margin-left: auto;
   margin-right: auto;
   box-shadow: 5px 5px 5px rgb(32, 32, 32);
-  font-family: "Open Sans", sans-serif;
 }
 
 .NavBar {
@@ -73,34 +69,54 @@ textarea {
 }
 
 .Background {
-  background: url("../../images/veggies.jpg");
+  background: url("../../images/veggies.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
+  padding-top: 150px;
+  padding-bottom: 150px;
+  height: 100%;
+  /* background: url("../../images/veggies.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
   background-position: center;
   -moz-background-size: cover;
   -o-background-size: cover;
   -webkit-background-size: cover;
-  padding-top: 150px;
+  -ms-content-zooming: none;
+  position: absolute;
   width: 100%;
-  min-height: 1400px;
+  height: 100%;
+  padding: 0;
+  margin-top: 0; */
 }
 
-/* Portrait */
-/* @media only screen and (max-width: 767px) {
-  .Form {
-    margin-top: 20px;
-  }
-
+@media only screen and (min-width: 767px) {
   .Background {
-    height: calc(100vh + 400px);
+    height: calc(100vh + 100px);
   }
 }
 
-@media only screen and (min-width: 800px) {
-  .Form {
-    margin-top: 170px;
-  }
-
+@media only screen and (max-width: 814px) {
   .Background {
-    height: calc(100vh + 560px);
+    padding-top: 20px;
   }
-} */
+}
+@media only screen and (max-width: 412px) {
+  .Background {
+    height: calc(100vh + 30px);
+  }
+}
+
+@media only screen and (min-width: 812px) and (max-width: 823px) {
+  .Background {
+    height: calc(100vh + 500px);
+  }
+}
+
+@media only screen and (max-width: 411px) {
+  .Background {
+    height: calc(100vh + 350px);
+  }
+}

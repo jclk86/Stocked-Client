@@ -1,3 +1,11 @@
 .red {
   color: red;
 }
+
+.App {
+  height: 100%;
+}
+
+.App__main {
+  height: 100%;
+}
