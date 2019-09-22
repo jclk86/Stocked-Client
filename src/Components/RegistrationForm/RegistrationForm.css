@@ -1,6 +1,10 @@
 .header_register {
   text-align: center;
-  padding-top: 50px;
+  padding-top: 30px;
+}
+
+.register_logo {
+  max-width: 100px;
 }
 
 .register_btn_container {
@@ -13,6 +17,16 @@
   margin: 0 auto;
 }
 
+.message_redirect {
+  padding-bottom: 50px;
+}
+
 .login_link {
   text-align: center;
+}
+
+.btn_login_link {
+  text-decoration: none;
+  color: rgba(46, 211, 189, 0.973);
+  font-weight: bold;
 }

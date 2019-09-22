@@ -1,5 +1,12 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap");
 .container_inventory_list_page {
   height: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.inventory_list_main {
+  margin-top: 80px;
 }
 
 .container_tags {
@@ -18,18 +25,32 @@
   padding-left: 0px;
   margin: 20px auto;
   text-align: center;
+  font-size: 16px;
   list-style-type: none;
 }
 
 .btn_show_all {
-  position: relative;
-  color: black;
-  border: 1px solid black;
-  padding: 4px;
+  text-decoration: none;
+  color: white;
+  border-radius: 2px;
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
   margin: 3px 3px;
-  background-color: gray;
+  background-color: rgb(58, 58, 58);
   font-size: 16px;
   cursor: pointer;
+  box-shadow: 1px 1px 1px 1px rgb(46, 45, 45);
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+}
+
+.btn_show_all:focus {
+  background-color: goldenrod;
+  color: rgb(58, 58, 58);
 }
 
 @media only screen and (max-width: 500px) {

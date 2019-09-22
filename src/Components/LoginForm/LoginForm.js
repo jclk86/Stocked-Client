@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Button, Input, Form, Logo } from "../Utils/Utils";
-import { Link, withRouter } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import "./LoginForm.css";
 import AuthApiService from "../../services/auth-api-service";
+import logo from "../../images/logo.png";
 
 class LoginForm extends Component {
   static defaultProps = {
@@ -35,10 +36,8 @@ class LoginForm extends Component {
     const { error } = this.state;
     return (
       <Form className="LoginForm" onSubmit={this.handleSubmitBasicAuth}>
-        <div role="alert">{error && <p className="red">{error}</p>}</div>
         <div className="header_login">
-          <Logo></Logo>
-          <h2>STOCKED</h2>
+          <img src={logo} alt="stocked logo" className="logo_login"></img>
         </div>
         <div className="user_name">
           <label htmlFor="LoginForm__user_name" className="label_login">
@@ -57,12 +56,22 @@ class LoginForm extends Component {
             id="LoginForm__password"
           />
         </div>
+        <div role="alert" className="alert_login">
+          {error && <p className="red">{error}</p>}
+        </div>
         <div className="login_register_container">
           <Button role="button" type="submit">
             Login
           </Button>
-          <p>
-            Not a member? <Link to="/register">Register here.</Link>
+          <p className="message_redirect">
+            Not a member?{" "}
+            <NavLink
+              to="/register"
+              role="navigation"
+              className="btn_register_link"
+            >
+              Register here.
+            </NavLink>
           </p>
         </div>
       </Form>

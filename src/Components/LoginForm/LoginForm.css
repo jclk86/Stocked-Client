@@ -1,6 +1,12 @@
 .header_login {
   text-align: center;
   padding-top: 50px;
+  margin-bottom: 20px;
+  max-width: 100%;
+}
+
+.logo_login {
+  max-width: 150px;
 }
 
 .label_login {
@@ -11,4 +17,18 @@
 
 .login_register_container {
   text-align: center;
+}
+
+.alert_login {
+  text-align: center;
+}
+
+.message_redirect {
+  font-size: 16px;
+}
+
+.btn_register_link {
+  text-decoration: none;
+  color: rgba(46, 211, 189, 0.973);
+  font-weight: bold;
 }

@@ -1,10 +1,21 @@
 .tag_item {
   text-decoration: none;
-  color: black;
-  border: 1px solid black;
-  padding: 3px;
+  color: white;
+  border-radius: 2px;
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
   margin: 3px 3px;
-  background-color: gray;
+  background-color: rgb(58, 58, 58);
   font-size: 16px;
   cursor: pointer;
+  box-shadow: 1px 1px 1px 1px rgb(46, 45, 45);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.tag_item:focus {
+  background-color: goldenrod;
+  color: rgb(58, 58, 58);
 }

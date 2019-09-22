@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import "./InventoryListPage.css";
-import { Section } from "../../Components/Utils/Utils";
+import { Section, Background } from "../../Components/Utils/Utils";
 import InventoryListItem from "../../Components/InventoryListItem/InventoryListItem";
 import InventoryContext from "../../context/InventoryContext";
 import InventoryApiService from "../../services/inventory-api-service";
@@ -10,6 +10,7 @@ import TagsListItem from "../../Components/TagsListItem/TagsListItem";
 import SearchBox from "../../Components/SearchBox/SearchBox";
 import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary";
 
+// Fix item id issue below
 class InventoryListPage extends Component {
   static contextType = InventoryContext;
   state = {
@@ -60,19 +61,14 @@ class InventoryListPage extends Component {
                 ></TagsListItem>
               ))
             )}
-            <NavLink
-              to={`/${user_id}/inventory`}
-              className="container_btn_show_all"
-            >
-              <button type="button" className="btn_show_all">
-                Show All
-              </button>
+            <NavLink to={`/${user_id}/inventory`} className="btn_show_all">
+              Show All
             </NavLink>
           </ErrorBoundary>
         </ul>
         <SearchBox updateSearch={this.updateSearch}></SearchBox>
 
-        <Section list className="InventoryListPage">
+        <Section list className="inventory_list_main">
           {filteredItems.map(item => (
             <InventoryListItem
               key={item.name} // doublecheck

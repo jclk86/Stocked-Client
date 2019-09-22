@@ -8,6 +8,7 @@ import {
   validatePassword,
   validateEmail
 } from "../ValidationError/ValidationError";
+import logo from "../../images/logo.png";
 
 class RegistrationForm extends Component {
   static defaultProps = {
@@ -59,6 +60,7 @@ class RegistrationForm extends Component {
       <Form onSubmit={this.handleSubmit}>
         <div role="alert">{error && <p className="red">{error}</p>}</div>
         <div className="header_register">
+          <img src={logo} alt="stocked logo" className="register_logo"></img>
           <h2>Registration</h2>
         </div>
         <div className="fullname">
@@ -130,8 +132,11 @@ class RegistrationForm extends Component {
           <Button type="submit">Submit</Button>
         </div>
         <div className="login_link">
-          <p>
-            Already a user? <NavLink to={"/login"}>Login</NavLink>
+          <p className="message_redirect">
+            Already a user?{" "}
+            <NavLink to={"/login"} role="navigation" className="btn_login_link">
+              Login
+            </NavLink>
           </p>
         </div>
       </Form>

@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap");
+
+.EditItem_Form {
+  font-family: "Open Sans", sans-serif;
+}
+
 .title_edit_item_form {
   text-align: center;
   padding-top: 40px;
@@ -19,6 +25,8 @@ select {
   width: 85%;
   margin: 10px auto;
   font-size: 16px;
+  border: 1px solid black;
+  font-family: "Open Sans", sans-serif;
 }
 
 .btn_container {
@@ -37,14 +45,14 @@ select {
   margin: 10px auto;
 }
 
-.item_units,
-.item_cost,
-.item_quantity {
+.container_item_units,
+.container_item_cost,
+.container_item_quantity {
   width: 20%;
 }
 
 .integer_inputs {
-  border: 1px solid #ddd;
+  border: 1px solid black;
   font-size: 1.1em;
   text-align: left;
   border-radius: 5px;
@@ -52,9 +60,9 @@ select {
 }
 
 @media only screen and (max-width: 550px) {
-  .item_units,
-  .item_cost,
-  .item_quantity {
+  .container_item_units,
+  .container_item_cost,
+  .container_item_quantity {
     min-width: 100%;
   }
 }

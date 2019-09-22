@@ -8,7 +8,7 @@ class InventoryListItem extends Component {
     return parseInt(itemQuantity) === 0 ? (
       <span className="restock_message">None left. Restock.</span>
     ) : (
-      <span>
+      <span className="">
         {itemQuantity} {itemUnit}
       </span>
     );
@@ -36,16 +36,19 @@ class InventoryListItem extends Component {
           ></img>
         </div>
 
-        <h2>{item.name}</h2>
-        <p> {item.desc}</p>
+        <h2 className="card_title">{item.name}</h2>
+        <p className="card_desc"> {item.desc}</p>
         <div
           className={item.quantity === 0 ? "restock_message" : "qty_no_style"}
         >
           {" "}
-          Qty: {this.renderRestockMessage(item.quantity, item.unit)}
+          <label className="card_label_qty">Qty:</label>{" "}
+          {this.renderRestockMessage(item.quantity, item.unit)}
         </div>
-        <p>Total Cost: </p>
-        <p>{this.renderTotalCost(item.quantity, item.cost_per_unit)}</p>
+        <h4 className="card_title_total_cost">Total Cost: </h4>
+        <p className="card_cost">
+          {this.renderTotalCost(item.quantity, item.cost_per_unit)}
+        </p>
       </NavLink>
     );
   }

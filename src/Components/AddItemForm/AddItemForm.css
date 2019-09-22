@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap");
+
+.AddItem_Form {
+  font-family: "Open Sans", sans-serif;
+}
+
 .title_add_item_form {
   text-align: center;
   padding-top: 40px;
@@ -14,12 +20,17 @@
   margin-bottom: 10px;
 }
 
+textarea {
+  font-family: "Open Sans", sans-serif;
+}
+
 select {
   display: block;
   width: 85%;
   margin: 10px auto;
   font-size: 16px;
   border-radius: 5px;
+  border: 1px solid black;
 }
 
 .container_btn {
@@ -38,9 +49,9 @@ select {
   margin: 10px auto;
 }
 
-.item_units,
-.item_cost,
-.item_quantity {
+.container_item_units,
+.container_item_cost,
+.container_item_quantity {
   width: 20%;
 }
 
@@ -51,7 +62,6 @@ select {
   text-align: left;
   border-radius: 5px;
   width: 100%;
-  
 }
 
 .error {
@@ -62,9 +72,9 @@ select {
 }
 
 @media only screen and (max-width: 550px) {
-  .item_units,
-  .item_cost,
-  .item_quantity {
+  .container_item_units,
+  .container_item_cost,
+  .container_item_quantity {
     min-width: 100%;
   }
 }

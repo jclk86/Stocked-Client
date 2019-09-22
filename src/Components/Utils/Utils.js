@@ -1,17 +1,20 @@
 import React from "react";
-import { format as formatDate } from "date-fns";
 import "./Utils.css";
 
 export function Logo({ className, ...props }) {
   return <div className={["Logo", className].join(" ")} {...props}></div>;
 }
 
-export function NavBar({ className, ...props }) {
-  return <div className={["NavBar", className].join(" ")} {...props}></div>;
+export function LogoMain({ className, ...props }) {
+  return <div className={["LogoMain", className].join(" ")} {...props}></div>;
 }
 
-export function NiceDate({ date, format = "Do MMMM YYYY" }) {
-  return formatDate(date, format);
+export function Background({ className, ...props }) {
+  return <div className={["Background", className].join(" ")} {...props}></div>;
+}
+
+export function NavBar({ className, ...props }) {
+  return <div className={["NavBar", className].join(" ")} {...props}></div>;
 }
 
 export function Form({ className, ...props }) {

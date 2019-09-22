@@ -1,5 +1,5 @@
 .item_card {
-  border: 1px solid black;
+  background-color: white;
   width: 250px;
   flex-basis: 20%;
   padding: 10px;
@@ -8,6 +8,8 @@
   text-align: center;
   text-decoration: none;
   overflow-wrap: break-word;
+  border-radius: 1px;
+  box-shadow: 1px 1px 1px 1px rgb(61, 61, 61);
 }
 
 .inventory_image {
@@ -15,10 +17,48 @@
   max-height: 100%;
 }
 
+.card_title {
+  font-size: 22px;
+  line-height: 26px;
+  margin-top: 0;
+  margin-bottom: 4px;
+  text-decoration: underline;
+}
+
+.card_desc {
+  margin-top: 3px;
+  font-size: 16px;
+  margin-bottom: 3px;
+  color: rgb(80, 78, 78);
+  font-weight: bold;
+}
+
 .restock_message {
+  margin-top: 0;
   color: red;
+  font-weight: bold;
+}
+
+.card_label_qty {
+  color: black;
+  font-weight: bold;
 }
 
 .qty_no_style {
-  color: black;
+  color: rgb(80, 78, 78);
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.card_title_total_cost {
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.card_cost {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  font-weight: bold;
+  color: rgb(80, 78, 78);
 }
