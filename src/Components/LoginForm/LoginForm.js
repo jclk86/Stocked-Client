@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Input, Form, Logo } from "../Utils/Utils";
+import { Button, Input, Form } from "../Utils/Utils";
 import { NavLink, withRouter } from "react-router-dom";
 import "./LoginForm.css";
 import AuthApiService from "../../services/auth-api-service";
