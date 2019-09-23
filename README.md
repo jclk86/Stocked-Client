@@ -38,12 +38,12 @@ Since all the inventory is user-specific, it meant that there needed to be route
 
 <p align="left">
   <p>Login:</p>
-  <img src="screenshots/Login.png">
+  <img src="screenshots/LoginForm.png">
 </p>
 
 <p align="left">
   <p>Registration:</p>
-  <img src="screenshots/Register.png">
+  <img src="screenshots/RegisterForm.png">
 </p>
 
 <p align="left">
