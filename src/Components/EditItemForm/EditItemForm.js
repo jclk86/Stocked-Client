@@ -304,7 +304,7 @@ class EditItemForm extends Component {
             <Required />
           </label>{" "}
           <select
-            defaultValue={tag.value}
+            value={tag.value}
             id="EditItemForm__tags"
             name="tag"
             onChange={e => this.editTag(e.target.value)}
