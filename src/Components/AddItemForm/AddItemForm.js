@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import "./AddItemForm.css";
-import {
-  Form,
-  Input,
-  Required,
-  Button,
-  Textarea,
-  Background
-} from "../Utils/Utils";
+import { Form, Input, Required, Button, Textarea } from "../Utils/Utils";
 import InventoryContext from "../../context/InventoryContext";
 import InventoryApiService from "../../services/inventory-api-service";
 import {
