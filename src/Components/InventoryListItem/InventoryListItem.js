@@ -31,7 +31,7 @@ class InventoryListItem extends Component {
         <div role="img" aria-label={`A ${item.name}`}>
           <img
             src={item.image_url}
-            className="inventory_image"
+            className="inventory_image mobile_hidden"
             alt={`${item.name}`}
           ></img>
         </div>
