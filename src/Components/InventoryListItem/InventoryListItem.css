@@ -72,4 +72,9 @@
   .item_card {
     flex-basis: 45%;
   }
+
+  .card_title {
+    color: rgb(55, 168, 168);
+    text-decoration: none;
+  }
 }

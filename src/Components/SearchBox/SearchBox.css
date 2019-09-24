@@ -13,3 +13,9 @@
   max-width: 100%;
   text-align: center;
 }
+
+@media only screen and (max-width: 600px) {
+  .search_inventory_filter {
+    max-width: 50%;
+  }
+}
