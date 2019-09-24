@@ -58,11 +58,11 @@ class RegistrationForm extends Component {
     const { error, password, email } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
-        <div role="alert">{error && <p className="red">{error}</p>}</div>
         <div className="header_register">
           <img src={logo} alt="stocked logo" className="register_logo"></img>
           <h2>Registration</h2>
         </div>
+        <div role="alert">{error && <p className="red">{error}</p>}</div>
         <div className="fullname">
           <label
             htmlFor="RegistrationForm__fullname"
@@ -102,7 +102,7 @@ class RegistrationForm extends Component {
             onChange={e => this.updatePassword(e.target.value)}
             name="password"
             type="password"
-            required
+            // required
             id="RegistrationForm__password"
           />
           {password.touched && (
