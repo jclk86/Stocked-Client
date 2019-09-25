@@ -26,29 +26,30 @@ class InventoryListItem extends Component {
       <NavLink
         role="navigation"
         to={`/${item.user_id}/inventory/edit-item/${item.item_id}`}
-        className="item_card"
+        className="item_card clearfix"
       >
-        <div role="img" aria-label={`A ${item.name}`}>
-          <img
-            src={item.image_url}
-            className="inventory_image mobile_hidden"
-            alt={`${item.name}`}
-          ></img>
+        <div className="container_content">
+          <div role="img" aria-label={`A ${item.name}`}>
+            <img
+              src={item.image_url}
+              className="inventory_image mobile_hidden"
+              alt={`${item.name}`}
+            ></img>
+          </div>
+          <h2 className="card_title">{item.name}</h2>
+          <p className="card_desc"> {item.desc}</p>
+          <div
+            className={item.quantity === 0 ? "restock_message" : "qty_no_style"}
+          >
+            {" "}
+            <label className="card_label_qty">Qty:</label>{" "}
+            {this.renderRestockMessage(item.quantity, item.unit)}
+          </div>
+          <h4 className="card_title_total_cost">Total Cost: </h4>
+          <p className="card_cost">
+            {this.renderTotalCost(item.quantity, item.cost_per_unit)}
+          </p>
         </div>
-
-        <h2 className="card_title">{item.name}</h2>
-        <p className="card_desc"> {item.desc}</p>
-        <div
-          className={item.quantity === 0 ? "restock_message" : "qty_no_style"}
-        >
-          {" "}
-          <label className="card_label_qty">Qty:</label>{" "}
-          {this.renderRestockMessage(item.quantity, item.unit)}
-        </div>
-        <h4 className="card_title_total_cost">Total Cost: </h4>
-        <p className="card_cost">
-          {this.renderTotalCost(item.quantity, item.cost_per_unit)}
-        </p>
       </NavLink>
     );
   }
