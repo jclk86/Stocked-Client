@@ -60,7 +60,7 @@ textarea {
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 5px 5px 5px rgb(32, 32, 32);
+  box-shadow: 3px 6px 7px 0px rgb(27, 26, 26);
 }
 
 .NavBar {
@@ -80,9 +80,25 @@ textarea {
   padding-bottom: 150px;
 }
 
+.BackgroundMain {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../../images/bg-main.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-bottom: 50px;
+}
+
 @media only screen and (min-width: 767px) {
   .Background {
     height: calc(100vh + 100px);
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .BackgroundMain {
+    height: calc(100vh + 200px);
   }
 }
 

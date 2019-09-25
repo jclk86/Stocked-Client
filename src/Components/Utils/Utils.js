@@ -13,6 +13,12 @@ export function Background({ className, ...props }) {
   return <div className={["Background", className].join(" ")} {...props}></div>;
 }
 
+export function BackgroundMain({ className, ...props }) {
+  return (
+    <div className={["BackgroundMain", className].join(" ")} {...props}></div>
+  );
+}
+
 export function NavBar({ className, ...props }) {
   return <div className={["NavBar", className].join(" ")} {...props}></div>;
 }
