@@ -77,7 +77,9 @@ textarea {
   -o-background-size: cover;
   background-size: cover;
   padding-top: 150px;
-  padding-bottom: 150px;
+  padding-bottom: 50px;
+  min-height: 100vh;
+  overflow: auto;
 }
 
 .BackgroundMain {
@@ -87,40 +89,7 @@ textarea {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  padding-bottom: 100px;
-}
-
-@media only screen and (min-width: 767px) {
-  .Background {
-    height: calc(100vh + 100px);
-  }
-}
-
-@media only screen and (min-width: 1000px) {
-  .BackgroundMain {
-    height: calc(100vh + 250px);
-  }
-}
-
-@media only screen and (max-width: 814px) {
-  .Background {
-    padding-top: 20px;
-  }
-}
-@media only screen and (max-width: 412px) {
-  .Background {
-    height: calc(100vh + 30px);
-  }
-}
-
-@media only screen and (min-width: 812px) and (max-width: 823px) {
-  .Background {
-    height: calc(100vh + 500px);
-  }
-}
-
-@media only screen and (max-width: 411px) {
-  .Background {
-    height: calc(100vh + 350px);
-  }
+  padding-bottom: 50px;
+  min-height: 100vh;
+  overflow: auto;
 }
