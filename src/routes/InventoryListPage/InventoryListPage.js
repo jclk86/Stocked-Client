@@ -16,6 +16,8 @@ class InventoryListPage extends Component {
     search: ""
   };
 
+  // user_id obtained from login. Then, only the specific user's
+  // inventory list is then set in the context provider.
   componentDidMount() {
     this.context.clearError();
     InventoryApiService.getInventory(this.props.match.params.user_id).then(
@@ -38,6 +40,8 @@ class InventoryListPage extends Component {
       this.context.inventoryList,
       this.props.match.params.tag_id
     );
+    // If a tag/category is chosen, the search input filters
+    // through items belonging to that tag/category only.
     const filteredItems = itemsForTag.filter(item => {
       return item.name.toLowerCase().includes(this.state.search.toLowerCase());
     });

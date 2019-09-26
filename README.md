@@ -2,7 +2,7 @@
 
 A quick and easy supply tracking app that lets users add, edit, delete inventory items
 
-<!-- links and login info -->
+Live link: https://stocked-client.jclk86.now.sh
 
 ## Login
 
@@ -63,6 +63,6 @@ Another notable challenge included user-specific inventory. Since all the invent
   <img src="screenshots/EditItemForm.png">
 </p>
 
-## Technologies Used
+## Built With
 
-React, Node.js, Express, JavaScript and PostgreSQL.
+React, Node.js, Express, JavaScript, and PostgreSQL.
