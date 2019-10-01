@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap");
 
+.NavBar {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
 .container_logo {
   height: 100%;
   padding-bottom: -10px;
@@ -26,7 +31,7 @@
   border-radius: 2px;
   padding: 5px 8px 5px 8px;
   font-size: 16px;
-  color: rgb(58, 58, 58);
+  color: black;
   font-weight: bold;
   box-shadow: 3px 4px 6px 0px rgb(27, 26, 26);
   outline: none;
@@ -39,12 +44,12 @@
 .add_inventory_button,
 .view_inventory_button {
   border: 1px solid white;
-  background-color: rgb(250, 236, 169);
+  background-color: white;
 }
 
 .logout_button {
   border: 1px solid goldenrod;
-  background-color: gold;
+  background-color: goldenrod;
   color: (58, 58, 58);
 }
 
@@ -53,13 +58,73 @@
   box-shadow: none;
 }
 
-@media only screen and (max-width: 640px) {
-  .nav_top_right_links,
-  .top_right_link {
+@media only screen and (min-width: 320px) and (max-width: 600px) and (orientation: portrait) {
+  .nav_top_right_links {
+    width: 50%;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-right: 5px;
+  }
+
+  .nav_link {
+    width: 90%;
+  }
+
+  .add_inventory_button,
+  .view_inventory_button,
+  .logout_button {
     width: 100%;
+    font-size: 17px;
   }
 
   .top_right_link {
     margin-bottom: 7px;
+  }
+}
+
+@media only screen and (min-width: 568px) and (max-width: 640px) and (orientation: landscape) {
+  .nav_top_right_links {
+    width: 70%;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-right: 5px;
+  }
+
+  .add_inventory_button,
+  .view_inventory_button,
+  .logout_button {
+    margin: 5px;
+  }
+}
+
+@media only screen and (min-width: 667px) and (max-width: 768px) and (orientation: landscape) {
+  .add_inventory_button,
+  .view_inventory_button,
+  .logout_button {
+    margin-right: 5px;
+  }
+}
+
+@media only screen and (min-width: 667px) and (max-width: 667px) and (orientation: landscape) {
+  .nav_top_right_links {
+    width: 70%;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-right: 5px;
+  }
+
+  .add_inventory_button,
+  .view_inventory_button,
+  .logout_button {
+    margin: 5px;
   }
 }

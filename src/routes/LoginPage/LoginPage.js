@@ -10,7 +10,7 @@ class LoginPage extends Component {
       push: () => {}
     }
   };
-
+  // it's might be location userId is being lost
   handleLoginSuccess = userId => {
     const { location, history } = this.props;
     const destination = (location.state || {}).from || `/${userId}/inventory`;

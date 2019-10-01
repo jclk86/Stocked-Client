@@ -45,11 +45,8 @@ textarea {
 }
 
 .Section--list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: space-evenly;
+  column-count: 4;
+  column-gap: 1em;
 }
 
 .Form {
@@ -92,4 +89,23 @@ textarea {
   padding-bottom: 50px;
   min-height: 100vh;
   overflow: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .Section--list {
+    column-count: 2;
+    column-gap: 1em;
+    /* display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center; */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .Section--list {
+    margin-left: 3px;
+    margin-right: 3px;
+  }
 }
