@@ -11,7 +11,7 @@ textarea {
   border-radius: 1px;
   font-family: "Open Sans", sans-serif;
 }
-/* apply font above */
+
 .Input::placeholder,
 .Textarea::placeholder {
   color: #ccc;
@@ -47,6 +47,8 @@ textarea {
 .Section--list {
   column-count: 4;
   column-gap: 1em;
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 .Form {
@@ -95,11 +97,6 @@ textarea {
   .Section--list {
     column-count: 2;
     column-gap: 1em;
-    /* display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: center; */
   }
 }
 

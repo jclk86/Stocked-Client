@@ -21,6 +21,7 @@ class App extends Component {
     return { hasError: true };
   }
 
+  // If auth token is passed,
   componentDidMount() {
     IdleService.setIdleCallback(this.logoutFromIdle);
     if (TokenService.hasAuthToken()) {

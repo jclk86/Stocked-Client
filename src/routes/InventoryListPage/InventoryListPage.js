@@ -65,11 +65,13 @@ class InventoryListPage extends Component {
                   ></TagsListItem>
                 ))
               )}
-              <NavLink to={`/${user_id}/inventory`} className="btn_show_all">
-                Show All
-              </NavLink>
             </ErrorBoundary>
           </ul>
+          <div className="container_btn_show_all">
+            <NavLink to={`/${user_id}/inventory`} className="btn_show_all">
+              Show All
+            </NavLink>
+          </div>
           <SearchBox updateSearch={this.updateSearch}></SearchBox>
 
           <Section list className="inventory_list_main">

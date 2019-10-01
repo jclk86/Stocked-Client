@@ -4,8 +4,8 @@ export function validateName(fieldValue) {
   const name = fieldValue.trim();
   if (name.length === 0) {
     return "Please enter a name";
-  } else if (name.length < 3 || name.length > 20) {
-    return "Item name should be between 3 and 20 characters";
+  } else if (name.length < 3) {
+    return "Item name should be greater than 3 characters";
   }
 }
 

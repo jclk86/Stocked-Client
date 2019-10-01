@@ -22,10 +22,10 @@ class LoginForm extends Component {
       password: password.value
     })
       .then(res => {
-        const user = res.id;
+        const userId = res.id.id;
         username.value = "";
         password.value = "";
-        this.props.onLoginSuccess(user.id);
+        this.props.onLoginSuccess(userId);
       })
       .catch(res => {
         this.setState({ error: res.error });
