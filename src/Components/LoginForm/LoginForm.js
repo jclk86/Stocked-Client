@@ -4,6 +4,7 @@ import { NavLink, withRouter } from "react-router-dom";
 import "./LoginForm.css";
 import AuthApiService from "../../services/auth-api-service";
 import logo from "../../images/logo.png";
+import TokenService from "../../services/token-service";
 
 class LoginForm extends Component {
   static defaultProps = {
@@ -22,11 +23,11 @@ class LoginForm extends Component {
       password: password.value
     })
       .then(res => {
-        // Retrieves user id from payload.
-        const userId = res.id.id;
+        const tokenDecoded = TokenService.readJwtToken(res);
         username.value = "";
         password.value = "";
-        this.props.onLoginSuccess(userId);
+        this.props.match.params.user_id = tokenDecoded.id; // new code
+        this.props.onLoginSuccess(tokenDecoded.id);
       })
       .catch(res => {
         this.setState({ error: res.error });
