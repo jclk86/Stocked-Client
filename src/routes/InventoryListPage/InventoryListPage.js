@@ -9,6 +9,7 @@ import Header from "../../Components/Header/Header";
 import TagsListItem from "../../Components/TagsListItem/TagsListItem";
 import SearchBox from "../../Components/SearchBox/SearchBox";
 import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary";
+import TokenService from "../../services/token-service";
 
 class InventoryListPage extends Component {
   static contextType = InventoryContext;
@@ -25,7 +26,9 @@ class InventoryListPage extends Component {
   // in App component, which then renders here.
   componentDidMount() {
     this.context.clearError();
-    InventoryApiService.getInventory(this.props.match.params.user_id).then(
+    const encryptedPayload = TokenService.getAuthToken();
+    const token = TokenService.parseJwt(encryptedPayload);
+    InventoryApiService.getInventory(token.id).then(
       this.context.setInventoryList
     );
     InventoryApiService.getAllTags().then(this.context.setTagsList);

@@ -4,12 +4,15 @@ import TokenService from "../../services/token-service";
 
 export default function PublicOnlyRoute({ component, ...props }) {
   const Component = component;
+  const encryptedPayload = TokenService.getAuthToken();
+  const token = TokenService.parseJwt(encryptedPayload);
+
   return (
     <Route
       {...props}
       render={componentProps =>
         TokenService.hasAuthToken() ? (
-          <Redirect to={`/:user_id/inventory`} />
+          <Redirect to={`/${token.id}/inventory`} />
         ) : (
           <Component {...componentProps} />
         )
