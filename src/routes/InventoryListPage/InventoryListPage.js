@@ -26,9 +26,9 @@ class InventoryListPage extends Component {
   // in App component, which then renders here.
   componentDidMount() {
     this.context.clearError();
-    const encryptedPayload = TokenService.getAuthToken();
-    const token = TokenService.parseJwt(encryptedPayload);
-    InventoryApiService.getInventory(token.id).then(
+    // const token = TokenService.readJwtToken();
+    InventoryApiService.getInventory(this.props.match.params.user_id).then(
+      //was token.id
       this.context.setInventoryList
     );
     InventoryApiService.getAllTags().then(this.context.setTagsList);

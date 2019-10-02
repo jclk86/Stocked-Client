@@ -4,13 +4,15 @@ import { NavLink, withRouter } from "react-router-dom";
 import "./LoginForm.css";
 import AuthApiService from "../../services/auth-api-service";
 import logo from "../../images/logo.png";
+import config from "../../config";
+import TokenService from "../../services/token-service";
 
 class LoginForm extends Component {
   static defaultProps = {
     onLoginSuccess: () => {}
   };
 
-  state = { error: null };
+  state = { error: null }; // fix this. thinks you'r etryingto render an object
 
   handleSubmitBasicAuth = event => {
     event.preventDefault();
@@ -22,11 +24,11 @@ class LoginForm extends Component {
       password: password.value
     })
       .then(res => {
-        // Retrieves user id from payload.
-        const userId = res.id.id;
+        const tokenDecoded = TokenService.readJwtToken(res);
+        console.log(tokenDecoded);
         username.value = "";
         password.value = "";
-        this.props.onLoginSuccess(userId);
+        this.props.onLoginSuccess(tokenDecoded.user_id); // changes
       })
       .catch(res => {
         this.setState({ error: res.error });
@@ -57,9 +59,7 @@ class LoginForm extends Component {
             id="LoginForm__password"
           />
         </div>
-        <div role="alert" className="alert_login">
-          {error && <p className="red">{error}</p>}
-        </div>
+        <div role="alert" className="alert_login"></div>
         <div className="login_register_container">
           <Button role="button" type="submit">
             Login

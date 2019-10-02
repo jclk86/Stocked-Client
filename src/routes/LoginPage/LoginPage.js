@@ -12,6 +12,7 @@ class LoginPage extends Component {
   };
 
   handleLoginSuccess = userId => {
+    console.log(userId);
     const { location, history } = this.props;
     const destination = (location.state || {}).from || `/${userId}/inventory`;
     history.push({ pathname: destination, state: userId });
