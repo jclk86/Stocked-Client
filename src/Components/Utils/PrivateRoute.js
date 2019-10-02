@@ -4,6 +4,7 @@ import TokenService from "../../services/token-service";
 
 export default function PrivateRoute({ component, ...props }) {
   const Component = component;
+  // Path is only accessible with token.
   return (
     <Route
       {...props}

@@ -21,7 +21,10 @@ class App extends Component {
     return { hasError: true };
   }
 
-  // If auth token is passed,
+  // If auth token is passed, setTimeout and provide a new token.
+  // Establishes detection of keyboard or mouse activity on the app.
+  // If not activity, log out and clear session storage and force render()
+  // on component.
   componentDidMount() {
     IdleService.setIdleCallback(this.logoutFromIdle);
     if (TokenService.hasAuthToken()) {
@@ -31,7 +34,7 @@ class App extends Component {
       });
     }
   }
-
+  // Once components unmount, clear idle timeout.
   componentWillUnmount() {
     IdleService.unRegisterIdleResets();
     TokenService.clearCallbackBeforeExpiry();

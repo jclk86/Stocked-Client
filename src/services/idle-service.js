@@ -7,23 +7,26 @@ let _notIdleEvents = [
   "scroll",
   "touchstart"
 ];
-let _FIVE_MINUTES_IN_MS = 5 * 60 * 1000;
+let _FIVE_MINUTES_IN_MS = 1 * 60 * 1000;
 
 const IdleService = {
+  // Sets the idle timeout.
   setIdleCallback(idleCallback) {
     _idleCallback = idleCallback;
   },
-
+  // Cancels timeout and establishes a new idle timeout.
   resetIdleTimer(ev) {
     clearTimeout(_timeoutId);
 
     _timeoutId = setTimeout(_idleCallback, _FIVE_MINUTES_IN_MS);
   },
+  // Detects keyboard and mouse activity on app.
   regiserIdleTimerResets() {
     _notIdleEvents.forEach(event =>
       document.addEventListener(event, IdleService.resetIdleTimer, true)
     );
   },
+  // Stops listening for activity on app.
   unRegisterIdleResets() {
     clearTimeout(_timeoutId);
     _notIdleEvents.forEach(event =>

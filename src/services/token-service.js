@@ -17,6 +17,7 @@ const TokenService = {
   hasAuthToken() {
     return !!TokenService.getAuthToken();
   },
+  // encrypts user info
   makeBasicAuthToken(userName, password) {
     return window.btoa(`${userName}:${password}`);
   },
@@ -26,9 +27,11 @@ const TokenService = {
   readJwtToken() {
     return TokenService.parseJwt(TokenService.getAuthToken());
   },
+  // Starting time of idle timeout established.
   _getMsUntilExpiry(payload) {
     return payload.exp * 1000 - Date.now();
   },
+  // Queues callback 10 seconds before timeout.
   queueCallbackBeforeExpiry(callback) {
     const msUntilExpiry = TokenService._getMsUntilExpiry(
       TokenService.readJwtToken()
@@ -36,6 +39,7 @@ const TokenService = {
 
     _timeoutId = setTimeout(callback, msUntilExpiry - _TEN_SECONDS_IN_MS);
   },
+  // Clears the setTimeout.
   clearCallbackBeforeExpiry() {
     clearTimeout(_timeoutId);
   }

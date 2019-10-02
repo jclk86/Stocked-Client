@@ -4,6 +4,8 @@ import { NavLink, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 class InventoryListItem extends Component {
+  // If item has 0 quantity, renders red notification message to user on
+  // item card.
   renderRestockMessage = (itemQuantity, itemUnit) => {
     return parseInt(itemQuantity) === 0 ? (
       <span className="restock_message">None left. Restock.</span>

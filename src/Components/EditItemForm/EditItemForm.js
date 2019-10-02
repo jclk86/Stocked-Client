@@ -46,7 +46,8 @@ class EditItemForm extends Component {
       }
     };
   }
-
+  // Populates Edit form with available info from item. If image is generic,
+  // which is provide if user doesn't provide an image, image input will remain empty.
   componentDidMount() {
     const { user_id, item_id } = this.props.match.params;
 
@@ -134,6 +135,7 @@ class EditItemForm extends Component {
       unit: unit.value,
       cost_per_unit: cost_per_unit.value
     };
+    // Item is update for the specific user who owns that item.
     InventoryApiService.updateItem(item, user_id, item_id).then(item => {
       this.props.history.push(`/${user_id}/inventory`);
     });
@@ -154,7 +156,7 @@ class EditItemForm extends Component {
       tag.value
     );
   };
-
+  // Deletes item that specific user owns.
   handleDelete = (user_id, item_id) => {
     InventoryApiService.deleteItem(user_id, item_id).then(() => {
       this.props.history.push(`/${user_id}/inventory`);

@@ -12,12 +12,17 @@ import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary";
 
 class InventoryListPage extends Component {
   static contextType = InventoryContext;
-  state = {
-    search: ""
-  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      search: ""
+    };
+  }
 
   // user_id obtained from login. Then, only the specific user's
-  // inventory list is then set in the context provider.
+  // inventory list is set in the context provider, which populates the state
+  // in App component, which then renders here.
   componentDidMount() {
     this.context.clearError();
     InventoryApiService.getInventory(this.props.match.params.user_id).then(

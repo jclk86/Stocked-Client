@@ -35,7 +35,7 @@ class RegistrationForm extends Component {
     event.preventDefault();
     const { fullname, password, username, email } = event.target;
     this.setState({ error: null, password: password, email: email });
-
+    // Adds user and user info to database.
     AuthApiService.postUser({
       username: username.value,
       password: password.value,

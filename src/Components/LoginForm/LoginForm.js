@@ -22,6 +22,7 @@ class LoginForm extends Component {
       password: password.value
     })
       .then(res => {
+        // Retrieves user id from payload.
         const userId = res.id.id;
         username.value = "";
         password.value = "";

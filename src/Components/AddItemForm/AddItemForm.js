@@ -93,6 +93,7 @@ class AddItemForm extends Component {
       tag
     } = this.state;
     const { user_id } = this.props.match.params;
+    // Create item object to be added to Context Provider.
     const item = {
       user_id: parseInt(user_id),
       name: name.value,
@@ -105,6 +106,8 @@ class AddItemForm extends Component {
       unit: unit.value,
       cost_per_unit: cost_per_unit.value
     };
+    // Adds item to Context Provider, which populates the state in the App component, which renders
+    // in inventory in InventoryPage component.
     InventoryApiService.postItem(item, user_id)
       .then(this.context.addInventoryItem(item))
       .then(() => {
@@ -132,8 +135,9 @@ class AddItemForm extends Component {
     const { quantity, cost_per_unit, name, unit, tag } = this.state;
     const { user_id } = this.props.match.params;
     const { tagsList } = this.context;
-    const isValid = this.isFormValid();
 
+    // Disables submit button till form is appropriately filled out.
+    const isValid = this.isFormValid();
     return (
       <Form
         className="AddItem_Form"

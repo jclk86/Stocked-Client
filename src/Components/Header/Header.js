@@ -7,6 +7,8 @@ import "./Header.css";
 import logo from "../../images/logo.png";
 
 export default class Header extends Component {
+  // Upon clicking logout, windows session storage is all cleared.
+  // And all idle services are cleared.
   handleLogoutClick = () => {
     TokenService.clearAuthToken();
     TokenService.clearCallbackBeforeExpiry();
