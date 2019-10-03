@@ -7,7 +7,9 @@ let _notIdleEvents = [
   "scroll",
   "touchstart"
 ];
-let _FIVE_MINUTES_IN_MS = 1 * 60 * 1000;
+
+// Adjust time for idle timer.
+let _FIVE_MINUTES_IN_MS = 5 * 60 * 1000;
 
 const IdleService = {
   // Sets the idle timeout.
@@ -15,6 +17,7 @@ const IdleService = {
     _idleCallback = idleCallback;
   },
   // Cancels timeout and establishes a new idle timeout.
+  // Takes on an event activity arg.
   resetIdleTimer(ev) {
     clearTimeout(_timeoutId);
 
