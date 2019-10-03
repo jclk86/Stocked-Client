@@ -4,7 +4,8 @@ import TokenService from "../../services/token-service";
 
 export default function PrivateRoute({ component, ...props }) {
   const Component = component;
-  // Path is only accessible with token.
+  // Path is only accessible with token. If token is provided,
+  // Component from App is passed through. If not, redirects to login page.
   return (
     <Route
       {...props}

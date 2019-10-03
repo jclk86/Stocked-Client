@@ -17,16 +17,16 @@ class LoginForm extends Component {
     event.preventDefault();
     this.setState({ error: null });
     const { username, password } = event.target;
-
+    // Retrieves jwt payload.
     AuthApiService.postLogin({
       username: username.value,
       password: password.value
     })
       .then(res => {
+        // Payload is parsed and read for user id.
         const tokenDecoded = TokenService.readJwtToken(res);
         username.value = "";
         password.value = "";
-        this.props.match.params.user_id = tokenDecoded.id; // new code
         this.props.onLoginSuccess(tokenDecoded.id);
       })
       .catch(res => {

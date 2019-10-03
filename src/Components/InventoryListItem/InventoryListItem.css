@@ -1,16 +1,15 @@
 .item_card {
   background-color: white;
-  width: 100%;
-  height: 0%;
+  width: 23%;
   padding: 10px;
   position: relative;
-  margin: 0 0 1em;
+  margin: 5px;
   text-align: center;
   text-decoration: none;
   overflow-wrap: break-word;
   border-radius: 1px;
   box-shadow: 3px 6px 7px 0px rgb(27, 26, 26);
-  display: inline-block;
+  display: block;
 }
 
 .inventory_image {
@@ -74,5 +73,9 @@
   .card_title {
     color: rgb(55, 168, 168);
     text-decoration: none;
+  }
+
+  .item_card {
+    width: 46%;
   }
 }

@@ -45,8 +45,10 @@ textarea {
 }
 
 .Section--list {
-  column-count: 4;
-  column-gap: 1em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   padding-left: 3px;
   padding-right: 3px;
 }
@@ -93,16 +95,8 @@ textarea {
   overflow: auto;
 }
 
-@media only screen and (max-width: 600px) {
-  .Section--list {
-    column-count: 2;
-    column-gap: 1em;
-  }
-}
-
 @media only screen and (max-width: 768px) {
   .Section--list {
-    margin-left: 3px;
-    margin-right: 3px;
+    justify-content: space-evenly;
   }
 }

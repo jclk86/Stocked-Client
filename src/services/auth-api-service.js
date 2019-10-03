@@ -10,9 +10,13 @@ const AuthApiService = {
         "content-type": "application/json"
       },
       body: JSON.stringify(user)
-    }).then(res => {
-      return !res.ok ? res.json().then(e => Promise.reject(e)) : res.json();
-    });
+    })
+      .then(res => {
+        return !res.ok ? res.json().then(e => Promise.reject(e)) : res.json();
+      })
+      .catch(err => {
+        console.error(err);
+      });
   },
 
   postLogin({ username, password }) {
@@ -33,8 +37,14 @@ const AuthApiService = {
           AuthApiService.postRefreshToken();
         });
         return res;
+      })
+      .catch(err => {
+        console.error(err);
       });
   },
+
+  // Requests to backend to execute createJWT and send payload again.
+  // This is triggered in set intervals.
   postRefreshToken(user) {
     return fetch(`${config.API_ENDPOINT}/auth/register`, {
       method: "POST",
@@ -54,7 +64,6 @@ const AuthApiService = {
         return res;
       })
       .catch(err => {
-        console.log("refresh token request");
         console.error(err);
       });
   }

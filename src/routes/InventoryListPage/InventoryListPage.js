@@ -8,7 +8,6 @@ import InventoryApiService from "../../services/inventory-api-service";
 import Header from "../../Components/Header/Header";
 import TagsListItem from "../../Components/TagsListItem/TagsListItem";
 import SearchBox from "../../Components/SearchBox/SearchBox";
-import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary";
 import TokenService from "../../services/token-service";
 
 class InventoryListPage extends Component {
@@ -52,27 +51,30 @@ class InventoryListPage extends Component {
     const filteredItems = itemsForTag.filter(item => {
       return item.name.toLowerCase().includes(this.state.search.toLowerCase());
     });
-    const { user_id } = this.props.match.params;
-    const { error } = this.context;
 
+    const itemsSortedByDate = filteredItems.sort(function(a, b) {
+      return new Date(b.date_modified) - new Date(a.date_modified);
+    });
+
+    const { user_id } = this.props.match.params;
+
+    const { error } = this.context;
     return (
       <BackgroundMain>
         <div className="container_inventory_list_page">
           <Header user_id={user_id}></Header>
           <ul className="tags_list">
-            <ErrorBoundary>
-              {error ? (
-                <p className="red">There was an error, try again</p>
-              ) : (
-                this.context.tagsList.map(tag => (
-                  <TagsListItem
-                    key={tag.name}
-                    tag={tag}
-                    user_id={user_id}
-                  ></TagsListItem>
-                ))
-              )}
-            </ErrorBoundary>
+            {error ? (
+              <p className="red">There was an error, try again</p>
+            ) : (
+              this.context.tagsList.map(tag => (
+                <TagsListItem
+                  key={tag.name}
+                  tag={tag}
+                  user_id={user_id}
+                ></TagsListItem>
+              ))
+            )}
           </ul>
           <div className="container_btn_show_all">
             <NavLink to={`/${user_id}/inventory`} className="btn_show_all">
@@ -82,7 +84,7 @@ class InventoryListPage extends Component {
           <SearchBox updateSearch={this.updateSearch}></SearchBox>
 
           <Section list className="inventory_list_main">
-            {filteredItems.map(item => (
+            {itemsSortedByDate.map(item => (
               <InventoryListItem
                 key={item.name}
                 item={item}

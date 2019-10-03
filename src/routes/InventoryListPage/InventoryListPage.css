@@ -7,6 +7,7 @@
 
 .inventory_list_main {
   margin-top: 80px;
+  width: 100%;
 }
 
 .container_tags {
@@ -17,12 +18,10 @@
 
 .tags_list {
   display: grid;
-  grid-template-areas: "left left-mid right-mid right";
+  grid-template-areas: "left left-mid mid right-mid right";
   grid-gap: 5px;
   grid-template-columns: repeat(5, 1fr);
   grid-auto-flow: dense;
-  /* flex-direction: row;
-  flex-wrap: wrap; */
   max-width: 600px;
   padding-top: 75px;
   padding-left: 0px;

@@ -17,7 +17,7 @@ const TokenService = {
   hasAuthToken() {
     return !!TokenService.getAuthToken();
   },
-  // encrypts user info
+  // encrypts user info.
   makeBasicAuthToken(userName, password) {
     return window.btoa(`${userName}:${password}`);
   },

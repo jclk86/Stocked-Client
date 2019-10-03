@@ -13,6 +13,8 @@ const InventoryContext = React.createContext({
 });
 export default InventoryContext;
 
+// State will get populated with user-specific data and
+// error utilities for inventory and edit item components.
 export class InventoryProvider extends Component {
   state = {
     inventoryList: [],
