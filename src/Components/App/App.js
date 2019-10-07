@@ -50,6 +50,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <head>
+          <link
+            rel="shortcut icon"
+            href="%PUBLIC_URL%/favicon.ico?"
+            type="image/x-icon"
+          />
+        </head>
         <main className="App__main">
           {this.state.hasError && (
             <p className="red">There was an error! Oh no!</p>
