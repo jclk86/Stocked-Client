@@ -40,6 +40,13 @@ class App extends Component {
     TokenService.clearCallbackBeforeExpiry();
   }
 
+  logoutFromIdle = () => {
+    TokenService.clearAuthToken();
+    TokenService.clearCallbackBeforeExpiry();
+    IdleService.unRegisterIdleResets();
+    this.forceUpdate();
+  };
+
   render() {
     return (
       <div className="App">
