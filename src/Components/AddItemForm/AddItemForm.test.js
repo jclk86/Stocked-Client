@@ -12,6 +12,7 @@ describe(`AddItemForm Component`, () => {
   });
 
   it("fires submit", () => {
+    jest.mock("jwt-decode"); // fix this
     const handleSubmitSpy = sinon.spy();
     const wrapper = mount(
       <BrowserRouter>
