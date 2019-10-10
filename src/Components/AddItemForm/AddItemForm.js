@@ -4,6 +4,7 @@ import "./AddItemForm.css";
 import { Form, Input, Required, Button, Textarea } from "../Utils/Utils";
 import InventoryContext from "../../context/InventoryContext";
 import InventoryApiService from "../../services/inventory-api-service";
+import TokenService from "../../services/token-service";
 import {
   ValidationError,
   validateName,
@@ -83,6 +84,8 @@ class AddItemForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    const token = TokenService.readJwtToken();
+
     const {
       name,
       quantity,
@@ -92,10 +95,10 @@ class AddItemForm extends Component {
       image_url,
       tag
     } = this.state;
-    const { user_id } = this.props.match.params;
+
     // Create item object to be added to Context Provider.
     const item = {
-      user_id: parseInt(user_id),
+      user_id: token.id,
       name: name.value,
       quantity: parseInt(quantity.value),
       tag: tag.value,
@@ -108,10 +111,10 @@ class AddItemForm extends Component {
     };
     // Adds item to Context Provider, which populates the state in the App component, which renders
     // in inventory in InventoryPage component.
-    InventoryApiService.postItem(item, user_id)
+    InventoryApiService.postItem(item, token.id)
       .then(this.context.addInventoryItem(item))
       .then(() => {
-        this.props.history.push(`/${user_id}/inventory`);
+        this.props.history.push(`/${token.id}/inventory`);
       });
   };
 
@@ -133,7 +136,7 @@ class AddItemForm extends Component {
 
   render() {
     const { quantity, cost_per_unit, name, unit, tag } = this.state;
-    const { user_id } = this.props.match.params;
+    const token = TokenService.readJwtToken();
     const { tagsList } = this.context;
 
     // Disables submit button till form is appropriately filled out.
@@ -278,7 +281,7 @@ class AddItemForm extends Component {
           <Button
             type="button"
             role="button"
-            onClick={() => this.props.history.push(`/${user_id}/inventory`)}
+            onClick={() => this.props.history.push(`/${token.id}/inventory`)}
           >
             Cancel
           </Button>

@@ -4,6 +4,7 @@ import "./EditItemForm.css";
 import { Form, Input, Required, Button, Textarea } from "../Utils/Utils";
 import InventoryContext from "../../context/InventoryContext";
 import InventoryApiService from "../../services/inventory-api-service";
+import TokenService from "../../services/token-service";
 import {
   ValidationError,
   validateName,
@@ -49,8 +50,8 @@ class EditItemForm extends Component {
   // Populates Edit form with available info from item. If image is generic,
   // which is provide if user doesn't provide an image, image input will remain empty.
   componentDidMount() {
-    const { user_id, item_id } = this.props.match.params;
-
+    const { item_id } = this.props.match.params;
+    const token = TokenService.readJwtToken();
     InventoryApiService.getAllTags()
       .then(tags => {
         return tags;
@@ -58,10 +59,10 @@ class EditItemForm extends Component {
       .then(tags => {
         this.setState({ tagsList: tags });
       });
-    InventoryApiService.getInventory(user_id).then(items => {
+    InventoryApiService.getInventory(token.id).then(items => {
       this.context.setInventoryList(items);
     });
-    InventoryApiService.getByUserAndItemId(user_id, item_id)
+    InventoryApiService.getByUserAndItemId(token.id, item_id)
       .then(data => {
         return data[0];
       })
@@ -110,8 +111,8 @@ class EditItemForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { user_id, item_id } = this.props.match.params;
-
+    const { item_id } = this.props.match.params;
+    const token = TokenService.readJwtToken();
     const {
       name,
       quantity,
@@ -123,7 +124,7 @@ class EditItemForm extends Component {
     } = this.state;
 
     const item = {
-      user_id: user_id,
+      user_id: token.id,
       item_id: item_id,
       name: name.value,
       quantity: quantity.value,
@@ -136,8 +137,8 @@ class EditItemForm extends Component {
       cost_per_unit: cost_per_unit.value
     };
     // Item is update for the specific user who owns that item.
-    InventoryApiService.updateItem(item, user_id, item_id).then(item => {
-      this.props.history.push(`/${user_id}/inventory`);
+    InventoryApiService.updateItem(item, token.id, item_id).then(item => {
+      this.props.history.push(`/${token.id}/inventory`);
     });
   };
 
@@ -174,7 +175,8 @@ class EditItemForm extends Component {
       tag,
       tagsList
     } = this.state;
-    const { item_id, user_id } = this.props.match.params;
+    const { item_id } = this.props.match.params;
+    const token = TokenService.readJwtToken();
     const isValid = this.isFormValid();
     return (
       <Form
@@ -327,7 +329,7 @@ class EditItemForm extends Component {
           <Button
             type="button"
             role="button"
-            onClick={() => this.handleDelete(user_id, item_id)}
+            onClick={() => this.handleDelete(token.id, item_id)}
           >
             Delete
           </Button>
@@ -336,7 +338,7 @@ class EditItemForm extends Component {
           <Button
             role="button"
             type="button"
-            onClick={() => this.props.history.push(`/${user_id}/inventory`)}
+            onClick={() => this.props.history.push(`/${token.id}/inventory`)}
           >
             Cancel
           </Button>

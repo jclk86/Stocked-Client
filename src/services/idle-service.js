@@ -24,7 +24,7 @@ const IdleService = {
     _timeoutId = setTimeout(_idleCallback, _FIVE_MINUTES_IN_MS);
   },
   // Detects keyboard and mouse activity on app.
-  regiserIdleTimerResets() {
+  registerIdleTimerResets() {
     _notIdleEvents.forEach(event =>
       document.addEventListener(event, IdleService.resetIdleTimer, true)
     );
