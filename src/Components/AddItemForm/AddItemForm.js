@@ -98,7 +98,6 @@ class AddItemForm extends Component {
 
     // Create item object to be added to Context Provider.
     const item = {
-      user_id: token.id,
       name: name.value,
       quantity: parseInt(quantity.value),
       tag: tag.value,

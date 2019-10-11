@@ -22,7 +22,11 @@ const TokenService = {
     return window.btoa(`${userName}:${password}`);
   },
   parseJwt(jwt) {
-    return jwtDecode(jwt);
+    if (jwt) {
+      return jwtDecode(jwt);
+    } else {
+      return {};
+    }
   },
   readJwtToken() {
     return TokenService.parseJwt(TokenService.getAuthToken());
