@@ -5,8 +5,6 @@ import toJson from "enzyme-to-json";
 import AddItemForm from "./AddItemForm";
 import sinon from "sinon";
 import AuthApiService from "../../services/auth-api-service";
-import InventoryApiService from "../../services/inventory-api-service";
-import TokenService from "../../services/token-service";
 
 describe(`AddItemForm Component`, () => {
   let mockUser = {

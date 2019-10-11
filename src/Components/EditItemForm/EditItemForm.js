@@ -47,8 +47,7 @@ class EditItemForm extends Component {
       }
     };
   }
-  // Populates Edit form with available info from item. If image is generic,
-  // which is provide if user doesn't provide an image, image input will remain empty.
+  // Populates Edit form with available info from item. Generic image provided if no image input.
   componentDidMount() {
     const { item_id } = this.props.match.params;
     const token = TokenService.readJwtToken();
@@ -141,7 +140,7 @@ class EditItemForm extends Component {
       this.props.history.push(`/${token.id}/inventory`);
     });
   };
-
+  // Disables submit button until all conditions are met.
   isFormValid = () => {
     const { name, quantity, unit, cost_per_unit, tag } = this.state;
     return (

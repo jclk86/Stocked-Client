@@ -116,7 +116,7 @@ class AddItemForm extends Component {
         this.props.history.push(`/${token.id}/inventory`);
       });
   };
-
+  // Disables submit button until all conditions are met.
   isFormValid = () => {
     const { name, quantity, unit, cost_per_unit, tag } = this.state;
     return (

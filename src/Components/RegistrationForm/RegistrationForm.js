@@ -102,7 +102,7 @@ class RegistrationForm extends Component {
             onChange={e => this.updatePassword(e.target.value)}
             name="password"
             type="password"
-            // required
+            required
             id="RegistrationForm__password"
           />
           {password.touched && (

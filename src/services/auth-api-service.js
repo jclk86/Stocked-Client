@@ -18,7 +18,7 @@ const AuthApiService = {
         console.error(err);
       });
   },
-
+  // Saves authtoken into sessionstorage.
   postLogin({ username, password }) {
     return fetch(`${config.API_ENDPOINT}/auth/login`, {
       method: "POST",
