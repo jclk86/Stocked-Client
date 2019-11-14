@@ -36,6 +36,7 @@ class LoginForm extends Component {
 
   render() {
     const { error } = this.state;
+
     return (
       <Form className="LoginForm" onSubmit={this.handleSubmitBasicAuth}>
         <div className="header_login">
@@ -56,6 +57,7 @@ class LoginForm extends Component {
             name="password"
             type="password"
             id="LoginForm__password"
+            autoComplete="off"
           />
         </div>
         <div role="alert" className="alert_login">

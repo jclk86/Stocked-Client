@@ -82,7 +82,7 @@ class RegistrationForm extends Component {
             htmlFor="RegistrationForm__username"
             className="label_registration"
           >
-            User name <Required />
+            Username <Required />
           </label>
           <Input
             name="username"
