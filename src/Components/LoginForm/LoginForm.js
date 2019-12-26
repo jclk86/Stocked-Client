@@ -29,7 +29,6 @@ class LoginForm extends Component {
         username.value = "";
         password.value = "";
         this.setState({ isLoading: false });
-        console.log(this.state.isLoading);
         this.props.onLoginSuccess(tokenDecoded.id);
       })
       .catch(res => {
