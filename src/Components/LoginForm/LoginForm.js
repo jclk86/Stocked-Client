@@ -4,6 +4,7 @@ import { NavLink, withRouter } from "react-router-dom";
 import "./LoginForm.css";
 import AuthApiService from "../../services/auth-api-service";
 import logo from "../../images/logo.png";
+import loading from "../../images/35.gif";
 import TokenService from "../../services/token-service";
 
 class LoginForm extends Component {
@@ -11,11 +12,11 @@ class LoginForm extends Component {
     onLoginSuccess: () => {}
   };
 
-  state = { error: null };
+  state = { error: null, isLoading: false };
 
   handleSubmitBasicAuth = event => {
     event.preventDefault();
-    this.setState({ error: null });
+    this.setState({ error: null, isLoading: true });
     const { username, password } = event.target;
     // Retrieves jwt payload.
     AuthApiService.postLogin({
@@ -27,6 +28,8 @@ class LoginForm extends Component {
         const tokenDecoded = TokenService.readJwtToken(res);
         username.value = "";
         password.value = "";
+        this.setState({ isLoading: false });
+        console.log(this.state.isLoading);
         this.props.onLoginSuccess(tokenDecoded.id);
       })
       .catch(res => {
@@ -35,13 +38,18 @@ class LoginForm extends Component {
   };
 
   render() {
-    const { error } = this.state;
+    const { error, isLoading } = this.state;
 
     return (
       <Form className="LoginForm" onSubmit={this.handleSubmitBasicAuth}>
         <div className="header_login">
           <img src={logo} alt="stocked logo" className="logo_login"></img>
         </div>
+        {isLoading && (
+          <div className="container_loader">
+            <img src={loading} alt="loading gif" className="loading_gif"></img>
+          </div>
+        )}
         <div className="user_name">
           <label htmlFor="LoginForm__user_name" className="label_login">
             Username
